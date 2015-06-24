@@ -1,0 +1,8 @@
+#########################################
+# Editor temporary/working/backup files #
+*~
+^#.+#$
+*.bak
+
+# Documentation generated files #
+#################################

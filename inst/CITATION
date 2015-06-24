@@ -1,0 +1,9 @@
+citHeader("To cite FDBeye use:")
+citEntry(entry = "Manual",
+         title = "FDBeye: functions for working with eyetracker data.",
+         note = paste("R package version", packageVersion("FDBeye")),
+         author = personList(as.person("David Braze")),
+         institution = "Haskins Laboratories",
+         year = "2015",
+         url = "https://github.com/davebraze/FDBeye",
+         textVersion = "")
