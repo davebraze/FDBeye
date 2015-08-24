@@ -1,15 +1,11 @@
----
-output:
-  md_document:
-    variant: markdown_github
----
+FDBeye
+====
+Functions to ease working with eye-tracker data. Currently limited to eyelink input files, and even there functionality
+is VERY thin. Pitch in and help if you like.
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, echo = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
-)
+Install with devtools::install_github()
+```R
+install.packages("devtools")
+library(devtools)
+install_github("davebraze/FDBeye")
 ```
