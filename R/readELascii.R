@@ -1,5 +1,3 @@
-##' @include is.numeral.R
-
 ##' @title Used by readELascii(). Not intended for end-users.
 ##'
 ##' @details

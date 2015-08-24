@@ -15,10 +15,10 @@ makeReport(gaze, type = c("FIX", "SACC", "TRIALVAR"))
 A data.frame containing the requested report.
 }
 \description{
-.. content for \description{} (no empty lines) ..
+Generate an ET report, as data.frame.
 }
 \details{
-.. content for \details{} ..
+No details yet.
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}
