@@ -8,10 +8,10 @@
 ##' @param bounds A numeric tuple. e1 is index marking beginning of trial. e2 is index indicating
 ##' end of trial.
 ##' @param lines A vector of strings, each corresponding to 1 line of the EL ASCII file.
-##' @return A list of 4 elements, data.frames enumerating fixations, saccades, blinks and TRIAL_VARs for the
-##' trial.
+##' @return A list of 6 elements, data.frames enumerating fixations, saccades, blinks, TRIAL_VARs,
+##' samples and messages for the trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
-getEyelinkTrialData <- function(bounds, lines) {
+getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
 
     requireNamespace("FDB1", quietly = TRUE)
 
@@ -84,20 +84,6 @@ getEyelinkTrialData <- function(bounds, lines) {
     ##   . binoc/remote recording, Not known at present
     ##   . monoc/remote recording, 9 fields (time, xpos, ypos, pupil, CR, xtarg, ytarg, dist, IP field)
 
-    ## TODO: Pick up events flagged in MSG lines like the following.
-    ## MSG	15334285 52 !V ARECSTART 0 1950006-letters2.wav
-    ## critical information is
-    ## o timestamp (15334285)
-    ## o offset (52)
-    ## o event type (ARECSTART)
-    ## o modifier (1950006-letters2.wav)
-    ##
-    ## To make this work will need to pass in a list of regexp, each of which uniquely identifies
-    ## each MSG of interest. If there are multiple instances of a MSG type, might need to make
-    ## decisions about which to capture: first only? last only? all?
-    ##
-    ## Should these events be placed with trialvars, or in their own structure?
-
     ## TODO: For each trial from START event record
     ## o start time of eye movement recording, (timestamp from START event)
     ## o eyes recorded, LEFT, RIGHT, BINOC
@@ -105,7 +91,23 @@ getEyelinkTrialData <- function(bounds, lines) {
         samp <- NULL
     }
 
-    retval <- list(fix=fix, sacc=sacc, blink=blink, trialvar=trialvar)
+    if(length(msgSet)>1 || !is.na(msgSet)) {
+        ## All messages caught by this routine should have the same number of fields, or else.
+        ## TODO: add error check for field count.
+        ## TODO: add code to pick up groups of msgs, where across groups the field count is different.
+        msgRE <- paste0("^MSG.*(", paste0(msgSet, "", collapse="|"), ")")
+        msg <- grep(msgRE, lines[bounds[1]:bounds[2]], value=TRUE)
+        msg <- stringr::str_split(msg, pattern="[ \t]+")
+        if (length(msg) > 0) {
+            msg <- data.frame(matrix(unlist(msg), ncol=length(msg[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
+        } else {
+            msg <- NULL
+        }
+    } else {
+        msg <- NULL
+    }
+
+    retval <- list(fix=fix, sacc=sacc, blink=blink, trialvar=trialvar, samp=samp, msg=msg)
     retval
 }
 
@@ -119,13 +121,13 @@ getEyelinkTrialData <- function(bounds, lines) {
 ##' @param file A string giving path/fname to input file (ELalscii file).
 ##' @param tStartRE A string containing regular expression that uniquely identifies beginning of trial.
 ##' @param tEndRE A string containing regular expression that uniquely identifies end of trial.
-##' @param eye Indicates which eye ("R"|"L") to get events from. Currently unused.
-##' @return List with one element for the file header and one element for each trial. Each trial
-##' element is itself a list of 4 elements: data.frames enumerating fixations, saccades, blinks and
-##' TRIAL_VARs for the trial.
+##' @param msgSet A character vector. Each element identifies a MSG to recover from the data file.
+##' @return List with two elements, one for session information, and one containing a list of
+##' trials. Each trial element is itself a list of 6 elements: data.frames enumerating fixations,
+##' saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
-readELascii <- function(file, tStartRE="TRIALID", tEndRE="TRIAL_RESULT", eye=NA) {
+readELascii <- function(file, tStartRE="TRIALID", tEndRE="TRIAL_RESULT", msgSet=NA) {
     f <- file(file, "r", blocking=FALSE)
     lines <- readLines(f, warn=TRUE, n=-1)
     close(f)
@@ -136,6 +138,7 @@ readELascii <- function(file, tStartRE="TRIALID", tEndRE="TRIAL_RESULT", eye=NA)
     sessdate <- unlist(stringr::str_split(grep("DATE:", header, value=TRUE), ": "))[2]
     srcfile <- unlist(stringr::str_split(grep("CONVERTED FROM", header, value=TRUE), " (FROM|using) "))[2]
     srcfile <- basename(srcfile)
+    session <- data.frame(script, sessdate, srcfile)
 
     ## get start and end lines for each trial block
     tStart <- grep(tStartRE, lines)
@@ -148,8 +151,10 @@ readELascii <- function(file, tStartRE="TRIALID", tEndRE="TRIAL_RESULT", eye=NA)
     trialids <- trialids[seq(2, length(trialids), 2)]
 
     ## get events for each trial
-    retval <- apply(trialidx, 1, getEyelinkTrialData, lines=lines)
-    names(retval) <- trialids
+    trials <- apply(trialidx, 1, getEyelinkTrialData, lines=lines, msgSet=msgSet)
+    names(trials) <- trialids
+
+    retval <- list(session=session, trials=trials)
     class(retval) <- c("ELascii", class(retval))
     retval
 }
