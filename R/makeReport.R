@@ -1,7 +1,9 @@
-##' .. content for \description{} (no empty lines) ..
-##'
-##' .. content for \details{} ..
+
 ##' @title Generate an ET report, as data.frame.
+##'
+##' @details
+##' No details yet.
+##'
 ##' @param gaze An object of class "ELascii".
 ##' @param type Which type of base report to generate. Ranges over c("FIX", "SACC", "TRIALVAR").
 ##' @return A data.frame containing the requested report.

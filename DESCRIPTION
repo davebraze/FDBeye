@@ -1,6 +1,6 @@
 Package: FDBeye
 Title: Facilitate Work with Eyetracker Data.
-Version: 0.0.1
+Version: 0.0.2
 Author: David Braze
 Maintainer: David Braze <davebraze@gmail.com>
 Description: Functions to ease working with eye-tracker data. Currently limited to eyelink input files.

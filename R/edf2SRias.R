@@ -1,4 +1,4 @@
-##' Call "edf2asc" command line utility to do some work.
+##' @title Call "edf2asc" command line utility to do some work.
 ##'
 ##' @details Call SR Research "edf2asc" command line utility to convert files.
 ##'
@@ -8,7 +8,6 @@
 ##'     \item Make sure edfapi library (e.g., edfapi.dll) is somewhere on the PATH.
 ##' }
 ##'
-##' @title Call "edf2asc" command line utility to do some work.
 ##' @param edffiles Vector of *edf file names.
 ##' @param e2afname Name of edf2asc executable (e.g., "edf2asc.exe", "edf2asc64.exe").
 ##' @param e2apath Path to edf2asc executable. It will probably look something like
