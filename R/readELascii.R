@@ -162,15 +162,17 @@ if(FALSE) {
     fname <- "../inst/extdata/1950006-RAN.asc"
 
 #    debug(readELascii)
-    e <- read.ELascii(fname)
+    e <- readELascii(fname)
 #    undebug(readELascii)
 
-    names(e$'2')
-    head(e$'2'$fix)
-    head(e$'2'$sacc)
-    head(e$'2'$blink)
-    dim(e$'2'$trialvar)
-    names(e$'2'$trialvar)
+    names(e$session)
+    names(e$trials)
+    names(e$trials$'2')
+    head(e$trials$'2'$fix)
+    head(e$trials$'2'$sacc)
+    head(e$trials$'2'$blink)
+    dim(e$trials$'2'$trialvar)
+    names(e$trials$'2'$trialvar)
 
 }
 

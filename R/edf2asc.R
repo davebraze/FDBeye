@@ -18,4 +18,10 @@
 edf2asc <- function(edffiles, e2afname="edf2asc64.exe", e2apath="D:/winbin/SR Research/EyeLink/EDF_Access_API/Example") {
     ## o use R function system() to make the call, but also see shell(), shell.exec() and, possibly, system2()
     ## o see R function shQuote() for help building the command line string.
+
+    ## maybe use > where edf2asc*.exe
+    ## to determine if the utility is on the path (under Windows).
+    ## With wildcard will find both edf2asc.exe and edf2asc64.exe if present.
+    ##
+    ## Similar command under *nix is "which"
 }
