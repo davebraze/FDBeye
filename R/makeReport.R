@@ -4,7 +4,22 @@
 ##' No details yet.
 ##'
 ##' @param gaze An object of class "ELascii", as created by readELascii().
-##' @return A data.frame containing a fixation report.
+##' @return A data.frame containing a fixation report with the following columns:
+##'
+##' \enumerate{
+##'     \item subject: factor for subject ID, taken from the name of the source EDF file.
+##'     \item trial: factor for trial ID.
+##'     \item time0: integer indicating timestamp (ms) of first sample in recording block.
+##'     \item event: factor for event type, always "FIX".
+##'     \item eye: factor indicating eye for corresponding fixation, ranges over c("L", "R").
+##'     \item stime: integer indicating start time for fixation (ms).
+##'     \item etime: integer indicating end time for fixation (ms).
+##'     \item dur: integer indicating duration of fixation (ms).
+##'     \item xpos: integer, x position of fixation in screen coordinates (pixels).
+##'     \item ypos: integer, y position of fixation in screen coordinates (pixels). Origin is upper left corner of screen.
+##'     \item pupil: integer, pupil size (pixels), may be either area or radius depending on ET settings
+##' }
+##'
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
 fixReport <- function(gaze) {
