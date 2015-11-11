@@ -40,6 +40,7 @@ fixReport <- function(gaze) {
     ## pull fixation details and merge time0 and subject ID
     retval <- plyr::ldply(.data = gaze$trials, .fun = function(x) {d <- x$fix},
                           .id = "trial")
+    ## FIXME: event column is pulled in as type 'character'. It should be 'factor'. Fix this in readELascii().
     retval <- dplyr::right_join(time0, retval)
     retval <- data.frame(subject, retval)
     retval
