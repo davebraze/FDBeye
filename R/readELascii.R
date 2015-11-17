@@ -69,22 +69,26 @@ getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
     samp <- stringr::str_split(samp, pattern="[ \t]+")
     if (length(samp) > 0) {
         samp <- data.frame(matrix(unlist(samp), ncol=length(samp[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
-    ## NEED SOME ADDITIONAL HANDLING here to take care of '...' (when either left or right eye is
-    ## not tracked) and similar composite fields
-    ## Problem: fields in sample lines are different depending on
-    ## o recording mode is 'remote' or 'head mounted'
-    ## o eye being recorded is 'left', 'right' or 'binocular'
-    ## o crossing those paramenters leads to 6 different configurations
-    ## o For SAMPLE lines, there are 4 cases that need to be handled (not counting
-    ##   optional velocity and resolution fields). See section 4.92 of EL1000+ user manual.
-    ##   . binoc/HM recording, 8 fields (time, xposL, yposL, pupilL, xposR, yposR, pupilL, CR)
-    ##   . monoc/HM recording, 5 fields (time, xpos, ypos, pupil, CR)
-    ##   . binoc/remote recording, Not known at present
-    ##   . monoc/remote recording, 9 fields (time, xpos, ypos, pupil, CR, xtarg, ytarg, dist, IP field)
+        ## NEED SOME ADDITIONAL HANDLING here to take care of '...' (when either left or right eye is
+        ## not tracked) and similar composite fields
+        ## Problem: fields in sample lines are different depending on
+        ## o recording mode is 'remote' or 'head mounted'
+        ## o eye being recorded is 'left', 'right' or 'binocular'
+        ## o crossing those paramenters leads to 6 different configurations
+        ## o For SAMPLE lines, there are 4 cases that need to be handled (not counting
+        ##   optional velocity and resolution fields). See section 4.92 of EL1000+ user manual.
+        ##   . binoc/HM recording, 8 fields (time, xposL, yposL, pupilL, xposR, yposR, pupilL, CR)
+        ##   . monoc/HM recording, 5 fields (time, xpos, ypos, pupil, CR)
+        ##   . binoc/remote recording, Not known at present
+        ##   . monoc/remote recording, 9 fields (time, xpos, ypos, pupil, CR, xtarg, ytarg, dist, IP field)
 
-    ## TODO: For each trial from START event record
-    ## o start time of eye movement recording, (timestamp from START event)
-    ## o eyes recorded, LEFT, RIGHT, BINOC
+        ## TODO: For each trial build a header to include
+        ## o start time of eye movement recording, (timestamp from START event)
+        ## o eyes recorded, LEFT, RIGHT, BINOC (START, RECCFG, !MODE)
+        ## o sample rate (RECCFG, !MODE)
+        ## o display resolution (GAZE_COORDS)
+        ## o what about these? THRESHOLDS, EFIT_PARAMS, ELLIPSE
+
     } else {
         samp <- NULL
     }
@@ -126,6 +130,7 @@ getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
 readELascii <- function(file, tStartRE="TRIALID", tEndRE="TRIAL_RESULT", msgSet=NA) {
+    ## FIXME: maybe change tStartRE to "Prepare_sequence"
     f <- file(file, "r", blocking=FALSE)
     lines <- readLines(f, warn=TRUE, n=-1)
     close(f)
