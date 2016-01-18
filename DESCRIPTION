@@ -11,7 +11,10 @@ License: MIT + file
 LazyData: true
 Imports:
     FDB1,
-    stringr
+    stringr,
+    ggplot2,
+    grid,
+    png
 Collate:
     'FDBeye-package.R'
     'edf2asc.R'
