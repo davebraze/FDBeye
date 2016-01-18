@@ -17,15 +17,25 @@
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @import ggplot2
 ##' @export
-fixPlot <- function(bgimage, bgalpha=.5, mar=c(0,0,0,0), data) {
+fixPlot <- function(bgimage, bgalpha=.33, mar=c(0,0,0,0), data) {
+
+    ## mar=c(0,0,0,0)
+    ## bgalpha <- .33
+    ## bgimage <- "d:/braze/R/development/FDBeye/inst/extdata/story01.png"
+
     if (!is.null(bgimage)) {
-        # bgimage <- "d:/braze/R/development/FDBeye/inst/extdata/story01.png"
-        bg <- png::readPNG(bgimage) # maybe use EBImage::readImage() instead
+        bg <- png::readPNG(bgimage) # maybe use EBImage::readImage() instead ?
         ysize <- dim(bg)[1]
         xsize <- dim(bg)[2]
-        bg <- grid::rasterGrob(bg) # figure out how to set alpha here (EBImage??)
+        zsize <- dim(bg)[3]
+        alpha <- matrix(bgalpha, ysize, xsize)
+        if(zsize==3) {                  ## add an alpha layer if none is present
+            bg <- abind::abind(bg, alpha)
+        } else if (zsize==4) {          ## or over-write existing alpha layer
+            bg <- abind::abind(bg[,,1:3], alpha)
+        }
+        bg <- grid::rasterGrob(bg)
     }
-    # mar=c(50,250,180,200) # margin adjustment
 
     p <- ggplot(data=data, aes(x=x, y=y)) + geom_blank()
     p <- p + coord_equal()

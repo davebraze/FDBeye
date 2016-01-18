@@ -1,6 +1,6 @@
 Package: FDBeye
 Title: Facilitate Work with Eyetracker Data.
-Version: 0.0.5
+Version: 0.0.6
 Author: David Braze
 Maintainer: David Braze <davebraze@gmail.com>
 Description: Functions to ease working with eye-tracker data. Currently limited
@@ -10,14 +10,17 @@ Depends:
 License: MIT + file
 LazyData: true
 Imports:
+    abind,
     FDB1,
-    stringr,
     ggplot2,
     grid,
-    png
+    png,
+    stringr
 Collate:
     'FDBeye-package.R'
     'edf2asc.R'
+    'fixPlot.R'
     'makeReport.R'
     'readELascii.R'
     'region2SRias.R'
+RoxygenNote: 5.0.1
