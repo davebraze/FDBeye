@@ -1,9 +1,10 @@
 Package: FDBeye
+Type: Package
 Title: Facilitate Work with Eyetracker Data.
 Version: 0.0.6
 Author: David Braze
 Maintainer: David Braze <davebraze@gmail.com>
-Description: Functions to ease working with eye-tracker data. Currently limited
+Description: Functions to ease working with eye-tracker data. Currently, much functionality is limited
     to SR Eyelink (ascii) files.
 Depends:
     R (>= 3.1.1)
@@ -23,4 +24,6 @@ Collate:
     'makeReport.R'
     'readELascii.R'
     'region2SRias.R'
+URL: https://github.com/davebraze/FDBeye
+BugReports: https://github.com/davebraze/FDBeye/issues
 RoxygenNote: 5.0.1

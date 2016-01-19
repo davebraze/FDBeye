@@ -4,20 +4,45 @@
 \alias{fixPlot}
 \title{Plot Fixations over bitmap using ggplot2.}
 \usage{
-fixPlot(bgimage, bgalpha = 0.33, mar = c(0, 0, 0, 0), data)
+fixPlot(data, bgimage, bgalpha = 0.33, posMap = ggplot2::aes_string(x =
+  "xpos", y = "ypos"), pointMap = ggplot2::aes_string(size = "dur"),
+  pointAlpha = 0.5, mar = c(0, 0, 0, 0), showRug = FALSE, rugMap = NULL,
+  rugColor = "black", rugAlpha = 0.33, rugSize = 2, ...,
+  showPlot = TRUE)
 }
 \arguments{
+\item{data}{A data.frame containing fixations. Must include x and y positions with column names
+"x" and "y".}
+
 \item{bgimage}{Path to background image for the plot. Usually will be the visual stimulus
 subjects viewed will eye movements were recorded.}
 
 \item{bgalpha}{Alpha level for background layer. Currently not working.}
 
+\item{pointMap}{Additional aesthetics specific to points. Passed to geom_point().}
+
+\item{pointAlpha}{Set point transparency.}
+
 \item{mar}{A 4 vector for margin adjustment: top, right, bottom, left. Use positive values move
 margins toward center of plot (trim the display area). Use negative values to expand the
 display area beyond the bitmap.}
 
-\item{data}{A data.frame containing fixations. Must include x and y positions with column names
-"x" and "y".}
+\item{showRug}{Logical indicating whether to include rug plots for x and y margins. Defaults is
+FALSE.}
+
+\item{rugMap}{Additional aesthetics specific to rugs. Passed to geom_rug().}
+
+\item{rugColor}{Set rug color.}
+
+\item{rugAlpha}{Set rug transparency.}
+
+\item{rugSize}{Set rug size.}
+
+\item{...}{Additional arguments passed to ggplot2::geom_point().}
+
+\item{showPlot}{Logical indicating whether to display the plot. Defaults to TRUE.}
+
+\item{xyMap}{Aesthetic mapping (ggplot2::aes_string()) to set x and y variables. Passed to ggplot().}
 }
 \value{
 A ggplot2 object.
