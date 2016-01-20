@@ -13,6 +13,7 @@ getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
 
     requireNamespace("FDB1", quietly = TRUE)
 
+    ## Get fixation events
     fix <- grep("^EFIX", lines[bounds[1]:bounds[2]], value=TRUE)
     fix <- stringr::str_split(fix, pattern="[ \t]+")
     if (length(fix) > 0) {
@@ -26,6 +27,7 @@ getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
         fix <- NULL
     }
 
+    ## Get saccade events
     sacc <- grep("^ESACC", lines[bounds[1]:bounds[2]], value=TRUE)
     sacc <- stringr::str_split(sacc, pattern="[ \t]+")
     if (length(sacc) > 0) {
@@ -38,6 +40,7 @@ getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
         sacc <- NULL
     }
 
+    ## Get blink events
     blink <- grep("^EBLINK", lines[bounds[1]:bounds[2]], value=TRUE)
     blink <- stringr::str_split(blink, pattern="[ \t]+")
     if (length(blink) > 0) {
@@ -50,6 +53,7 @@ getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
         blink <- NULL
     }
 
+    ## Get trial variables
     trialvar <- grep("TRIAL_VAR", lines[bounds[1]:bounds[2]], value=TRUE)
     trialvar <- stringr::str_split(trialvar, pattern="[ \t]+")
     if (length(trialvar) > 0) {
@@ -65,6 +69,7 @@ getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
 
     ## TODO: Get sample level data put in separate list item (data.frame).
     ## browser()
+    ## Get samples
     samp <- grep("^[0-9]+", lines[bounds[1]:bounds[2]], value=TRUE)
     samp <- stringr::str_split(samp, pattern="[ \t]+")
     if (length(samp) > 0) {
@@ -93,6 +98,7 @@ getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
         samp <- NULL
     }
 
+    ## Get message events
     if(length(msgSet)>1 || !is.na(msgSet)) {
         ## All messages caught by this routine should have the same number of fields, or else.
         ## TODO: add error check for field count.

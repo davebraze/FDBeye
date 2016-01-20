@@ -5,12 +5,8 @@ Version: 0.0.6
 Date: 2016-01-18
 Author: David Braze
 Maintainer: David Braze <davebraze@gmail.com>
-Description: Functions to ease working with eye-tracker data. Currently, much functionality is limited
-    to SR Eyelink (ascii) files.
 Depends:
     R (>= 3.1.1)
-License: MIT + file
-LazyData: true
 Imports:
     abind,
     FDB1,
@@ -18,13 +14,10 @@ Imports:
     grid,
     png,
     stringr
-Collate:
-    'FDBeye-package.R'
-    'edf2asc.R'
-    'fixPlot.R'
-    'makeReport.R'
-    'readELascii.R'
-    'region2SRias.R'
+Description: Functions to ease working with eye-tracker data. Currently, much functionality is limited
+    to SR Eyelink (ascii) files.
+License: MIT + file LICENSE
+LazyData: true
 URL: https://github.com/davebraze/FDBeye
 BugReports: https://github.com/davebraze/FDBeye/issues
 RoxygenNote: 5.0.1
