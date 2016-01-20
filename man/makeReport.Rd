@@ -14,6 +14,9 @@ makeReport(gaze, type = c("FIX", "SACC", "TRIALVAR"))
 \value{
 A data.frame containing the requested report.
 }
+\description{
+No description yet.
+}
 \details{
 No details yet.
 }

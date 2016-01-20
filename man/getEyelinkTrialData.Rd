@@ -2,7 +2,7 @@
 % Please edit documentation in R/readELascii.R
 \name{getEyelinkTrialData}
 \alias{getEyelinkTrialData}
-\title{Used by readELascii(). Not intended for end-users.}
+\title{Called by readELascii()}
 \usage{
 getEyelinkTrialData(bounds, lines, msgSet = NA)
 }
@@ -11,10 +11,15 @@ getEyelinkTrialData(bounds, lines, msgSet = NA)
 end of trial.}
 
 \item{lines}{A vector of strings, each corresponding to 1 line of the EL ASCII file.}
+
+\item{msgSet}{A character vector of regular expressions to identify eyelink MSG lines to catch.}
 }
 \value{
 A list of 6 elements, data.frames enumerating fixations, saccades, blinks, TRIAL_VARs,
 samples and messages for the trial.
+}
+\description{
+Used by readELascii(). Not intended for end-users.
 }
 \details{
 Used by readELascii(). Not intended for end-users. Extract fixations, saccades, and blinks from a trial.

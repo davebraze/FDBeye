@@ -2,9 +2,9 @@
 % Please edit documentation in R/fixPlot.R
 \name{fixPlot}
 \alias{fixPlot}
-\title{Plot Fixations over bitmap using ggplot2.}
+\title{plot fixation data using a convenience wrapper around ggplot2::ggplot()}
 \usage{
-fixPlot(data, bgimage, bgalpha = 0.33, posMap = ggplot2::aes_string(x =
+fixPlot(data, bgimage, bgalpha = 0.33, xyMap = ggplot2::aes_string(x =
   "xpos", y = "ypos"), pointMap = ggplot2::aes_string(size = "dur"),
   pointAlpha = 0.5, mar = c(0, 0, 0, 0), showRug = FALSE, rugMap = NULL,
   rugColor = "black", rugAlpha = 0.33, rugSize = 2, ...,
@@ -18,6 +18,8 @@ fixPlot(data, bgimage, bgalpha = 0.33, posMap = ggplot2::aes_string(x =
 subjects viewed will eye movements were recorded.}
 
 \item{bgalpha}{Alpha level for background layer. Currently not working.}
+
+\item{xyMap}{Aesthetic mapping (ggplot2::aes_string()) for x and y coordinates. Passed to ggplot().}
 
 \item{pointMap}{Additional aesthetics specific to points. Passed to geom_point().}
 
@@ -41,14 +43,12 @@ FALSE.}
 \item{...}{Additional arguments passed to ggplot2::geom_point().}
 
 \item{showPlot}{Logical indicating whether to display the plot. Defaults to TRUE.}
-
-\item{xyMap}{Aesthetic mapping (ggplot2::aes_string()) to set x and y variables. Passed to ggplot().}
 }
 \value{
 A ggplot2 object.
 }
 \description{
-A convenience wrapper around ggplot2::ggplot()
+No description yet.
 }
 \details{
 This is a convenience function for using ggplot() to lay fixation data over a

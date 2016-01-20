@@ -1,5 +1,6 @@
 citHeader("To cite FDBeye use:")
 citEntry(entry = "Manual",
+         title = paste(meta$Package, meta$Title, sep=": "),
          note = paste("R package version", packageVersion("FDBeye")),
          author = personList(as.person("David Braze")),
          institution = "Haskins Laboratories",

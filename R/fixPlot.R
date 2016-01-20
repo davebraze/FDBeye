@@ -1,15 +1,16 @@
-##' A convenience wrapper around ggplot2::ggplot()
+##' @title plot fixation data using a convenience wrapper around ggplot2::ggplot()
+##'
+##' @description No description yet.
 ##'
 ##' @details This is a convenience function for using ggplot() to lay fixation data over a
 ##'     background bitmap.
 ##'
-##' @title Plot Fixations over bitmap using ggplot2.
 ##' @param data A data.frame containing fixations. Must include x and y positions with column names
 ##'     "x" and "y".
 ##' @param bgimage Path to background image for the plot. Usually will be the visual stimulus
 ##'     subjects viewed will eye movements were recorded.
 ##' @param bgalpha Alpha level for background layer. Currently not working.
-##' @param xyMap Aesthetic mapping (ggplot2::aes_string()) to set x and y variables. Passed to ggplot().
+##' @param xyMap Aesthetic mapping (ggplot2::aes_string()) for x and y coordinates. Passed to ggplot().
 ##' @param pointMap Additional aesthetics specific to points. Passed to geom_point().
 ##' @param pointAlpha Set point transparency.
 ##' @param mar A 4 vector for margin adjustment: top, right, bottom, left. Use positive values move
@@ -30,7 +31,7 @@
 fixPlot <- function(data,
                     bgimage,
                     bgalpha=.33,
-                    posMap=ggplot2::aes_string(x="xpos", y="ypos"),
+                    xyMap=ggplot2::aes_string(x="xpos", y="ypos"),
                     pointMap=ggplot2::aes_string(size="dur"),
                     pointAlpha=.5,
                     mar=c(0,0,0,0),
@@ -56,7 +57,7 @@ fixPlot <- function(data,
         bg <- grid::rasterGrob(bg)
     }
 
-    p <- ggplot(data=data, mapping=posMap) + geom_blank()
+    p <- ggplot(data=data, mapping=xyMap) + geom_blank()
     p <- p + coord_equal()
     p <- p + scale_x_continuous(limits=c(0+mar[4],xsize-mar[2]), ## need to make better choices for tic positions when margins are in place.
                                 expand=c(0,0))

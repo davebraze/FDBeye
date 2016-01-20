@@ -2,7 +2,7 @@
 % Please edit documentation in R/region2SRias.R
 \name{region2SRias}
 \alias{region2SRias}
-\title{Convert region file to SR interest area file.}
+\title{Convert region file to SR interest area file}
 \usage{
 region2SRias(regfile, iasfile = FALSE, size = c("big", "small"))
 }
@@ -19,6 +19,9 @@ Called for its side effect of writing an "*.ias" file.
 }
 \description{
 Convert a region file to an SR interest area file.
+}
+\details{
+No details yet.
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}

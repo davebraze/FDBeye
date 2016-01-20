@@ -21,6 +21,9 @@ List with two elements, one for session information, and one containing a list o
 trials. Each trial element is itself a list of 6 elements: data.frames enumerating fixations,
 saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
 }
+\description{
+Convenience function to call SRR utility edf2asc from inside R.
+}
 \details{
 SR Research provides a utility (EDF2ASC.exe) that dumps ASCII renderings of their proprietary
 EDF data file format. This function reads those ASCII files and extracts eye-movement events

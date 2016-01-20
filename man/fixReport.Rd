@@ -2,7 +2,7 @@
 % Please edit documentation in R/makeReport.R
 \name{fixReport}
 \alias{fixReport}
-\title{Make a fixation report from an ELascii object.}
+\title{Make a fixation report from an ELascii object}
 \usage{
 fixReport(gaze)
 }
@@ -25,6 +25,9 @@ A data.frame containing a fixation report with the following columns:
     \item ypos: integer, y position of fixation in screen coordinates (pixels). Origin is upper left corner of screen.
     \item pupil: integer, pupil size (pixels), may be either area or radius depending on ET settings
 }
+}
+\description{
+No description yet.
 }
 \details{
 No details yet.

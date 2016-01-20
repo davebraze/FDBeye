@@ -1,4 +1,6 @@
-##' @title Used by readELascii(). Not intended for end-users.
+##' @title Called by readELascii()
+##'
+##' @description Used by readELascii(). Not intended for end-users.
 ##'
 ##' @details
 ##' Used by readELascii(). Not intended for end-users. Extract fixations, saccades, and blinks from a trial.
@@ -6,6 +8,7 @@
 ##' @param bounds A numeric tuple. e1 is index marking beginning of trial. e2 is index indicating
 ##' end of trial.
 ##' @param lines A vector of strings, each corresponding to 1 line of the EL ASCII file.
+##' @param msgSet A character vector of regular expressions to identify eyelink MSG lines to catch.
 ##' @return A list of 6 elements, data.frames enumerating fixations, saccades, blinks, TRIAL_VARs,
 ##' samples and messages for the trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
@@ -120,6 +123,8 @@ getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
 }
 
 ##' @title Get events from SR Research ASCII data files.
+##'
+##' @description Convenience function to call SRR utility edf2asc from inside R.
 ##'
 ##' @details
 ##' SR Research provides a utility (EDF2ASC.exe) that dumps ASCII renderings of their proprietary

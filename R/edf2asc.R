@@ -1,5 +1,7 @@
 ##' @title Call "edf2asc" command line utility to do some work.
 ##'
+##' @description No description yet.
+##'
 ##' @details Call SR Research "edf2asc" command line utility to convert files.
 ##'
 ##' \enumerate{
@@ -8,11 +10,10 @@
 ##'     \item Make sure edfapi library (e.g., edfapi.dll) is somewhere on the PATH.
 ##' }
 ##'
-##' @param edffiles Vector of *edf file names.
+##' @param edffiles Vector of *edf file names to be converted.
 ##' @param e2afname Name of edf2asc executable (e.g., "edf2asc.exe", "edf2asc64.exe").
 ##' @param e2apath Path to edf2asc executable. It will probably look something like
 ##' "D:/winbin/SR Research/EyeLink/EDF_Access_API/Example" from "SR Research" on down.
-##' @param files A character vector listing file names to be converted.
 ##' @return A character vector listing output files.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 edf2asc <- function(edffiles, e2afname="edf2asc64.exe", e2apath="D:/winbin/SR Research/EyeLink/EDF_Access_API/Example") {

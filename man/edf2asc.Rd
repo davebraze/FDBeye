@@ -8,17 +8,18 @@ edf2asc(edffiles, e2afname = "edf2asc64.exe",
   e2apath = "D:/winbin/SR Research/EyeLink/EDF_Access_API/Example")
 }
 \arguments{
-\item{edffiles}{Vector of *edf file names.}
+\item{edffiles}{Vector of *edf file names to be converted.}
 
 \item{e2afname}{Name of edf2asc executable (e.g., "edf2asc.exe", "edf2asc64.exe").}
 
 \item{e2apath}{Path to edf2asc executable. It will probably look something like
 "D:/winbin/SR Research/EyeLink/EDF_Access_API/Example" from "SR Research" on down.}
-
-\item{files}{A character vector listing file names to be converted.}
 }
 \value{
 A character vector listing output files.
+}
+\description{
+No description yet.
 }
 \details{
 Call SR Research "edf2asc" command line utility to convert files.

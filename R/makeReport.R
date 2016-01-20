@@ -1,4 +1,6 @@
-##' @title Make a fixation report from an ELascii object.
+##' @title Make a fixation report from an ELascii object
+##'
+##' @description No description yet.
 ##'
 ##' @details
 ##' No details yet.
@@ -55,6 +57,8 @@ if(FALSE) {
 
 
 ##' @title Generate an ET report, as data.frame.
+##'
+##' @description No description yet.
 ##'
 ##' @details
 ##' No details yet.

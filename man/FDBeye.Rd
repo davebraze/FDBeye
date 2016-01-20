@@ -4,8 +4,8 @@
 \name{FDBeye}
 \alias{FDBeye}
 \alias{FDBeye-package}
-\title{FDBeye.}
+\title{FDBeye}
 \description{
-FDBeye.
+No description yet.
 }
 
