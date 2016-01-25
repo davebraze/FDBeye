@@ -1,14 +1,17 @@
-##' @title plot fixation data using a convenience wrapper around ggplot2::ggplot()
+##' @title Plot Gaze Fixation Data
 ##'
-##' @description No description yet.
+##' @description Plot gaze fixation data overlayed on a bitmap image. This is a convenience wrapper
+##'     around ggplot2::ggplot().
 ##'
 ##' @details This is a convenience function for using ggplot() to lay fixation data over a
-##'     background bitmap.
+##'     background bitmap. At present, only PNG files are supported for background images. Usually,
+##'     these will correspond to the visual stimulus viewed by subjects while gaze was
+##'     recorded. Function returns a ggplot2 object which can be further modified by ggplot2 geoms.
 ##'
 ##' @param data A data.frame containing fixations. Must include x and y positions with column names
 ##'     "x" and "y".
-##' @param bgimage Path to background image for the plot. Usually will be the visual stimulus
-##'     subjects viewed will eye movements were recorded.
+##' @param bgimage Path to background image. Must be a PNG file. Usually this will correspond to the visual stimulus
+##'     being viewed by subjects while their eye movements were recorded.
 ##' @param bgalpha Alpha level for background layer. Currently not working.
 ##' @param xyMap Aesthetic mapping (ggplot2::aes_string()) for x and y coordinates. Passed to ggplot().
 ##' @param pointMap Additional aesthetics specific to points. Passed to geom_point().

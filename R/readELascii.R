@@ -12,7 +12,9 @@
 ##' @return A list of 6 elements, data.frames enumerating fixations, saccades, blinks, TRIAL_VARs,
 ##' samples and messages for the trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
-getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
+getEyelinkTrialData <- function(bounds,
+                                lines,
+                                msgSet=NA) {
 
     requireNamespace("FDB1", quietly = TRUE)
 
@@ -140,7 +142,10 @@ getEyelinkTrialData <- function(bounds, lines, msgSet=NA) {
 ##' saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
-readELascii <- function(file, tStartRE="TRIALID", tEndRE="TRIAL_RESULT", msgSet=NA) {
+readELascii <- function(file,
+                        tStartRE="TRIALID",
+                        tEndRE="TRIAL_RESULT",
+                        msgSet=NA) {
     ## FIXME: maybe change tStartRE to "Prepare_sequence"
     f <- file(file, "r", blocking=FALSE)
     lines <- readLines(f, warn=TRUE, n=-1)

@@ -11,7 +11,9 @@
 ##' @return Called for its side effect of writing an "*.ias" file.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
-region2SRias <- function(regfile, iasfile=FALSE, size=c("big", "small")) {
+region2SRias <- function(regfile,
+                         iasfile=FALSE,
+                         size=c("big", "small")) {
 
     reg <- read.csv(regfile, as.is=T)
     if(!iasfile) {
