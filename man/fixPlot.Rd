@@ -2,7 +2,7 @@
 % Please edit documentation in R/fixPlot.R
 \name{fixPlot}
 \alias{fixPlot}
-\title{plot fixation data using a convenience wrapper around ggplot2::ggplot()}
+\title{Plot Gaze Fixation Data}
 \usage{
 fixPlot(data, bgimage, bgalpha = 0.33, xyMap = ggplot2::aes_string(x =
   "xpos", y = "ypos"), pointMap = ggplot2::aes_string(size = "dur"),
@@ -14,8 +14,8 @@ fixPlot(data, bgimage, bgalpha = 0.33, xyMap = ggplot2::aes_string(x =
 \item{data}{A data.frame containing fixations. Must include x and y positions with column names
 "x" and "y".}
 
-\item{bgimage}{Path to background image for the plot. Usually will be the visual stimulus
-subjects viewed will eye movements were recorded.}
+\item{bgimage}{Path to background image. Must be a PNG file. Usually this will correspond to the visual stimulus
+being viewed by subjects while their eye movements were recorded.}
 
 \item{bgalpha}{Alpha level for background layer. Currently not working.}
 
@@ -48,11 +48,14 @@ FALSE.}
 A ggplot2 object.
 }
 \description{
-No description yet.
+Plot gaze fixation data overlayed on a bitmap image. This is a convenience wrapper
+    around ggplot2::ggplot().
 }
 \details{
 This is a convenience function for using ggplot() to lay fixation data over a
-    background bitmap.
+    background bitmap. At present, only PNG files are supported for background images. Usually,
+    these will correspond to the visual stimulus viewed by subjects while gaze was
+    recorded. Function returns a ggplot2 object which can be further modified by ggplot2 geoms.
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}

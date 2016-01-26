@@ -2,33 +2,39 @@
 % Please edit documentation in R/edf2asc.R
 \name{edf2asc}
 \alias{edf2asc}
-\title{Call "edf2asc" command line utility to do some work.}
+\title{Call SRR "edf2asc" command line utility to do some work.}
 \usage{
-edf2asc(edffiles, e2afname = "edf2asc64.exe",
-  e2apath = "D:/winbin/SR Research/EyeLink/EDF_Access_API/Example")
+edf2asc(edffiles)
 }
 \arguments{
-\item{edffiles}{Vector of *edf file names to be converted.}
-
-\item{e2afname}{Name of edf2asc executable (e.g., "edf2asc.exe", "edf2asc64.exe").}
-
-\item{e2apath}{Path to edf2asc executable. It will probably look something like
-"D:/winbin/SR Research/EyeLink/EDF_Access_API/Example" from "SR Research" on down.}
+\item{edffiles}{Character vector of *edf file names to be converted.}
 }
 \value{
 A character vector listing output files.
 }
 \description{
-No description yet.
+A convenience wrapper around the SR Research edf2asc file conversion utility.
 }
 \details{
-Call SR Research "edf2asc" command line utility to convert files.
+Call SR Research "edf2asc" command line utility to convert files. This function expect
+    to find the full path to the edf2asc executable via getOption("FDBeye_edf2asc_exec"). The
+    user can set the option by calling option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"),
+    either in the script itself or, more permanently, in their .Rprofile file. Before calling
+    the utility, this function will check to see that the specified file exists and is
+    executable. As a meager security check, we also ensure that the basename of the file
+    includes the string "edf2asc".
 
 \enumerate{
-    \item The best way to get the edf2asc utility is to install the Eyelink Developers Kit: https://www.sr-support.com/showthread.php?6-EyeLink-Developers-Kit-for-Windows-%28Windows-Display-Software%29.
+
+    \item The best way to get the edf2asc utility is to install the Eyelink Developers Kit:
+            https://www.sr-support.com/showthread.php?6-EyeLink-Developers-Kit-for-Windows-%28Windows-Display-Software%29.
     \item Documentation is in the EL1000+ manual, section 4.8 "Using ASC files".
     \item Make sure edfapi library (e.g., edfapi.dll) is somewhere on the PATH.
+
 }
+
+This function captures the output of the edf2asc untility and writes it to a logfile,
+"edf2asc.log", in the current working directory.
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}
