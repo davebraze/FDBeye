@@ -4,7 +4,7 @@
 \name{FDBeye}
 \alias{FDBeye}
 \alias{FDBeye-package}
-\title{FDBeye}
+\title{FDBeye: Functions to Ease Work with Eyetracker Data}
 \description{
 No description yet.
 }

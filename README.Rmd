@@ -1,9 +1,9 @@
 FDBeye
 ====
-Functions to ease working with eye-tracker data. Currently limited to eyelink input files, and even there functionality
-is VERY thin. Pitch in and help if you like.
+Functions to ease working with eyetracker data. Currently limited to eyelink input files, and even there functionality
+is thin. Pitch in and help if you like.
 
-Install with devtools::install_github()
+First you should install <https://github.com/davebraze/FDB1>. Then, install this package via devtools::install_github()
 ```R
 install.packages("devtools")
 library(devtools)

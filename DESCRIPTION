@@ -1,6 +1,6 @@
 Package: FDBeye
 Type: Package
-Title: Functions to Facilitate Work with Eyetracker Data
+Title: Functions to Ease Work with Eyetracker Data
 Version: 0.0.7
 Date: 2016-01-26
 Author: David Braze
@@ -9,13 +9,18 @@ Depends:
     R (>= 3.1.1)
 Imports:
     abind,
+    dplyr,
     FDB1,
     ggplot2,
     grid,
+    plyr,
     png,
-    stringr
-Description: Functions to ease working with eye-tracker data. Currently, much functionality is limited
-    to SR Eyelink (ascii) files.
+    stringr,
+    tools
+Description:
+    Functions to ease working with eye-tracker data.
+    Currently, most functionality is focussed on, and
+    limited to, SR Eyelink (ascii) files.
 License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/davebraze/FDBeye

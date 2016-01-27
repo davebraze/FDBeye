@@ -1,4 +1,4 @@
-##' @title FDBeye
+##' @title FDBeye: Functions to Ease Work with Eyetracker Data
 ##'
 ##' @description No description yet.
 ##'

@@ -7,7 +7,8 @@
 edf2asc(edffiles)
 }
 \arguments{
-\item{edffiles}{Character vector of *edf file names to be converted.}
+\item{edffiles}{Character vector of *edf file names to be converted. File names should include
+paths relative to the current working directory, or fully qualified paths.}
 }
 \value{
 A character vector listing output files.
@@ -16,25 +17,32 @@ A character vector listing output files.
 A convenience wrapper around the SR Research edf2asc file conversion utility.
 }
 \details{
-Call SR Research "edf2asc" command line utility to convert files. This function expect
-    to find the full path to the edf2asc executable via getOption("FDBeye_edf2asc_exec"). The
-    user can set the option by calling option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"),
-    either in the script itself or, more permanently, in their .Rprofile file. Before calling
-    the utility, this function will check to see that the specified file exists and is
-    executable. As a meager security check, we also ensure that the basename of the file
-    includes the string "edf2asc".
+Call SR Research "edf2asc" command line utility to convert *edf files to *asc
+    files. Each *asc file is placed in the same directory as the *edf file that it is derived
+    from.
 
-\enumerate{
 
-    \item The best way to get the edf2asc utility is to install the Eyelink Developers Kit:
+    This function expects to find the fully qualified path to the edf2asc executable via
+    getOption("FDBeye_edf2asc_exec"). The user can set the option by calling
+    option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"), either in the script itself or, more
+    permanently, in their .Rprofile file. Before calling the utility, this function will check
+    to see that the specified file exists and is executable. As a meager security check, we also
+    ensure that the basename of the file includes the string "edf2asc".
+
+    The function edf2asc() also checks getOption("FDBeye_edf2asc_opts"). If this option
+    exists, it should be a valid string of command line options to pass to the SRR edf2asc
+    utility (e.g., "-y -ns"). See the SRR documentation for possibilities.
+
+    In addition to creating the requested *asc files, this function will write a log file
+    ('edf2asc.log') of messages captured from the stdout of SRR edf2asc utility and place it in
+    the current working directory.
+
+    \enumerate{
+         \item The best way to get the edf2asc utility is to install the Eyelink Developers Kit:
             https://www.sr-support.com/showthread.php?6-EyeLink-Developers-Kit-for-Windows-%28Windows-Display-Software%29.
-    \item Documentation is in the EL1000+ manual, section 4.8 "Using ASC files".
-    \item Make sure edfapi library (e.g., edfapi.dll) is somewhere on the PATH.
-
-}
-
-This function captures the output of the edf2asc untility and writes it to a logfile,
-"edf2asc.log", in the current working directory.
+         \item Documentation is in the EL1000+ manual, section 4.8 "Using ASC files".
+         \item Make sure edfapi library (e.g., edfapi.dll) is somewhere on the PATH.
+    }
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}
