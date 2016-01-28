@@ -90,7 +90,7 @@ getEyelinkTrialData <- function(bounds,
         ##   . binoc/HM recording, 8 fields (time, xposL, yposL, pupilL, xposR, yposR, pupilL, CR)
         ##   . monoc/HM recording, 5 fields (time, xpos, ypos, pupil, CR)
         ##   . binoc/remote recording, Not known at present
-        ##   . monoc/remote recording, 9 fields (time, xpos, ypos, pupil, CR, xtarg, ytarg, dist, IP field)
+        ##   . monoc/remote recording, 9 fields (time, xpos, ypos, pupil, CR, xtarg, ytarg, ztarg (distance), IP field)
 
         ## TODO: For each trial build a header to include
         ## o start time of eye movement recording, (timestamp from START event)
@@ -108,7 +108,11 @@ getEyelinkTrialData <- function(bounds,
         ## All messages caught by this routine should have the same number of fields, or else.
         ## TODO: add error check for field count.
         ## TODO: add code to pick up groups of msgs, where across groups the field count is different.
-        msgRE <- paste0("^MSG.*(", paste0(msgSet, "", collapse="|"), ")")
+        ## 1. Set of REs, each uniquely matches line in trial (e.g., "ARECSTART")
+        ## 2. For each matched line, get timestamp, and offset if present. If no offset, set offset to 0.
+        ## 3. Get label/event-type (e.g., ARECSTART).
+        ## 4. Get value if present, otherwise set value to NA.
+        msgRE <- paste0("^MSG.*(", paste0(msgSet, "", collapse="|"), ")") ## FIXME: Don't paste the REs together. Handle them 1 at a time.
         msg <- grep(msgRE, lines[bounds[1]:bounds[2]], value=TRUE)
         msg <- stringr::str_split(msg, pattern="[ \t]+")
         if (length(msg) > 0) {
@@ -131,12 +135,12 @@ getEyelinkTrialData <- function(bounds,
 ##' @details
 ##' SR Research provides a utility (EDF2ASC.exe) that dumps ASCII renderings of their proprietary
 ##' EDF data file format. This function reads those ASCII files and extracts eye-movement events
-##' (fixations, saccades, blinks) and TRIAL_VARs from them.
+##' (fixations, saccades, blinks), specified MSG events, and TRIAL_VARs from them.
 ##'
-##' @param file A string giving path/fname to input file (ELalscii file).
-##' @param tStartRE A string containing regular expression that uniquely identifies beginning of trial.
-##' @param tEndRE A string containing regular expression that uniquely identifies end of trial.
-##' @param msgSet A character vector. Each element identifies a MSG to recover from the data file.
+##' @param file A string giving path/fname to input file (ELascii file).
+##' @param tStartRE A string containing regular expression that uniquely identifies beginnings of trials.
+##' @param tEndRE A string containing regular expression that uniquely identifies ends of trials.
+##' @param msgSet A character vector. Each element identifies a MSG event to recover from the data file.
 ##' @return List with two elements, one for session information, and one containing a list of
 ##' trials. Each trial element is itself a list of 6 elements: data.frames enumerating fixations,
 ##' saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
@@ -152,6 +156,7 @@ readELascii <- function(file,
     close(f)
 
     ## get session information from file header
+    ## FIXME: Also need to capture version of edfapi/edf2asc used for file conversion.
     header <- grep("^[*][*] ", lines, value=TRUE)
     script <- unlist(stringr::str_split(grep("RECORDED BY", header, value=TRUE), "[ \t]+"))[4]
     sessdate <- unlist(stringr::str_split(grep("DATE:", header, value=TRUE), ": "))[2]

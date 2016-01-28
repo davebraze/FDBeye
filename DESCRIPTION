@@ -20,7 +20,7 @@ Imports:
 Description:
     Functions to ease working with eye-tracker data.
     Currently, most functionality is focussed on, and
-    limited to, SR Eyelink (ascii) files.
+    limited to, SR Eyelink files.
 License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/davebraze/FDBeye

@@ -1,4 +1,4 @@
-##' @title Plot Gaze Fixation Data
+##' @title Plot Gaze Fixation Data Over a Bitmap
 ##'
 ##' @description Plot gaze fixation data overlayed on a bitmap image. This is a convenience wrapper
 ##'     around ggplot2::ggplot().
@@ -8,8 +8,7 @@
 ##'     these will correspond to the visual stimulus viewed by subjects while gaze was
 ##'     recorded. Function returns a ggplot2 object which can be further modified by ggplot2 geoms.
 ##'
-##' @param data A data.frame containing fixations. Must include x and y positions with column names
-##'     "x" and "y".
+##' @param data A data.frame containing fixations. Must include at least x and y positions.
 ##' @param bgimage Path to background image. Must be a PNG file. Usually this will correspond to the visual stimulus
 ##'     being viewed by subjects while their eye movements were recorded.
 ##' @param bgalpha Alpha level for background layer. Currently not working.
@@ -38,7 +37,7 @@ fixPlot <- function(data,
                     pointMap=ggplot2::aes_string(size="dur"),
                     pointAlpha=.5,
                     mar=c(0,0,0,0),
-                    showRug=FALSE,
+                    showRug=FALSE,      ##FIXME:  remove the rug stuff.
                     rugMap=NULL,
                     rugColor="black",
                     rugAlpha=.33,
