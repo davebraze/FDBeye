@@ -108,10 +108,10 @@ getEyelinkTrialData <- function(bounds,
         ## All messages caught by this routine should have the same number of fields, or else.
         ## TODO: add error check for field count.
         ## TODO: add code to pick up groups of msgs, where across groups the field count is different.
-        ## 1. Set of REs, each uniquely matches line in trial (e.g., "ARECSTART")
-        ## 2. For each matched line, get timestamp, and offset if present. If no offset, set offset to 0.
-        ## 3. Get label/event-type (e.g., ARECSTART).
-        ## 4. Get value if present, otherwise set value to NA.
+        ##  1. Set of REs, each uniquely matches line in trial (e.g., "ARECSTART")
+        ##  2. For each matched line, get timestamp, and offset if present. If no offset, set offset to 0.
+        ##  3. Get label/event-type (e.g., ARECSTART).
+        ##  4. Get value if present, otherwise set value to NA.
         msgRE <- paste0("^MSG.*(", paste0(msgSet, "", collapse="|"), ")") ## FIXME: Don't paste the REs together. Handle them 1 at a time.
         msg <- grep(msgRE, lines[bounds[1]:bounds[2]], value=TRUE)
         msg <- stringr::str_split(msg, pattern="[ \t]+")

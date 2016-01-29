@@ -1,11 +1,70 @@
 FDBeye
 ====
+
 Functions to ease working with eyetracker data. Currently limited to eyelink input files, and even there functionality
 is thin. Pitch in and help if you like.
 
-First you should install <https://github.com/davebraze/FDB1>. Then, install this package via devtools::install_github()
+Installing FDBeye
+-----------------
+
+First you should install <https://github.com/davebraze/FDB1>. Then, install *FDBeye* via devtools::install_github()
 ```R
-install.packages("devtools")
+install.packages("devtools")    ## if you don't already have it
 library(devtools)
 install_github("davebraze/FDBeye")
 ```
+
+Other ET Tools
+--------------
+
+I've limited this list to open source tools where source code can be freely downloaded (i.e., you don't have to ask for
+it). Even so, the list is certainly incomplete. If you're aware of something I've missed, let me know.
+
+### *R* packages ###
+
+  * *emov* Functions for fixation/saccade detection. On CRAN <https://cran.r-project.org/web/packages/emov/>. Source is
+    available on github <https://github.com/schw4b/emov>.
+  * *ETRAN* Fixation detection, plotting. Available from this web site <https://sites.google.com/site/azhegallo/>, and
+    written up in the journal _Perception_ here:
+    <http://pec.sagepub.com/content/early/2015/08/14/0301006615594944.full>.
+  * *eyetracking* Compute pixel-to-pixel and eye-to-screen distances. On CRAN
+    <https://cran.r-project.org/web/packages/eyetracking/>.
+  * *eyetrackingR* Full workflow oriented package that seems mostly oriented toward 'visual world' style analysis. On CRAN
+    <https://cran.r-project.org/web/packages/eyetrackingR/>. It also has its own web site here:
+    <http://www.eyetracking-r.com/>. The source is available on github <https://github.com/jwdink/eyetrackingR>.
+  * *fix_align.R* automatically adjusts the vertical coordinate of each eye fixation in a multi-line reading experiment
+    so that the fixation falls on a specific line of text, eliminating need to make ad hoc decisions about which line is
+    fixated. At UMass <http://www.psych.umass.edu/PACLab/resources/>. Described in a *Behav Res*:
+    <http://people.umass.edu/eyelab/CohenBRM.pdf>.
+  * *gazepath* Functions for fixation/saccade detection. On CRAN
+    <https://cran.r-project.org/web/packages/gazepath/>. Source on github <https://github.com/cran/gazepath>.
+  * *saccades* Functions for fixation/saccade detection. On CRAN
+    <https://cran.r-project.org/web/packages/saccades/>. Source on github
+    <https://github.com/tmalsburg/saccades>. author's website <http://pages.ucsd.edu/~tvondermalsburg/saccades/>.
+  * *ScaSim* author's website <http://pages.ucsd.edu/~tvondermalsburg/scasim/>. Scan path similarity analysis. Last
+    updated 2010.
+
+### Other eye tracking tools ###
+
+  * *DynAOI* on launchpad <https://launchpad.net/dynaoi>. Also written up in *Behav Res*
+    <https://www.iwm-tuebingen.de/cybermedia/dynaoi/PapenmeierHuffBRM.pdf>. Analysis of EM in relation to
+    moving objects. Python codebase, relies on Blender for some functions. Last update in 2011.
+  * *EALab* web site <https://ealab-matlabtoolbox.rhcloud.com/>.  Write up in *Neuroinform*
+    <http://dx.doi.org/10.1007/s12021-015-9275-4>. Matlab toolbox. Classification and extraction of eye
+    activity/events. Seems current.
+  * *EyeMap* on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Last update in 2012.
+  * *EyePatterns* on sourceforge <http://sourceforge.net/projects/eyepatterns/>. Looks for patterns/similarities in
+    fixation sequences. Java codebase. Last update in 2013.
+  * *EyeSimplify* web site at <http://www.cl.uni-heidelberg.de/seminare/studpro06/eyesimplify/>. Convenience wrapper
+    with automation for UMass tools (*EyeDoctor* etc.). Possibly superceded by *RoboDoc.py*. Python codebase. Last
+    update in 2007.
+  * *eyetracker* on github <https://github.com/stefan-k/eyetracker>. C++ codebase. Last update in 2012.
+  * *EyeTrack*, *EyeDoctor*, *EyeDry*, *RoboDoc.py* from Staub lab at UMass
+    <https://blogs.umass.edu/eyelab/software/>. C++ codebase, some Python. Seems current.
+  * *iMap* on author's website <http://perso.unifr.ch/roberto.caldara/index.php?page=3>. Fixation pattern
+    analysis and visualization. Described in a couple of journal articles *Behav Res*
+    <http://perso.unifr.ch/roberto.caldara/pdfs/caldara_11.pdf> and *J of Vision*
+    <http://jov.arvojournals.org/article.aspx?articleid=2433901>. Matlab toolbox. Seems current.
+  * *OGAMA* on codeplex <http://www.ogama.net/>. Also does mouse tracking. C# codebase. Seems current.
+
+
