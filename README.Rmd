@@ -17,8 +17,9 @@ install_github("davebraze/FDBeye")
 Other ET Tools
 --------------
 
-I've limited this list to open source tools where source code can be freely downloaded (i.e., you don't have to ask for
-it). Even so, the list is certainly incomplete. If you're aware of something I've missed, let me know.
+I've limited this list to tools where the source code can be freely downloaded (i.e., you don't have to ask for
+it). However, at least some of them do not carry an explicit Open Source License. The list is certainly incomplete. If
+you're aware of something I've missed and seems like it should be included, let me know.
 
 ### *R* packages ###
 
@@ -35,7 +36,8 @@ it). Even so, the list is certainly incomplete. If you're aware of something I'v
   * *fix_align.R* automatically adjusts the vertical coordinate of each eye fixation in a multi-line reading experiment
     so that the fixation falls on a specific line of text, eliminating need to make ad hoc decisions about which line is
     fixated. At UMass <http://www.psych.umass.edu/PACLab/resources/>. Described in a *Behav Res*:
-    <http://people.umass.edu/eyelab/CohenBRM.pdf>.
+    <http://people.umass.edu/eyelab/CohenBRM.pdf>. Source file (v0p92) includes a copyright notice "(c) 2012, University of
+    Massachussetts, All rights reserved," but no license.
   * *gazepath* Functions for fixation/saccade detection. On CRAN
     <https://cran.r-project.org/web/packages/gazepath/>. Source on github <https://github.com/cran/gazepath>.
   * *saccades* Functions for fixation/saccade detection. On CRAN
