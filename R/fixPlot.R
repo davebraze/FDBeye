@@ -46,7 +46,7 @@ fixPlot <- function(data,
                     showPlot=TRUE) {
 
     if (!is.null(bgimage)) {
-        bg <- png::readPNG(bgimage) # maybe use EBImage::readImage() instead ?
+        bg <- png::readPNG(bgimage) # Look into imager::, maybe also see what EBImage:: has to offer?
         ysize <- dim(bg)[1]
         xsize <- dim(bg)[2]
         zsize <- dim(bg)[3]
