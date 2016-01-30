@@ -19,7 +19,7 @@ Other ET Tools
 
 I've limited this list to tools where the source code can be freely downloaded (i.e., you don't have to ask for
 it). However, at least some of them do not carry an explicit Open Source License. The list is certainly incomplete. If
-you're aware of something I've missed and seems like it should be included, let me know.
+you're aware of something I've missed and it seems like it should be included, let me know.
 
 ### *R* packages ###
 
@@ -48,10 +48,10 @@ you're aware of something I've missed and seems like it should be included, let 
 
 ### Other eye tracking tools ###
 
-  * *DynAOI* on launchpad <https://launchpad.net/dynaoi>. Also written up in *Behav Res*
+  * *DynAOI* on launchpad <https://launchpad.net/dynaoi>. Described in *Behav Res*
     <https://www.iwm-tuebingen.de/cybermedia/dynaoi/PapenmeierHuffBRM.pdf>. Analysis of EM in relation to
     moving objects. Python codebase, relies on Blender for some functions. Last update in 2011.
-  * *EALab* web site <https://ealab-matlabtoolbox.rhcloud.com/>.  Write up in *Neuroinform*
+  * *EALab* web site <https://ealab-matlabtoolbox.rhcloud.com/>.  Described in *Neuroinform*
     <http://dx.doi.org/10.1007/s12021-015-9275-4>. Matlab toolbox. Classification and extraction of eye
     activity/events. Seems current.
   * *EyeMap* on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Last update in 2012.
@@ -64,9 +64,10 @@ you're aware of something I've missed and seems like it should be included, let 
   * *EyeTrack*, *EyeDoctor*, *EyeDry*, *RoboDoc.py* from Staub lab at UMass
     <https://blogs.umass.edu/eyelab/software/>. C++ codebase, some Python. Seems current.
   * *iMap* on author's website <http://perso.unifr.ch/roberto.caldara/index.php?page=3>. Fixation pattern
-    analysis and visualization. Described in a couple of journal articles *Behav Res*
+    analysis and visualization. Described in a couple of journal articles: *Behav Res*
     <http://perso.unifr.ch/roberto.caldara/pdfs/caldara_11.pdf> and *J of Vision*
     <http://jov.arvojournals.org/article.aspx?articleid=2433901>. Matlab toolbox. Seems current.
   * *OGAMA* on codeplex <http://www.ogama.net/>. Also does mouse tracking. C# codebase. Seems current.
-
+  * *ScanMatch* web page <http://seis.bris.ac.uk/~psidg/ScanMatch/>. Described in *Behav Res*
+    <http://seis.bris.ac.uk/~psidg/ScanMatch/CMTG2010.pdf>. Scan path analysis. Matlab toolbox. Last update 2009.
 
