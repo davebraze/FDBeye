@@ -70,6 +70,9 @@ yet, fork this repository, make the changes yourself, and send me a pull request
     analysis and visualization. Described in a couple of journal articles: *Behav Res*
     <http://perso.unifr.ch/roberto.caldara/pdfs/caldara_11.pdf> and *J of Vision*
     <http://jov.arvojournals.org/article.aspx?articleid=2433901>. Matlab toolbox. Seems current.
-  * ***OGAMA***: on codeplex <http://www.ogama.net/>. Also does mouse tracking. C# codebase. Seems current.
+  * ***OGAMA***: on codeplex <http://www.ogama.net/>. Data collection, fixation detection, scanpath analysis, and
+    heatmaps. Supports Tobii and Alea Tech ET systems only. Also does mouse tracking. C# codebase. Seems current.
+  * ***pyarbus***: on github <https://github.com/ivanov/pyarbus>. Python codebase. Major functionality seems to be
+    for extracting sample and message info from SRR *asc files. Last update in 2013.
   * ***ScanMatch***: web page <http://seis.bris.ac.uk/~psidg/ScanMatch/>. Described in *Behav Res*
     <http://seis.bris.ac.uk/~psidg/ScanMatch/CMTG2010.pdf>. Scan path analysis. Matlab toolbox. Last update 2009.

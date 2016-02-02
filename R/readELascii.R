@@ -99,6 +99,40 @@ getEyelinkTrialData <- function(bounds,
         ## o display resolution (GAZE_COORDS)
         ## o what about these? THRESHOLDS, EFIT_PARAMS, ELLIPSE
 
+        ## SEE: github.com/ivanov/pyarbus file data.py. There content of sample lines is determined
+        ## from settings of three binary parameters: 'binocular', 'velocity', 'res'. The following
+        ## is cropped from that file:
+
+        ## gaze_cols = {
+        ## # Monocular:
+        ## #        <time> <xp> <yp> <ps>
+        ## (False,False,False) : (0,1,2,3), # gaze columns for monocular data
+        ## # Monocular, with velocity
+        ## #        <time> <xp> <yp> <ps> <xv> <yv>
+        ## (False,True ,False) : (0,1,2,3,4,5),
+        ## # Monocular, with resolution
+        ## #     <time> <xp> <yp> <ps> <xr> <yr>
+        ## (False,False,True ) : (0,1,2,3,4,5),
+        ## # Monocular, with velocity and resolution
+        ## #     <time> <xp> <yp> <ps> <xv> <yv> <xr> <yr>
+        ## (False,True ,True ) : (0,1,2,3,4,5,6,7),
+        ## # Binocular
+        ## #     <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr>
+        ## (True ,False,False) : (0,1,2,3,4,5,6), # gaze columns for binocuclar data
+        ## # Binocular, with velocity
+        ## #     <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xvl> <yvl> <xvr> <yvr>
+        ## (True ,True ,False) : (0,1,2,3,4,5,6,7,8,9,10),
+        ## # Binocular, with and resolution
+        ## #     <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xr> <yr>
+        ## (True ,False,True ) : (0,1,2,3,4,5,6,7,8),
+        ## # Binocular, with velocity and resolution
+        ## #      <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xvl> <yvl> <xvr> <yvr> <xr> <yr>
+        ## (True ,True,True ) : (0,1,2,3,4,5,6,7,8,9,10,11,12),
+        ## }
+
+
+
+
     } else {
         samp <- NULL
     }
