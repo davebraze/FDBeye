@@ -16,7 +16,7 @@
 ##'
 ##'     The function edf2asc() also checks getOption("FDBeye_edf2asc_opts"). If this option
 ##'     exists, it should be a valid string of command line options to pass to the SRR edf2asc
-##'     utility (e.g., "-y -ns"). See the SRR documentation for possibilities.
+##'     utility (e.g., "-y -ns"). See the SRR documentation for details.
 ##'
 ##'     In addition to creating the requested *asc files, this function will write a log file
 ##'     ('edf2asc.log') of messages captured from the stdout of SRR edf2asc utility and place it in

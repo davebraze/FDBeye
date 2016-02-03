@@ -2,8 +2,8 @@
 ##'
 ##' @description Used by readELascii(). Not intended for end-users.
 ##'
-##' @details
-##' Used by readELascii(). Not intended for end-users. Extract fixations, saccades, and blinks from a trial.
+##' @details Used by readELascii(). Not intended for end-users. Extract fixations, saccades, blinks
+##'     and other data from an individual trial.
 ##'
 ##' @param bounds A numeric tuple. e1 is index marking beginning of trial. e2 is index indicating
 ##' end of trial.
@@ -17,6 +17,30 @@ getEyelinkTrialData <- function(bounds,
                                 msgSet=NA) {
 
     requireNamespace("FDB1", quietly = TRUE)
+
+    ## Get EVENTS meta-data. TODO: check that events line exists and that there is only 1.
+    eventsLine <- grep("^EVENTS", lines[bounds[1]:bounds[2]], value=TRUE)
+    ## eventsLine <- "EVENTS	GAZE	RIGHT	RES	RATE	 250.00	TRACKING	CR	FILTER	2"
+    Egaze <- grepl("GAZE", eventsLine)
+    Eres <- grepl("RES", eventsLine)
+    ## Evel <- grepl("VEL", eventsLine) ## this flag not valid for EVENTS, SAMPLES only
+    Eleft <- grepl("LEFT", eventsLine)
+    Eright <- grepl("RIGHT", eventsLine)
+    Ebinoc <- (Left && Right)
+    Erate <- unlist(stringr::str_split(stringr::str_extract(eventsLine, "RATE\\W+[0-9.]+"), "[ \t]+"))[2]
+    ## Maybe also get tracking mode (pupil, cr) and filter level
+
+    ## Get SAMPLES meta-data
+    samplesLine <- grep("^SAMPLES", lines[bounds[1]:bounds[2]], value=TRUE)
+    samplesLine <- "SAMPLES	GAZE	RIGHT	VEL	RES	RATE	 250.00	TRACKING	CR	FILTER	2"
+    Sgaze <- grepl("GAZE", eventsLine)
+    Sres <- grepl("RES", eventsLine)
+    Svel <- grepl("VEL", eventsLine) ## this flag not valid for EVENTS, SAMPLES only
+    Sleft <- grepl("LEFT", eventsLine)
+    Sright <- grepl("RIGHT", eventsLine)
+    Sbinoc <- (Left && Right)
+    Srate <- unlist(stringr::str_split(stringr::str_extract(eventsLine, "RATE\\W+[0-9.]+"), "[ \t]+"))[2]
+    ## Maybe also get tracking mode (pupil, cr) and filter level
 
     ## Get fixation events
     fix <- grep("^EFIX", lines[bounds[1]:bounds[2]], value=TRUE)
@@ -99,39 +123,23 @@ getEyelinkTrialData <- function(bounds,
         ## o display resolution (GAZE_COORDS)
         ## o what about these? THRESHOLDS, EFIT_PARAMS, ELLIPSE
 
-        ## SEE: github.com/ivanov/pyarbus file data.py. There content of sample lines is determined
-        ## from settings of three binary parameters: 'binocular', 'velocity', 'res'. The following
-        ## is cropped from that file:
-
-        ## gaze_cols = {
-        ## # Monocular:
-        ## #        <time> <xp> <yp> <ps>
-        ## (False,False,False) : (0,1,2,3), # gaze columns for monocular data
-        ## # Monocular, with velocity
-        ## #        <time> <xp> <yp> <ps> <xv> <yv>
-        ## (False,True ,False) : (0,1,2,3,4,5),
-        ## # Monocular, with resolution
-        ## #     <time> <xp> <yp> <ps> <xr> <yr>
-        ## (False,False,True ) : (0,1,2,3,4,5),
-        ## # Monocular, with velocity and resolution
-        ## #     <time> <xp> <yp> <ps> <xv> <yv> <xr> <yr>
-        ## (False,True ,True ) : (0,1,2,3,4,5,6,7),
-        ## # Binocular
-        ## #     <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr>
-        ## (True ,False,False) : (0,1,2,3,4,5,6), # gaze columns for binocuclar data
-        ## # Binocular, with velocity
-        ## #     <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xvl> <yvl> <xvr> <yvr>
-        ## (True ,True ,False) : (0,1,2,3,4,5,6,7,8,9,10),
-        ## # Binocular, with and resolution
-        ## #     <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xr> <yr>
-        ## (True ,False,True ) : (0,1,2,3,4,5,6,7,8),
-        ## # Binocular, with velocity and resolution
-        ## #      <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xvl> <yvl> <xvr> <yvr> <xr> <yr>
-        ## (True ,True,True ) : (0,1,2,3,4,5,6,7,8,9,10,11,12),
-        ## }
-
-
-
+        if (!(Sbinoc||Svel||Sres)) {           ## monocular data; no velocity; no resolution
+            ## 5 columns        <time> <xp> <yp> <ps> ...
+        } else if(Svel && !(Sbinoc||Sres)) {   ## monocular; velocity; no resolution
+            ## 7 columns        <time> <xp> <yp> <ps> <xv> <yv> ...
+        } else if(Sres && !(Sbinoc||Svel)) {   ## monocular; no velocity;  resolution
+            ## 7 columns        <time> <xp> <yp> <ps> <xr> <yr> ...
+        } else if((Svel&&Sres) && !Sbinoc) {   ## monocular; velocity;  resolution
+            ## 9 columns        <time> <xp> <yp> <ps> <xv> <yv> <xr> <yr> ...
+        } else if (Sbinoc && !(Svel||Sres)) {  ## binocular data; no velocity; no resolution
+            ## 8 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> ...
+        } else if((Sbinoc && Svel) && !Sres) { ## binocular; velocity; no resolution
+            ## 10 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xv> <yv> ...
+        } else if(Sres && !(Sbinoc||Svel)) {   ## binocular; no velocity;  resolution
+            ## 10 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xr> <yr> ...
+        } else if((Svel&&Sres) && !Sbinoc) {   ## binocular; velocity;  resolution
+            ## 12 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xv> <yv> <xr> <yr> ...
+        }
 
     } else {
         samp <- NULL

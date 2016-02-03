@@ -19,10 +19,10 @@ install_github("davebraze/FDBeye")
 Other ET Tools
 --------------
 
-I've limited this list to tools where the source code can be freely downloaded (i.e., you don't have to ask for it), but
-note that at least some of the tools lack an explicit Open Source License. Even given this constraint, the list is
-certainly incomplete. If you know of something I've missed and it seems like it should be included, let me know. Better
-yet, fork this repository, make the changes yourself, and send me a pull request.
+I've kept this list to tools where the source code can be freely downloaded (i.e., you don't have to ask for it), but
+note that at least some of the tools lack an explicit Open Source License. Even so, the list is certainly incomplete. If
+you know of something that seems like it should be included, let me know. Better yet, fork this repository, make the
+changes yourself, and send me a pull request.
 
 ### *R* packages ###
 
