@@ -18,6 +18,14 @@ getEyelinkTrialData <- function(bounds,
 
     requireNamespace("FDB1", quietly = TRUE)
 
+
+    ## TODO: For each trial build a header to include
+    ## o start time of eye movement recording, (timestamp from START event)
+    ## o eyes recorded, LEFT, RIGHT, BINOC (START, RECCFG, !MODE)
+    ## o sample rate (RECCFG, !MODE)
+    ## o display resolution (GAZE_COORDS)
+    ## o what about these? THRESHOLDS, EFIT_PARAMS, ELLIPSE
+
     ## Get EVENTS meta-data. TODO: check that events line exists and that there is only 1.
     eventsLine <- grep("^EVENTS", lines[bounds[1]:bounds[2]], value=TRUE)
     ## eventsLine <- "EVENTS	GAZE	RIGHT	RES	RATE	 250.00	TRACKING	CR	FILTER	2"
@@ -40,7 +48,11 @@ getEyelinkTrialData <- function(bounds,
     Sright <- grepl("RIGHT", eventsLine)
     Sbinoc <- (Left && Right)
     Srate <- unlist(stringr::str_split(stringr::str_extract(eventsLine, "RATE\\W+[0-9.]+"), "[ \t]+"))[2]
-    ## Maybe also get tracking mode (pupil, cr) and filter level
+
+    ## There is also an HTARGET flag that adds columns (three, to SAMPLE lines. Definitely need to
+    ## deal with that. HTARGET only occurs with remote systems in head. One of it's columns seems to
+    ## be camera-to-target distance in mm. Not sure about the others. An INPUT flag also adds a
+    ## single column.
 
     ## Get fixation events
     fix <- grep("^EFIX", lines[bounds[1]:bounds[2]], value=TRUE)
@@ -116,21 +128,54 @@ getEyelinkTrialData <- function(bounds,
         ##   . binoc/remote recording, Not known at present
         ##   . monoc/remote recording, 9 fields (time, xpos, ypos, pupil, CR, xtarg, ytarg, ztarg (distance), IP field)
 
-        ## TODO: For each trial build a header to include
-        ## o start time of eye movement recording, (timestamp from START event)
-        ## o eyes recorded, LEFT, RIGHT, BINOC (START, RECCFG, !MODE)
-        ## o sample rate (RECCFG, !MODE)
-        ## o display resolution (GAZE_COORDS)
-        ## o what about these? THRESHOLDS, EFIT_PARAMS, ELLIPSE
-
         if (!(Sbinoc||Svel||Sres)) {           ## monocular data; no velocity; no resolution
-            ## 5 columns        <time> <xp> <yp> <ps> ...
+
+            ## For monocular data determine which eye was measured, label columns
+            ## accordingly. Within a study using monocular recording, some subjects may contribute R
+            ## eye data while others L eye data. If this is the case then coordinate and pupil size
+            ## columns will be labelled differently for the two groups. Will need a helper function
+            ## to deal with that. Perhaps just by renaming columns. But in a more complicated
+            ## situation where, e.g., most subjects contributed binoculard data, but some have L eye
+            ## only and some R eye only, we'll need a more sophisticated means of choosing which eye
+            ## to use in analysis. One approach might be something like "prefer left" meaning take
+            ## left eye measurements if available, otherwise use right. Other options, for binoc
+            ## data would include "prefer best" where we choose the better of R or L eye data
+            ## according to some rubric, or "collapse" were we take the average of L & R for each
+            ## time point.
+            ##
+            ## MAYBE: Also insert columns for unmeasured eye and fill them with NAs.
+
+            if (Sleft) {
+                ## 5 columns        <time> <xpl> <ypl> <psl> ...
+            } else {
+                ## 5 columns        <time> <xpr> <ypr> <psr> ...
+            }
+
+
         } else if(Svel && !(Sbinoc||Sres)) {   ## monocular; velocity; no resolution
-            ## 7 columns        <time> <xp> <yp> <ps> <xv> <yv> ...
+
+            if (Sleft) {
+                ## 7 columns        <time> <xpl> <ypl> <psl> <xv> <yv> ...
+            } else {
+                ## 7 columns        <time> <xpr> <ypr> <psr> <xv> <yv> ...
+            }
+
         } else if(Sres && !(Sbinoc||Svel)) {   ## monocular; no velocity;  resolution
-            ## 7 columns        <time> <xp> <yp> <ps> <xr> <yr> ...
+
+            if (Sleft) {
+                ## 7 columns        <time> <xpl> <ypl> <psl> <xr> <yr> ...
+            } else {
+                ## 7 columns        <time> <xpr> <ypr> <psr> <xr> <yr> ...
+            }
+
         } else if((Svel&&Sres) && !Sbinoc) {   ## monocular; velocity;  resolution
-            ## 9 columns        <time> <xp> <yp> <ps> <xv> <yv> <xr> <yr> ...
+
+            if (Sleft) {
+                ## 7 columns        <time> <xpl> <ypl> <psl> <xv> <yv> <xr> <yr> ...
+            } else {
+                ## 7 columns        <time> <xpr> <ypr> <psr> <xv> <yv> <xr> <yr> ...
+            }
+
         } else if (Sbinoc && !(Svel||Sres)) {  ## binocular data; no velocity; no resolution
             ## 8 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> ...
         } else if((Sbinoc && Svel) && !Sres) { ## binocular; velocity; no resolution

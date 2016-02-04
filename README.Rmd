@@ -26,6 +26,9 @@ changes yourself, and send me a pull request.
 
 ### *R* packages ###
 
+  * ***edf***: R package for reading SRR *edf files directly. Codebase is both R and C++, and requires SRR's
+    edfapi. Source available on SRR's help forum (login via free account required)
+    <https://www.sr-support.com/showthread.php?1416-Reading-EDF-files-in-GNU-R>.
   * ***emov***: Functions for fixation/saccade detection. On CRAN <https://cran.r-project.org/web/packages/emov/>. Source is
     available on github <https://github.com/schw4b/emov>.
   * ***ETRAN***: Fixation detection, plotting. Available from this web site <https://sites.google.com/site/azhegallo/>, and
