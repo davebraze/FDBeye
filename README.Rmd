@@ -19,9 +19,9 @@ install_github("davebraze/FDBeye")
 Other ET Tools
 --------------
 
-I've kept this list to tools where the source code can be freely downloaded (i.e., you don't have to ask for it), but
-note that at least some of the tools lack an explicit Open Source License. Even so, the list is certainly incomplete. If
-you know of something that seems like it should be included, let me know. Better yet, fork this repository, make the
+I've kept this short, limited to tools where the source code can be freely downloaded (i.e., you don't have to ask for
+it), but note that at least some of the tools lack an Open Source License. Even so, I'm sure the list is incomplete. If
+you know of something that seems like ought to be included, let me know. Better yet, fork this repository, make the
 changes yourself, and send me a pull request.
 
 ### *R* packages ###
@@ -39,11 +39,11 @@ changes yourself, and send me a pull request.
   * ***eyetrackingR***: Full workflow oriented package that seems mostly oriented toward 'visual world' style analysis. On CRAN
     <https://cran.r-project.org/web/packages/eyetrackingR/>. It also has its own web site here:
     <http://www.eyetracking-r.com/>. The source is available on github <https://github.com/jwdink/eyetrackingR>.
-  * ***fix_align.R***: automatically adjusts the vertical coordinate of each eye fixation in a multi-line reading experiment
-    so that the fixation falls on a specific line of text, eliminating need to make ad hoc decisions about which line is
-    fixated. At UMass <http://www.psych.umass.edu/PACLab/resources/>. Described in *Behav Res*:
-    <http://people.umass.edu/eyelab/CohenBRM.pdf>. Source file (v0p92) includes a copyright notice "(c) 2012, University of
-    Massachussetts, All rights reserved," but no license.
+  * ***fix_align.R***: automatically adjusts y coordinate of fixations in multi-line reading paradigm so that each falls
+    on a specific line of text. At UMass <http://www.psych.umass.edu/PACLab/resources/>. Described in *Behav Res*:
+    <http://people.umass.edu/eyelab/CohenBRM.pdf>. Source file (v0p92) includes the notice "(c) 2012, University of
+    Massachussetts, All rights reserved". The latter bit seems to entail that the code may not be modified,
+    redistributed, or even used without first obtaining explicit permission from UMass. Odd.
   * ***gazepath***: Functions for fixation/saccade detection. On CRAN
     <https://cran.r-project.org/web/packages/gazepath/>. Source on github <https://github.com/cran/gazepath>.
   * ***saccades***: Functions for fixation/saccade detection. On CRAN

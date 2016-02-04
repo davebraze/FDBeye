@@ -8,22 +8,18 @@
 ##'     these will correspond to the visual stimulus viewed by subjects while gaze was
 ##'     recorded. Function returns a ggplot2 object which can be further modified by ggplot2 geoms.
 ##'
-##' @param data A data.frame containing fixations. Must include at least x and y positions.
-##' @param bgimage Path to background image. Must be a PNG file. Usually this will correspond to the visual stimulus
-##'     being viewed by subjects while their eye movements were recorded.
-##' @param bgalpha Alpha level for background layer. Currently not working.
-##' @param xyMap Aesthetic mapping (ggplot2::aes_string()) for x and y coordinates. Passed to ggplot().
+##' @param data A data.frame containing one fixation per row. Must include at least x and y
+##'     coordinates. Origin is assumed to be upper left corner.
+##' @param bgImage Path to background image. Must be a PNG file. Usually this will correspond to the
+##'     visual stimulus being viewed by subjects while their eye movements were recorded.
+##' @param bgAlpha Alpha level for background layer. Defaults to .33.
+##' @param xyMap Aesthetic mapping (ggplot2::aes_string()) for x and y coordinates. Passed to
+##'     ggplot().
 ##' @param pointMap Additional aesthetics specific to points. Passed to geom_point().
-##' @param pointAlpha Set point transparency.
+##' @param pointAlpha Set fixation point transparency. Defaults to .5.
 ##' @param mar A 4 vector for margin adjustment: top, right, bottom, left. Use positive values move
 ##'     margins toward center of plot (trim the display area). Use negative values to expand the
 ##'     display area beyond the bitmap.
-##' @param showRug Logical indicating whether to include rug plots for x and y margins. Defaults is
-##'     FALSE.
-##' @param rugMap Additional aesthetics specific to rugs. Passed to geom_rug().
-##' @param rugColor Set rug color.
-##' @param rugAlpha Set rug transparency.
-##' @param rugSize Set rug size.
 ##' @param ... Additional arguments passed to ggplot2::geom_point().
 ##' @param showPlot Logical indicating whether to display the plot. Defaults to TRUE.
 ##' @return A ggplot2 object.
@@ -31,30 +27,25 @@
 ##' @import ggplot2
 ##' @export
 fixPlot <- function(data,
-                    bgimage,
-                    bgalpha=.33,
+                    bgImage,
+                    bgAlpha=.33,
                     xyMap=ggplot2::aes_string(x="xpos", y="ypos"),
                     pointMap=ggplot2::aes_string(size="dur"),
                     pointAlpha=.5,
                     mar=c(0,0,0,0),
-                    showRug=FALSE,      ##FIXME:  remove the rug stuff.
-                    rugMap=NULL,
-                    rugColor="black",
-                    rugAlpha=.33,
-                    rugSize=2,
                     ...,
                     showPlot=TRUE) {
 
-    if (!is.null(bgimage)) {
-        bg <- png::readPNG(bgimage) # Look into imager::, maybe also see what EBImage:: has to offer?
+    if (!is.null(bgImage)) {
+        bg <- png::readPNG(bgImage) # Look into imager::, maybe also see what EBImage:: has to offer?
         ysize <- dim(bg)[1]
         xsize <- dim(bg)[2]
         zsize <- dim(bg)[3]
-        bgalpha <- matrix(bgalpha, ysize, xsize)
+        bgAlpha <- matrix(bgAlpha, ysize, xsize)
         if(zsize==3) {                  ## add an alpha layer if none is present
-            bg <- abind::abind(bg, bgalpha)
+            bg <- abind::abind(bg, bgAlpha)
         } else if (zsize==4) {          ## or over-write existing alpha layer
-            bg <- abind::abind(bg[,,1:3], bgalpha)
+            bg <- abind::abind(bg[,,1:3], bgAlpha)
         }
         bg <- grid::rasterGrob(bg)
     }
@@ -70,14 +61,6 @@ fixPlot <- function(data,
                                xmin=0, ymin=-ysize,
                                xmax=xsize, ymax=0)
     p <- p + geom_point(mapping=pointMap, alpha=pointAlpha, ...)
-
-    if(showRug) {
-        if(is.null(rugMap)) {
-            p <- p + geom_rug(color=rugColor, alpha=rugAlpha, size=rugSize)
-        } else {
-            p <- p + geom_rug(mapping=rugMap, color=rugColor, alpha=rugAlpha, size=rugSize)
-        }
-    }
 
     ## show the fixation plot
     if (showPlot) print(p)
