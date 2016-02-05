@@ -2,43 +2,32 @@
 % Please edit documentation in R/fixPlot.R
 \name{fixPlot}
 \alias{fixPlot}
-\title{Plot Gaze Fixation Data}
+\title{Plot Gaze Fixation Data Over a Bitmap}
 \usage{
-fixPlot(data, bgimage, bgalpha = 0.33, xyMap = ggplot2::aes_string(x =
-  "xpos", y = "ypos"), pointMap = ggplot2::aes_string(size = "dur"),
-  pointAlpha = 0.5, mar = c(0, 0, 0, 0), showRug = FALSE, rugMap = NULL,
-  rugColor = "black", rugAlpha = 0.33, rugSize = 2, ...,
-  showPlot = TRUE)
+fixPlot(data, bgImage = NULL, bgAlpha = 0.33,
+  xyMap = ggplot2::aes_string(x = "xpos", y = "ypos"),
+  pointMap = ggplot2::aes_string(size = "dur"), pointAlpha = 0.5,
+  mar = c(0, 0, 0, 0), ..., showPlot = TRUE)
 }
 \arguments{
-\item{data}{A data.frame containing fixations. Must include x and y positions with column names
-"x" and "y".}
+\item{data}{A data.frame containing one fixation per row. Must include at least x and y
+coordinates. Origin is assumed to be upper left corner.}
 
-\item{bgimage}{Path to background image. Must be a PNG file. Usually this will correspond to the visual stimulus
-being viewed by subjects while their eye movements were recorded.}
+\item{bgImage}{Path to background image. Must be a PNG file. Usually this will correspond to the
+visual stimulus being viewed by subjects while their eye movements were recorded.}
 
-\item{bgalpha}{Alpha level for background layer. Currently not working.}
+\item{bgAlpha}{Alpha level for background layer. Defaults to .33.}
 
-\item{xyMap}{Aesthetic mapping (ggplot2::aes_string()) for x and y coordinates. Passed to ggplot().}
+\item{xyMap}{Aesthetic mapping (ggplot2::aes_string()) for x and y coordinates. Passed to
+ggplot().}
 
 \item{pointMap}{Additional aesthetics specific to points. Passed to geom_point().}
 
-\item{pointAlpha}{Set point transparency.}
+\item{pointAlpha}{Set fixation point transparency. Defaults to .5.}
 
-\item{mar}{A 4 vector for margin adjustment: top, right, bottom, left. Use positive values move
-margins toward center of plot (trim the display area). Use negative values to expand the
-display area beyond the bitmap.}
-
-\item{showRug}{Logical indicating whether to include rug plots for x and y margins. Defaults is
-FALSE.}
-
-\item{rugMap}{Additional aesthetics specific to rugs. Passed to geom_rug().}
-
-\item{rugColor}{Set rug color.}
-
-\item{rugAlpha}{Set rug transparency.}
-
-\item{rugSize}{Set rug size.}
+\item{mar}{A 4 vector for margin adjustment (x & y scale limits): top, right, bottom, left. Use
+positive values move margins toward center of plot (trim the display area). Use negative
+values to expand the display area beyond the bitmap.}
 
 \item{...}{Additional arguments passed to ggplot2::geom_point().}
 

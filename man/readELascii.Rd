@@ -8,13 +8,13 @@ readELascii(file, tStartRE = "TRIALID", tEndRE = "TRIAL_RESULT",
   msgSet = NA)
 }
 \arguments{
-\item{file}{A string giving path/fname to input file (ELalscii file).}
+\item{file}{A string giving path/fname to input file (ELascii file).}
 
-\item{tStartRE}{A string containing regular expression that uniquely identifies beginning of trial.}
+\item{tStartRE}{A string containing regular expression that uniquely identifies beginnings of trials.}
 
-\item{tEndRE}{A string containing regular expression that uniquely identifies end of trial.}
+\item{tEndRE}{A string containing regular expression that uniquely identifies ends of trials.}
 
-\item{msgSet}{A character vector. Each element identifies a MSG to recover from the data file.}
+\item{msgSet}{A character vector. Each element identifies a MSG event to recover from the data file.}
 }
 \value{
 List with two elements, one for session information, and one containing a list of
@@ -27,7 +27,7 @@ Convenience function to call SRR utility edf2asc from inside R.
 \details{
 SR Research provides a utility (EDF2ASC.exe) that dumps ASCII renderings of their proprietary
 EDF data file format. This function reads those ASCII files and extracts eye-movement events
-(fixations, saccades, blinks) and TRIAL_VARs from them.
+(fixations, saccades, blinks), specified MSG events, and TRIAL_VARs from them.
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}

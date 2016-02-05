@@ -22,7 +22,8 @@ samples and messages for the trial.
 Used by readELascii(). Not intended for end-users.
 }
 \details{
-Used by readELascii(). Not intended for end-users. Extract fixations, saccades, and blinks from a trial.
+Used by readELascii(). Not intended for end-users. Extract fixations, saccades, blinks
+    and other data from an individual trial.
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}

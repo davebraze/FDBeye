@@ -36,8 +36,8 @@ changes yourself, and send me a pull request.
     <http://pec.sagepub.com/content/early/2015/08/14/0301006615594944.full>.
   * ***eyetracking***: Compute pixel-to-pixel and eye-to-screen distances. On CRAN
     <https://cran.r-project.org/web/packages/eyetracking/>.
-  * ***eyetrackingR***: Full workflow oriented package that seems mostly oriented toward 'visual world' style analysis. On CRAN
-    <https://cran.r-project.org/web/packages/eyetrackingR/>. It also has its own web site here:
+  * ***eyetrackingR***: Package oriented toward post-acquisition workflow, mostly for 'visual world' style studies. On
+    CRAN <https://cran.r-project.org/web/packages/eyetrackingR/>. It also has its own web site here:
     <http://www.eyetracking-r.com/>. The source is available on github <https://github.com/jwdink/eyetrackingR>.
   * ***fix_align.R***: automatically adjusts y coordinate of fixations in multi-line reading paradigm so that each falls
     on a specific line of text. At UMass <http://www.psych.umass.edu/PACLab/resources/>. Described in *Behav Res*:
@@ -67,8 +67,9 @@ changes yourself, and send me a pull request.
     with automation for UMass tools (*EyeDoctor* etc.). Possibly superceded by *RoboDoc.py*. Python codebase. Last
     update in 2007.
   * ***eyetracker***: on github <https://github.com/stefan-k/eyetracker>. C++ codebase. Last update in 2012.
-  * ***EyeTrack***, ***EyeDoctor***, ***EyeDry***, ***RoboDoc.py***: from Staub lab at UMass
-    <https://blogs.umass.edu/eyelab/software/>. C++ codebase, some Python. Seems current.
+  * ***EyeTrack***, ***EyeDoctor***, ***EyeDry***, ***RoboDoc.py***: Designed for reading studies and for use with SRR
+    ET systems. Available from Staub lab at UMass <https://blogs.umass.edu/eyelab/software/>. C++ codebase, some
+    Python. Seems current.
   * ***iMap***: author's website <http://perso.unifr.ch/roberto.caldara/index.php?page=3>. Fixation pattern
     analysis and visualization. Described in a couple of journal articles: *Behav Res*
     <http://perso.unifr.ch/roberto.caldara/pdfs/caldara_11.pdf> and *J of Vision*

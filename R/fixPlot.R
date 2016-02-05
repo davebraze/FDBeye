@@ -17,9 +17,9 @@
 ##'     ggplot().
 ##' @param pointMap Additional aesthetics specific to points. Passed to geom_point().
 ##' @param pointAlpha Set fixation point transparency. Defaults to .5.
-##' @param mar A 4 vector for margin adjustment: top, right, bottom, left. Use positive values move
-##'     margins toward center of plot (trim the display area). Use negative values to expand the
-##'     display area beyond the bitmap.
+##' @param mar A 4 vector for margin adjustment (x & y scale limits): top, right, bottom, left. Use
+##'     positive values move margins toward center of plot (trim the display area). Use negative
+##'     values to expand the display area beyond the bitmap.
 ##' @param ... Additional arguments passed to ggplot2::geom_point().
 ##' @param showPlot Logical indicating whether to display the plot. Defaults to TRUE.
 ##' @return A ggplot2 object.
@@ -27,7 +27,7 @@
 ##' @import ggplot2
 ##' @export
 fixPlot <- function(data,
-                    bgImage,
+                    bgImage=NULL,
                     bgAlpha=.33,
                     xyMap=ggplot2::aes_string(x="xpos", y="ypos"),
                     pointMap=ggplot2::aes_string(size="dur"),
@@ -48,6 +48,8 @@ fixPlot <- function(data,
             bg <- abind::abind(bg[,,1:3], bgAlpha)
         }
         bg <- grid::rasterGrob(bg)
+    } else {
+        xsize <- ysize <- zsize <- 0
     }
 
     p <- ggplot(data=data, mapping=xyMap) + geom_blank()
@@ -57,9 +59,11 @@ fixPlot <- function(data,
     p <- p + scale_y_continuous(limits=c(ysize-mar[3], 0+mar[1]),
                                 trans="reverse",
                                 expand=c(0,0))
-    p <- p + annotation_custom(bg,
-                               xmin=0, ymin=-ysize,
-                               xmax=xsize, ymax=0)
+    if (!is.null(bgImage)) {
+        p <- p + annotation_custom(bg,
+                                   xmin=0, ymin=-ysize,
+                                   xmax=xsize, ymax=0)
+    }
     p <- p + geom_point(mapping=pointMap, alpha=pointAlpha, ...)
 
     ## show the fixation plot
@@ -73,8 +77,13 @@ fixPlot <- function(data,
 
 if(FALSE) {
 
-  data <- data.frame(x=seq(10, (xsize-10), length.out=10),
-                  y=seq(10, (ysize-10), length.out=10))
+    data <- data.frame(x=seq(10, 1270, length.out=10),
+                  y=seq(10, 1014, length.out=10))
+
+    fixPlot(data = data,
+            bgImage = "./../inst/extdata/story01.png",
+            xyMap = ggplot2::aes_string(x='x', y='y'),
+            pointMap =ggplot2::aes_string())
 
 }
 
