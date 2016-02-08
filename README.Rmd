@@ -29,6 +29,8 @@ changes yourself, and send me a pull request.
   * ***edf***: R package for reading SRR *edf files directly. Codebase is both R and C++, and requires SRR's
     edfapi. Source available on SRR's help forum (login via free account required)
     <https://www.sr-support.com/showthread.php?1416-Reading-EDF-files-in-GNU-R>.
+  * ***em2***: "package for computing reading time measures for psycholinguistics," i.e. regional reading time
+        measures. R package, underlying code mostly C++. Source available on github <https://github.com/cran/em2>.
   * ***emov***: Functions for fixation/saccade detection. On CRAN <https://cran.r-project.org/web/packages/emov/>. Source is
     available on github <https://github.com/schw4b/emov>.
   * ***ETRAN***: Fixation detection, plotting. Available from this web site <https://sites.google.com/site/azhegallo/>, and
@@ -61,8 +63,10 @@ changes yourself, and send me a pull request.
   * ***EALab***: web site <https://ealab-matlabtoolbox.rhcloud.com/>.  Described in *Neuroinform*
     <http://dx.doi.org/10.1007/s12021-015-9275-4>. Matlab toolbox. Classification and extraction of eye
     activity/events. Seems current.
+  * ***ETML***: on github <https://github.com/cran/em2>. Matlab codebase. "Framework for running eyetracking experiments
+    in MATLAB," with SRR eyelink systems. Seems active.
   * ***eventdetect***: on github <https://github.com/gian/eventdetect>. Repository of event detection algorithms. Python
-    codebase. Last update in 2015. Development is sluggish.
+    codebase. Last update in 2015. Development seems sluggish.
   * ***EyeMap***: on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Last update in 2012.
   * ***EyePatterns***: on sourceforge <http://sourceforge.net/projects/eyepatterns/>. Looks for patterns/similarities in
     fixation sequences. Java codebase. Last update in 2013.
