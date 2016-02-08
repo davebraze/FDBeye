@@ -1,10 +1,19 @@
 #########################################
-# Editor temporary/working/backup files #
+## Editor temporary/working/backup files
 *~
 ^#.+#$
 *.bak
 .*
 !/.gitignore
 
-# Documentation generated files #
-#################################
+#########################################
+## R/RStudio files
+.Rhistory
+.Rapp.history
+.RData
+.Rproj.user
+
+#########################################
+## Documentation generated files
+vignettes/*.html
+vignettes/*.pdf
