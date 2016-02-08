@@ -63,7 +63,7 @@ changes yourself, and send me a pull request.
   * ***EALab***: web site <https://ealab-matlabtoolbox.rhcloud.com/>.  Described in *Neuroinform*
     <http://dx.doi.org/10.1007/s12021-015-9275-4>. Matlab toolbox. Classification and extraction of eye
     activity/events. Seems current.
-  * ***ETML***: on github <https://github.com/cran/em2>. Matlab codebase. "Framework for running eyetracking experiments
+  * ***ETML***: on github <https://github.com/jwdink/ETML>. Matlab codebase. "Framework for running eyetracking experiments
     in MATLAB," with SRR eyelink systems. Seems active.
   * ***eventdetect***: on github <https://github.com/gian/eventdetect>. Repository of event detection algorithms. Python
     codebase. Last update in 2015. Development seems sluggish.
