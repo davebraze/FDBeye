@@ -57,6 +57,9 @@ changes yourself, and send me a pull request.
 
 ### Other languages ###
 
+  * ***CARPE***: on google code <https://code.google.com/archive/p/dynamic-images-and-eye-movements/>. visualization and
+    collection of gaze patterns over dynamic images. Project home page on wordpress
+    <https://thediemproject.wordpress.com/>. Looks fairly polished, but no recent development (sonce 2010).
   * ***DynAOI***: on launchpad <https://launchpad.net/dynaoi>. Described in *Behav Res*
     <https://www.iwm-tuebingen.de/cybermedia/dynaoi/PapenmeierHuffBRM.pdf>. Analysis of EM in relation to
     moving objects. Python codebase, relies on Blender for some functions. Last update in 2011.
@@ -68,6 +71,8 @@ changes yourself, and send me a pull request.
   * ***eventdetect***: on github <https://github.com/gian/eventdetect>. Repository of event detection algorithms. Python
     codebase. Last update in 2015. Development seems sluggish.
   * ***EyeMap***: on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Last update in 2012.
+  * ***EyeMMV***: on github <https://github.com/krasvas/EyeMMV>. Matlab toolbox. post-collection eye movement
+    analysis. Last update in 2014. Described in J. of *Eye Movement Research* <http://www.jemr.org/online/7/1/1>.
   * ***EyePatterns***: on sourceforge <http://sourceforge.net/projects/eyepatterns/>. Looks for patterns/similarities in
     fixation sequences. Java codebase. Last update in 2013.
   * ***EyeSimplify***: web site at <http://www.cl.uni-heidelberg.de/seminare/studpro06/eyesimplify/>. Convenience wrapper
