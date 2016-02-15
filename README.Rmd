@@ -19,10 +19,10 @@ install_github("davebraze/FDBeye")
 Other Eye Tracking Tools
 --------------
 
-I've kept this short, limited to tools where the source code can be freely downloaded (i.e., you don't have to ask for
-it, but some of the tools lack an Open Source License). Even so, I'm sure the list is incomplete. If
-you know of something that seems like ought to be included, let me know. Better yet, fork this repository, make the
-changes yourself, and send me a pull request.
+I've kept this short, limited to tools for post-acquisition summarization and analysis, and where the source code can be
+freely downloaded (i.e., you don't have to ask for it, but some of the tools lack an Open Source License). I'm sure the
+list is incomplete. If you know of something that seems like ought to be included, let me know. Better yet, fork this
+repository, make the changes yourself, and send me a pull request.
 
 ### *R* packages ###
 
@@ -55,41 +55,22 @@ changes yourself, and send me a pull request.
   * ***ScaSim***: author's website <http://pages.ucsd.edu/~tvondermalsburg/scasim/>. Scan path similarity analysis. Last
     updated 2010.
 
-### Other languages ###
+### *Python* packages ###
 
-  * ***CARPE***: on google code <https://code.google.com/archive/p/dynamic-images-and-eye-movements/>. visualization and
-    collection of gaze patterns over dynamic images. Project home page on wordpress
-    <https://thediemproject.wordpress.com/>. Looks fairly polished, but no recent development (sonce 2010).
   * ***DynAOI***: on launchpad <https://launchpad.net/dynaoi>. Described in *Behav Res*
     <https://www.iwm-tuebingen.de/cybermedia/dynaoi/PapenmeierHuffBRM.pdf>. Analysis of EM in relation to
     moving objects. Python codebase, relies on Blender for some functions. Last update in 2011.
-  * ***EALab***: web site <https://ealab-matlabtoolbox.rhcloud.com/>.  Described in *Neuroinform*
-    <http://dx.doi.org/10.1007/s12021-015-9275-4>. Matlab toolbox. Classification and extraction of eye
-    activity/events. Seems current.
-  * ***ETML***: on github <https://github.com/jwdink/ETML>. Matlab codebase. "Framework for running eyetracking experiments
-    in MATLAB," with SRR eyelink systems. Seems active.
   * ***eventdetect***: on github <https://github.com/gian/eventdetect>. Repository of event detection algorithms. Python
     codebase. Last update in 2015. Development seems sluggish.
-  * ***EyeMap***: on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Last update in 2012.
-  * ***EyeMMV***: on github <https://github.com/krasvas/EyeMMV>. Matlab toolbox. post-collection eye movement
-    analysis. Last update in 2014. Described in J. of *Eye Movement Research* <http://www.jemr.org/online/7/1/1>.
-  * ***EyePatterns***: on sourceforge <http://sourceforge.net/projects/eyepatterns/>. Looks for patterns/similarities in
-    fixation sequences. Java codebase. Last update in 2013.
   * ***EyeSimplify***: web site at <http://www.cl.uni-heidelberg.de/seminare/studpro06/eyesimplify/>. Convenience wrapper
     with automation for UMass tools (*EyeDoctor* etc.). Possibly superceded by *RoboDoc.py*. Python codebase. Last
     update in 2007.
-  * ***eyetracker***: on github <https://github.com/stefan-k/eyetracker>. C++ codebase. Last update in 2012.
-  * ***EyeTrack***, ***EyeDoctor***, ***EyeDry***, ***RoboDoc.py***: Designed for reading studies and for use with SRR
-    ET systems. Available from Staub lab at UMass <https://blogs.umass.edu/eyelab/software/>. C++ codebase, some
-    Python. Seems current.
   * ***iMap***: author's website <http://perso.unifr.ch/roberto.caldara/index.php?page=3>. Fixation pattern
     analysis and visualization. Described in a couple of journal articles: *Behav Res*
     <http://perso.unifr.ch/roberto.caldara/pdfs/caldara_11.pdf> and *J of Vision*
     <http://jov.arvojournals.org/article.aspx?articleid=2433901>. Matlab toolbox. Seems current.
   * ***ocupy***: on github <https://github.com/nwilming/ocupy>. Python codebase. "tools for analyzing eye-tracking
     data". last update in 2015, sluggish development.
-  * ***OGAMA***: on codeplex <http://www.ogama.net/>. Data collection, fixation detection, scanpath analysis, and
-    heatmaps. Supports Tobii and Alea Tech ET systems only. Also does mouse tracking. C# codebase. Seems current.
   * ***pyarbus***: on github <https://github.com/ivanov/pyarbus>. Python codebase. Major functionality seems to be
     for extracting sample and message info from SRR *asc files. Last update in 2013.
   * ***pyeparse***: on github <https://github.com/pyeparse/pyeparse>. Python codebase. "analyzing eye tracking data from
@@ -98,5 +79,30 @@ changes yourself, and send me a pull request.
     "programming of eyetracking experiments". Web site at <http://www.pygaze.org/>. Actively developed.
   * ***Samara***: on github <https://github.com/m-macaskill/Samara>. Python codebase. Saccade analysis, SMI iView
     trackers. Last update in 2013.
+
+### *Matlab* toolkits ###
+
+  * ***EALab***: web site <https://ealab-matlabtoolbox.rhcloud.com/>.  Described in *Neuroinform*
+    <http://dx.doi.org/10.1007/s12021-015-9275-4>. Matlab toolbox. Classification and extraction of eye
+    activity/events. Seems current.
+  * ***ETML***: on github <https://github.com/jwdink/ETML>. Matlab codebase. "Framework for running eyetracking experiments
+    in MATLAB," with SRR eyelink systems. Seems active.
+  * ***EyeMMV***: on github <https://github.com/krasvas/EyeMMV>. Matlab toolbox. post-collection eye movement
+    analysis. Last update in 2014. Described in J. of *Eye Movement Research* <http://www.jemr.org/online/7/1/1>.
+  * ***EyePatterns***: on sourceforge <http://sourceforge.net/projects/eyepatterns/>. Looks for patterns/similarities in
+    fixation sequences. Java codebase. Last update in 2013.
   * ***ScanMatch***: web page <http://seis.bris.ac.uk/~psidg/ScanMatch/>. Described in *Behav Res*
     <http://seis.bris.ac.uk/~psidg/ScanMatch/CMTG2010.pdf>. Scan path analysis. Matlab toolbox. Last update 2009.
+
+### Other languages ###
+
+  * ***CARPE***: on google code <https://code.google.com/archive/p/dynamic-images-and-eye-movements/>. visualization and
+    collection of gaze patterns over dynamic images. Project home page on wordpress
+    <https://thediemproject.wordpress.com/>. Looks fairly polished, but no recent development (sonce 2010).
+  * ***EyeMap***: on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Last update in 2012.
+  * ***eyetracker***: on github <https://github.com/stefan-k/eyetracker>. C++ codebase. Last update in 2012.
+  * ***EyeTrack***, ***EyeDoctor***, ***EyeDry***, ***RoboDoc.py***: Designed for reading studies and for use with SRR
+    ET systems. Available from Staub lab at UMass <https://blogs.umass.edu/eyelab/software/>. C++ codebase, some
+    Python. Seems current.
+  * ***OGAMA***: on codeplex <http://www.ogama.net/>. Data collection, fixation detection, scanpath analysis, and
+    heatmaps. Supports Tobii and Alea Tech ET systems only. Also does mouse tracking. C# codebase. Seems current.
