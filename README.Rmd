@@ -89,8 +89,6 @@ repository, make the changes yourself, and send me a pull request.
     in MATLAB," with SRR eyelink systems. Seems active.
   * ***EyeMMV***: on github <https://github.com/krasvas/EyeMMV>. Matlab toolbox. post-collection eye movement
     analysis. Last update in 2014. Described in J. of *Eye Movement Research* <http://www.jemr.org/online/7/1/1>.
-  * ***EyePatterns***: on sourceforge <http://sourceforge.net/projects/eyepatterns/>. Looks for patterns/similarities in
-    fixation sequences. Java codebase. Last update in 2013.
   * ***ScanMatch***: web page <http://seis.bris.ac.uk/~psidg/ScanMatch/>. Described in *Behav Res*
     <http://seis.bris.ac.uk/~psidg/ScanMatch/CMTG2010.pdf>. Scan path analysis. Matlab toolbox. Last update 2009.
 
@@ -100,6 +98,8 @@ repository, make the changes yourself, and send me a pull request.
     collection of gaze patterns over dynamic images. Project home page on wordpress
     <https://thediemproject.wordpress.com/>. Looks fairly polished, but no recent development (sonce 2010).
   * ***EyeMap***: on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Last update in 2012.
+  * ***EyePatterns***: on sourceforge <http://sourceforge.net/projects/eyepatterns/>. Looks for patterns/similarities in
+    fixation sequences. Java codebase. Last update in 2013.
   * ***eyetracker***: on github <https://github.com/stefan-k/eyetracker>. C++ codebase. Last update in 2012.
   * ***EyeTrack***, ***EyeDoctor***, ***EyeDry***, ***RoboDoc.py***: Designed for reading studies and for use with SRR
     ET systems. Available from Staub lab at UMass <https://blogs.umass.edu/eyelab/software/>. C++ codebase, some
