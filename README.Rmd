@@ -36,6 +36,8 @@ repository, make the changes yourself, and send me a pull request.
   * ***ETRAN***: Fixation detection, plotting. Available from this web site <https://sites.google.com/site/azhegallo/>, and
     written up in the journal _Perception_ here:
     <http://pec.sagepub.com/content/early/2015/08/14/0301006615594944.full>.
+  * ***eyelinker***: Tool for converting SRR *ASC files to data.frames. Available on github
+    <https://github.com/dahtah/eyelinker>.
   * ***eyetracking***: Compute pixel-to-pixel and eye-to-screen distances. On CRAN
     <https://cran.r-project.org/web/packages/eyetracking/>.
   * ***eyetrackingR***: Package oriented toward post-acquisition workflow, mostly for 'visual world' style studies. On
