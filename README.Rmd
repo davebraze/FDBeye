@@ -37,7 +37,7 @@ repository, make the changes yourself, and send me a pull request.
     written up in the journal _Perception_ here:
     <http://pec.sagepub.com/content/early/2015/08/14/0301006615594944.full>.
   * ***eyelinker***: Tool for converting SRR *ASC files to data.frames. Available on github
-    <https://github.com/dahtah/eyelinker>.
+    <https://github.com/dahtah/eyelinker>. Not clearly open source; no license statement at all.
   * ***eyetracking***: Compute pixel-to-pixel and eye-to-screen distances. On CRAN
     <https://cran.r-project.org/web/packages/eyetracking/>.
   * ***eyetrackingR***: Package oriented toward post-acquisition workflow, mostly for 'visual world' style studies. On
@@ -98,7 +98,7 @@ repository, make the changes yourself, and send me a pull request.
 
   * ***CARPE***: on google code <https://code.google.com/archive/p/dynamic-images-and-eye-movements/>. visualization and
     collection of gaze patterns over dynamic images. Project home page on wordpress
-    <https://thediemproject.wordpress.com/>. Looks fairly polished, but no recent development (sonce 2010).
+    <https://thediemproject.wordpress.com/>. Looks fairly polished, but no recent development (since 2010).
   * ***EyeMap***: on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Last update in 2012.
   * ***EyePatterns***: on sourceforge <http://sourceforge.net/projects/eyepatterns/>. Looks for patterns/similarities in
     fixation sequences. Java codebase. Last update in 2013.
