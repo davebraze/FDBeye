@@ -1,8 +1,9 @@
 FDBeye
 ====
 
-Tools to ease working with eyetracker data. Currently focussed on my own work flow involving data from SRR Eyelink
-systems, although some stuff may be more generally useful. Functionality is a bit thin. Pitch in and help if you like.
+Tools to ease working with eyetracker data. I'm gradually (slowly) migrating stuff from my junkpile of project specific
+code into this package. What's here now is focussed on my own workflows involving data from SRR Eyelink systems,
+although some stuff may be more generally useful. Functionality is a bit thin. Pitch in and help if you like.
 
 Before you dive into FDBeye, you might want to look at what else is available. See the list below.
 
@@ -19,10 +20,10 @@ install_github("davebraze/FDBeye")
 Other Eye Tracking Tools
 --------------
 
-I've kept this short, limited to tools for post-acquisition summarization and analysis, and where the source code can be
-freely downloaded (i.e., you don't have to ask for it, but some of the tools lack an Open Source License). I'm sure the
-list is incomplete. If you know of something that seems like ought to be included, let me know. Better yet, fork this
-repository, make the changes yourself, and send me a pull request.
+I've kept this list short, limited to tools for post-acquisition summarization and analysis, and where the source code
+can be freely downloaded (i.e., you don't have to ask for it, but some of the stuff I've linked to lacks an Open Source
+License). I'm sure the list is incomplete. If you know of something that seems like ought to be included, let me
+know. Better yet, fork this repository, make the changes yourself, and send me a pull request.
 
 ### *R* packages ###
 
