@@ -1,3 +1,5 @@
+## Message from Dave.
+
 ##' @title Adjust y coordinates for gaze data.
 ##'
 ##' @description Adjust y coordinates for gaze data, such as might occur in reading multi-line text
