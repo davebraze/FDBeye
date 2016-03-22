@@ -1,5 +1,3 @@
-## Message from Dave.
-
 ##' @title Adjust y coordinates for gaze data.
 ##'
 ##' @description Adjust y coordinates for gaze data, such as might occur in reading multi-line text
@@ -20,21 +18,6 @@
 ##' @param ... Additional arguments passed to \code{FUN}.
 ##' @return A copy of data enriched with adjusted y values.
 ##' @author
-
-require(png)
-
-k_bounds <- c(-.1, .1); o_bounds <- c(-32.5, 32.5); s_bounds <- c(1, 20)
-den_sd_cutoff <- Inf # remove points for which the density is > this many sd away from mean density
-den_ratio_cutoff <- 1 # remove points for which (max density)/(2nd max density) not high enough
-
-data1 <- read.csv("./fix_data1.csv", na.strings = "NA")
-data1$type <- as.character(data1$type)
-lines1 <- read.csv("./start_pts1.csv", na.strings = "NA")
-
-init_params1 <- c(0, 0, 0) # for create_lines: Intitial parameter values (slope, vertical offset, sd)
-init_params2 <- rep(c(0,0,0), nrow(lines)) # Intitial parameter values (slope, vertical offset, sd) for each line of data
-
-
 adjust_y <- function(data, lines, datafile_name, init_params, 
                      FUN, ...) {
 
@@ -56,8 +39,25 @@ adjust_y <- function(data, lines, datafile_name, init_params,
 }
 
 
-# create_lines1: original paper's function 
-# one slope, ver_offset, sd for all lines, using -sum(data_den_max) as target measure for optimization
+#' @title Function to optimize slope, offset and sd for all lines of fixations (from original paper)
+#' @description This function uses one slope, ver_offset, sd to fit all lines, and use -sum(data_den_max)
+#'  as target measure for optimizationuses
+#' @details    
+#' 
+#' @param params 
+#' @param fit_it 
+#' @param data 
+#' @param start_pts 
+#' @param k_bounds 
+#' @param o_bounds 
+#' @param s_bounds 
+#' @param den_sd_cutoff 
+#' @param den_ratio_cutoff 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 create_lines1 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff) {
   # fit_it: TRUE -> return fit measure, FALSE -> return fit information
   ys <- start_pts[,2] # The y-values for the lines
@@ -75,7 +75,7 @@ create_lines1 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_boun
   for (l in 1:n_lines) {
     y_on_line <- o + k*(data$x_pos - start_pts[l,1]) + start_pts[l,2] # The value of each point on each line
     data_den[,l] <- log(dnorm(data$y_pos, mean=y_on_line, sd=s)) # Log density value for each point based on the line and sd
-    y_diff[,l] <- abs(data$y_pos - y_on_line) # Store the difference between the real and fitted value
+    y_diff[,l] <- (abs(data$y_pos - y_on_line))^2 # Store the difference between the real and fitted value
   }
   
   # Find max density line for each point
@@ -167,8 +167,24 @@ create_lines1 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_boun
 }
 
 
-# create_lines2: original paper's function 
-# one slope, ver_offset, sd for all lines, using sum(min y_diff) as target measure for optimization
+#' @title Function to optimize slope, offset and sd for all lines of fixations (extended from original paper)
+#' @description This function uses one slope, ver_offset, sd to fit all lines, and use sum(min y_diff)
+#'  as target measure for optimizationuses
+#' @details 
+#' @param params 
+#' @param fit_it 
+#' @param data 
+#' @param start_pts 
+#' @param k_bounds 
+#' @param o_bounds 
+#' @param s_bounds 
+#' @param den_sd_cutoff 
+#' @param den_ratio_cutoff 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 create_lines2 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff) {
   # fit_it: TRUE -> return fit measure, FALSE -> return fit information
   ys <- start_pts[,2] # The y-values for the lines
@@ -186,7 +202,7 @@ create_lines2 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_boun
   for (l in 1:n_lines) {
     y_on_line <- o + k*(data$x_pos - start_pts[l,1]) + start_pts[l,2] # The value of each point on each line
     data_den[,l] <- log(dnorm(data$y_pos, mean=y_on_line, sd=s)) # Log density value for each point based on the line and sd
-    y_diff[,l] <- abs(data$y_pos - y_on_line) # Store the difference between the real and fitted value
+    y_diff[,l] <- (abs(data$y_pos - y_on_line))^2 # Store the difference between the real and fitted value
   }
   
   # Find max density line for each point
@@ -278,8 +294,25 @@ create_lines2 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_boun
 }
 
 
-# create_lines3: modified code
-# each line has its own slope, vert_offset, sd, using -sum(data_den_max) as target measure for optimization
+#' @title Function to optimize slope, offset and sd for all lines of fixations (extedned from original paper)
+#' @description This function uses many slopes, ver_offsets, sds to fit every lines, and use -sum(data_den_max)
+#'  as target measure for optimizationuses
+#' @details 
+#' 
+#' @param params 
+#' @param fit_it 
+#' @param data 
+#' @param start_pts 
+#' @param k_bounds 
+#' @param o_bounds 
+#' @param s_bounds 
+#' @param den_sd_cutoff 
+#' @param den_ratio_cutoff 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 create_lines3 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff) {
   # fit_it: TRUE -> return fit measure, FALSE -> return fit information
   ys <- start_pts[,2] # The y-values for the lines
@@ -297,7 +330,7 @@ create_lines3 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_boun
     
     y_on_line <- o + k*(data$x_pos - start_pts[l,1]) + start_pts[l,2] # The value of each point on each line
     data_den[,l] <- log(dnorm(data$y_pos, mean=y_on_line, sd=s)) # Log density value for each point based on the line and sd
-    y_diff[,l] <- abs(data$y_pos - y_on_line) # Store the difference between the real and fitted value
+    y_diff[,l] <- (abs(data$y_pos - y_on_line))^2 # Store the difference between the real and fitted value
   }
   
   # Find max density line for each point
@@ -398,8 +431,25 @@ create_lines3 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_boun
 }
 
 
-# create_lines4: modified code
-# each line has its own slope, vert_offset, sd, using sum(min y_diff) as target measure for optimization
+#' @title Function to optimize slope, offset and sd for all lines of fixations (extended from original paper)
+#' @description This function uses many slopes, ver_offsets, sds for every lines, and use sum(min y_diff)
+#'  as target measure for optimizationuses
+#' @details 
+#' 
+#' @param params 
+#' @param fit_it 
+#' @param data 
+#' @param start_pts 
+#' @param k_bounds 
+#' @param o_bounds 
+#' @param s_bounds 
+#' @param den_sd_cutoff 
+#' @param den_ratio_cutoff 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 create_lines4 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff) {
   # fit_it: TRUE -> return fit measure, FALSE -> return fit information
   ys <- start_pts[,2] # The y-values for the lines
@@ -417,7 +467,7 @@ create_lines4 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_boun
     
     y_on_line <- o + k*(data$x_pos - start_pts[l,1]) + start_pts[l,2] # The value of each point on each line
     data_den[,l] <- log(dnorm(data$y_pos, mean=y_on_line, sd=s)) # Log density value for each point based on the line and sd
-    y_diff[,l] <- abs(data$y_pos - y_on_line) # Store the difference between the real and fitted value
+    y_diff[,l] <- (abs(data$y_pos - y_on_line))^2 # Store the difference between the real and fitted value
   }
   
   # Find max density line for each point
@@ -519,6 +569,21 @@ create_lines4 <- function(params, fit_it=TRUE, data, start_pts, k_bounds, o_boun
 
 
 # trial_plots12: for single slope, offset, and sd cases (create_lines1 and create_lines2)
+#' @title This function draws original and modified fixations with fitted lines
+#' @description This function is suitable for optimized values using create_lines1 and create_lines2
+#' @details 
+#'
+#' @param line_ret 
+#' @param output_filehead 
+#' @param draw_type 
+#' @param bg_image_name 
+#' @param image_width 
+#' @param image_height 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 trial_plots12 <- function(line_ret, output_filehead, draw_type, bg_image_name=NULL, image_width=1280, image_height=1024) {
   
   # output_filehead: output image file head
@@ -640,6 +705,21 @@ trial_plots12 <- function(line_ret, output_filehead, draw_type, bg_image_name=NU
 
 
 # trial_plots34: for single slope, offset, and sd cases (create_lines3 and create_lines4)
+#' @title This function draws original and modified fixations with fitted lines
+#' @description This function is suitable for values optimized by create_lines3 and create_lines4
+#' @details 
+#'
+#' @param line_ret 
+#' @param output_filehead 
+#' @param draw_type 
+#' @param bg_image_name 
+#' @param image_width 
+#' @param image_height 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 trial_plots34 <- function(line_ret, output_filehead, draw_type, bg_image_name=NULL, image_width=1280, image_height=1024) {
   
   # output_filehead: output image file head
@@ -758,3 +838,19 @@ trial_plots34 <- function(line_ret, output_filehead, draw_type, bg_image_name=NU
   
   dev.off() # close plot
 }
+
+
+# helper functions
+require(png)
+
+k_bounds <- c(-.1, .1); o_bounds <- c(-32.5, 32.5); s_bounds <- c(1, 20)
+den_sd_cutoff <- Inf # remove points for which the density is > this many sd away from mean density
+den_ratio_cutoff <- 1 # remove points for which (max density)/(2nd max density) not high enough
+
+subjID <- '1950044'
+data1 <- read.csv("./fix_data1.csv", na.strings = "NA")
+data1$type <- as.character(data1$type)
+lines1 <- read.csv("./start_pts1.csv", na.strings = "NA")
+
+init_params1 <- c(0, 0, 0) # for create_lines: Intitial parameter values (slope, vertical offset, sd)
+init_params2 <- rep(c(0,0,0), nrow(lines)) # Intitial parameter values (slope, vertical offset, sd) for each line of data
