@@ -1,8 +1,9 @@
 FDBeye
 ====
 
-Tools to ease working with eyetracker data. Currently focussed on my own work flow involving data from SRR Eyelink
-systems, although some stuff may be more generally useful. Functionality is a bit thin. Pitch in and help if you like.
+Tools to ease working with eyetracker data. I'm gradually (slowly) migrating stuff from my junkpile of project specific
+code into this package. What's here now is focussed on my own workflows involving data from SRR Eyelink systems,
+although some stuff may be more generally useful. Functionality is a bit thin. Pitch in and help if you like.
 
 Before you dive into FDBeye, you might want to look at what else is available. See the list below.
 
@@ -19,10 +20,10 @@ install_github("davebraze/FDBeye")
 Other Eye Tracking Tools
 --------------
 
-I've kept this short, limited to tools for post-acquisition summarization and analysis, and where the source code can be
-freely downloaded (i.e., you don't have to ask for it, but some of the tools lack an Open Source License). I'm sure the
-list is incomplete. If you know of something that seems like ought to be included, let me know. Better yet, fork this
-repository, make the changes yourself, and send me a pull request.
+I've kept this list short, limited to tools for post-acquisition summarization and analysis, and where the source code
+can be freely downloaded (i.e., you don't have to ask for it, but some of the stuff I've linked to lacks an Open Source
+License). I'm sure the list is incomplete. If you know of something that seems like ought to be included, let me
+know. Better yet, fork this repository, make the changes yourself, and send me a pull request.
 
 ### *R* packages ###
 
@@ -37,7 +38,7 @@ repository, make the changes yourself, and send me a pull request.
     written up in the journal _Perception_ here:
     <http://pec.sagepub.com/content/early/2015/08/14/0301006615594944.full>.
   * ***eyelinker***: Tool for converting SRR *ASC files to data.frames. Available on github
-    <https://github.com/dahtah/eyelinker>.
+    <https://github.com/dahtah/eyelinker>. Not clearly open source; no license statement at all.
   * ***eyetracking***: Compute pixel-to-pixel and eye-to-screen distances. On CRAN
     <https://cran.r-project.org/web/packages/eyetracking/>.
   * ***eyetrackingR***: Package oriented toward post-acquisition workflow, mostly for 'visual world' style studies. On
@@ -98,7 +99,7 @@ repository, make the changes yourself, and send me a pull request.
 
   * ***CARPE***: on google code <https://code.google.com/archive/p/dynamic-images-and-eye-movements/>. visualization and
     collection of gaze patterns over dynamic images. Project home page on wordpress
-    <https://thediemproject.wordpress.com/>. Looks fairly polished, but no recent development (sonce 2010).
+    <https://thediemproject.wordpress.com/>. Looks fairly polished, but no recent development (since 2010).
   * ***EyeMap***: on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Last update in 2012.
   * ***EyePatterns***: on sourceforge <http://sourceforge.net/projects/eyepatterns/>. Looks for patterns/similarities in
     fixation sequences. Java codebase. Last update in 2013.
