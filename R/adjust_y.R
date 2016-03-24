@@ -277,24 +277,25 @@ cat_lines1 <- function(params, fit_it=TRUE, data, start_pts,
   # Initialize matrices
   data_den <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
   y_diff <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
+
   # Unpack the parameters
   k <- k_bounds[1] + (k_bounds[2] - k_bounds[1])*pnorm(params[1])
   o <- o_bounds[1] + (o_bounds[2] - o_bounds[1])*pnorm(params[2])
   s <- s_bounds[1] + (s_bounds[2] - s_bounds[1])*pnorm(params[3])
-  
+
   for (l in 1:n_lines) {
     y_on_line <- o + k*(data$x_pos[data$type!='oob'] - start_pts[l,1]) + start_pts[l,2] # The value of each point on each line
     data_den[,l] <- log(dnorm(data$y_pos[data$type!='oob'], mean=y_on_line, sd=s)) # Log density value for each point based on the line and sd
     y_diff[,l] <- abs(data$y_pos[data$type!='oob'] - y_on_line) # Store the difference between the real and fitted value
   }
-  
+
   # Find max density line for each point
   data_den_max <- apply(data_den, 1, max) # Assume all-or-none classification
   fit_den <- -sum(data_den_max) # The sum of the log densitities is the fit measure, using valid, in-bounds fixations
   # Find min y_diff line for each point
   y_diff_min <- apply(y_diff, 1, min) # The smallest difference between assigned line pos and original y_pos
   fit_y_diff <- sum(y_diff_min) # The sum of the smallest difference is the fit measure
-  
+
   if (fit_it) {
     if (fit_den == Inf) fit_den = .Machine$integer.max # In case log density goes to infinity
     return(fit_den) # Method 1: Return the fit_den as the fit measure
@@ -306,7 +307,7 @@ cat_lines1 <- function(params, fit_it=TRUE, data, start_pts,
       if (sum(data_den_sort[i,])==0) data_den_sort[i,] <- 1
     }
     data_den_ratio <- data_den_sort[,n_lines]/data_den_sort[,n_lines-1]
-    
+
     # Mark ambigous points
     ambig_rm <- data_den_ratio <= den_ratio_cutoff
     ambig_rm[ambig_rm==FALSE] <- 'keep'; ambig_rm[ambig_rm==TRUE] <- 'amb'
@@ -358,7 +359,7 @@ cat_lines1 <- function(params, fit_it=TRUE, data, start_pts,
     for (i in amb_ind) {
       # Go backwards to get line membership of previous keeper
       j = i - 1
-      repeat { 			
+      repeat {
         if (j <= 0) prev_line = -1
         else if (data$type[j] == 'keep') prev_line = data$line[j]
         else if (data$type[j] == 'oob') prev_line = -1
@@ -368,15 +369,15 @@ cat_lines1 <- function(params, fit_it=TRUE, data, start_pts,
       }
       # Go forwards to get line membership of next keeper
       j = i + 1
-      repeat { 
+      repeat {
         if (j > length(data$type)) next_line = -1
-        else if (data$type[j] == 'keep') next_line = data$line[j]						
+        else if (data$type[j] == 'keep') next_line = data$line[j]
         else if (data$type[j] == 'oob') next_line = -1
         else if (data$type[j] == 'den') next_line = -1
         else if ((data$type[j] == 'amb') || (data$type[j] == 'oob_r')) { j = j + 1; next }
         break
       }
-        
+
       # If both before and after are from the same line, reclassify
       if (prev_line == next_line && prev_line != -1) {
         data$type[i] = 'keep'; data$line[i] = prev_line
@@ -433,20 +434,20 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
   k <- k_bounds[1] + (k_bounds[2] - k_bounds[1])*pnorm(params[1])
   o <- o_bounds[1] + (o_bounds[2] - o_bounds[1])*pnorm(params[2])
   s <- s_bounds[1] + (s_bounds[2] - s_bounds[1])*pnorm(params[3])
-  
+
   for (i in 1:n_lines) {
     y_on_line <- o + k*(data$x_pos[data$type!='oob'] - start_pts[i,1]) + start_pts[i,2] # The value of each point on each line
     data_den[,i] <- log(dnorm(data$y_pos[data$type!='oob'], mean=y_on_line, sd=s)) # Log density value for each point based on the line and sd
     y_diff[,i] <- abs(data$y_pos[data$type!='oob'] - y_on_line) # Store the difference between the real and fitted value
   }
-  
+
   # Find max density line for each point
   data_den_max <- apply(data_den, 1, max) # Assume all-or-none classification
   fit_den <- -sum(data_den_max) # The sum of the log densitities is the fit measure, using valid, in-bounds fixations
   # Find min y_diff line for each point
   y_diff_min <- apply(y_diff, 1, min) # The smallest difference between assigned line pos and original y_pos
   fit_y_diff <- sum(y_diff_min) # The sum of the smallest difference is the fit measure
-  
+
   if (fit_it) {
     if (fit_y_diff == Inf) fit_y_diff = .Machine$integer.max # In case log density goes to infinity
     return(fit_y_diff) # Method 2L:: Return fit_y_diff as the fit measure
@@ -458,7 +459,7 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
       if (sum(data_den_sort[i,])==0) data_den_sort[i,] <- 1
     }
     data_den_ratio <- data_den_sort[,n_lines]/data_den_sort[,n_lines-1]
-    
+
     # Mark ambigous points
     ambig_rm <- data_den_ratio <= den_ratio_cutoff
     ambig_rm[ambig_rm==FALSE] <- 'keep'; ambig_rm[ambig_rm==TRUE] <- 'amb'
@@ -510,7 +511,7 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
     for (i in amb_ind) {
       # Go backwards to get line membership of previous keeper
       j = i - 1
-      repeat { 			
+      repeat {
         if (j <= 0) prev_line = -1
         else if (data$type[j] == 'keep') prev_line = data$line[j]
         else if (data$type[j] == 'oob') prev_line = -1
@@ -520,15 +521,15 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
       }
       # Go forwards to get line membership of next keeper
       j = i + 1
-      repeat { 
+      repeat {
         if (j > length(data$type)) next_line = -1
-        else if (data$type[j] == 'keep') next_line = data$line[j]						
+        else if (data$type[j] == 'keep') next_line = data$line[j]
         else if (data$type[j] == 'oob') next_line = -1
         else if (data$type[j] == 'den') next_line = -1
         else if ((data$type[j] == 'amb') || (data$type[j] == 'oob_r')) { j = j + 1; next }
         break
       }
-      
+
       # If both before and after are from the same line, reclassify
       if (prev_line == next_line && prev_line != -1) {
         data$type[i] = 'keep'; data$line[i] = prev_line
@@ -578,7 +579,7 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
   
   ys <- start_pts[,2] # The y-values for the lines
   n_lines <- length(ys) # The number of clusters is based off of the lines
-  
+
   # Initialize matrices
   data_den <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
   y_diff <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
@@ -593,14 +594,14 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
     data_den[,l] <- log(dnorm(data$y_pos[data$type!='oob'], mean=y_on_line, sd=s)) # Log density value for each point based on the line and sd
     y_diff[,l] <- abs(data$y_pos[data$type!='oob'] - y_on_line) # Store the difference between the real and fitted value
   }
-  
+
   # Find max density line for each point
   data_den_max <- apply(data_den, 1, max) # Assume all-or-none classification
   fit_den <- -sum(data_den_max) # The sum of the log densitities is the fit measure, using valid, in-bounds fixations
   # Find min y_diff line for each point
   y_diff_min <- apply(y_diff, 1, min) # The smallest difference between assigned line pos and original y_pos
   fit_y_diff <- sum(y_diff_min) # The sum of the smallest difference is the fit measure
-  
+
   if (fit_it) {
     if (fit_den == Inf) fit_den = .Machine$integer.max # In case log density goes to infinity
     return(fit_den) # Method 3: Return fit_den as the fit measure
@@ -612,7 +613,7 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
       if (sum(data_den_sort[i,])==0) data_den_sort[i,] <- 1
     }
     data_den_ratio <- data_den_sort[,n_lines]/data_den_sort[,n_lines-1]
-    
+
     # Mark ambigous points
     ambig_rm <- data_den_ratio <= den_ratio_cutoff
     ambig_rm[ambig_rm==FALSE] <- 'keep'; ambig_rm[ambig_rm==TRUE] <- 'amb'
@@ -664,7 +665,7 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
     for (i in amb_ind) {
       # Go backwards to get line membership of previous keeper
       j = i - 1
-      repeat { 			
+      repeat {
         if (j <= 0) prev_line = -1
         else if (data$type[j] == 'keep') prev_line = data$line[j]
         else if (data$type[j] == 'oob') prev_line = -1
@@ -674,15 +675,15 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
       }
       # Go forwards to get line membership of next keeper
       j = i + 1
-      repeat { 
+      repeat {
         if (j > length(data$type)) next_line = -1
-        else if (data$type[j] == 'keep') next_line = data$line[j]						
+        else if (data$type[j] == 'keep') next_line = data$line[j]
         else if (data$type[j] == 'oob') next_line = -1
         else if (data$type[j] == 'den') next_line = -1
         else if ((data$type[j] == 'amb') || (data$type[j] == 'oob_r')) { j = j + 1; next }
         break
       }
-      
+
       # If both before and after are from the same line, reclassify
       if (prev_line == next_line && prev_line != -1) {
         data$type[i] = 'keep'; data$line[i] = prev_line
@@ -742,7 +743,7 @@ cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
   
   ys <- start_pts[,2] # The y-values for the lines
   n_lines <- length(ys) # The number of clusters is based off of the lines
-  
+
   # Initialize matrices
   data_den <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
   y_diff <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
@@ -757,14 +758,14 @@ cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
     data_den[,l] <- log(dnorm(data$y_pos[data$type!='oob'], mean=y_on_line, sd=s)) # Log density value for each point based on the line and sd
     y_diff[,l] <- abs(data$y_pos[data$type!='oob'] - y_on_line) # Store the difference between the real and fitted value
   }
-  
+
   # Find max density line for each point
   data_den_max <- apply(data_den, 1, max) # Assume all-or-none classification
   fit_den <- -sum(data_den_max) # The sum of the log densitities is the fit measure, using valid, in-bounds fixations
   # Find min y_diff line for each point
   y_diff_min <- apply(y_diff, 1, min) # The smallest difference between assigned line pos and original y_pos
   fit_y_diff <- sum(y_diff_min) # The sum of the smallest difference is the fit measure
-  
+
   if (fit_it) {
     if (fit_y_diff == Inf) fit_y_diff = .Machine$integer.max # In case log density goes to infinity
     return(fit_y_diff) # Method 4: Return fit_y_diff as the fit measure
@@ -776,7 +777,7 @@ cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
       if (sum(data_den_sort[i,])==0) data_den_sort[i,] <- 1
     }
     data_den_ratio <- data_den_sort[,n_lines]/data_den_sort[,n_lines-1]
-    
+
     # Mark ambigous points
     ambig_rm <- data_den_ratio <= den_ratio_cutoff
     ambig_rm[ambig_rm==FALSE] <- 'keep'; ambig_rm[ambig_rm==TRUE] <- 'amb'
@@ -828,7 +829,7 @@ cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
     for (i in amb_ind) {
       # Go backwards to get line membership of previous keeper
       j = i - 1
-      repeat { 			
+      repeat {
         if (j <= 0) prev_line = -1
         else if (data$type[j] == 'keep') prev_line = data$line[j]
         else if (data$type[j] == 'oob') prev_line = -1
@@ -838,15 +839,15 @@ cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
       }
       # Go forwards to get line membership of next keeper
       j = i + 1
-      repeat { 
+      repeat {
         if (j > length(data$type)) next_line = -1
-        else if (data$type[j] == 'keep') next_line = data$line[j]						
+        else if (data$type[j] == 'keep') next_line = data$line[j]
         else if (data$type[j] == 'oob') next_line = -1
         else if (data$type[j] == 'den') next_line = -1
         else if ((data$type[j] == 'amb') || (data$type[j] == 'oob_r')) { j = j + 1; next }
         break
       }
-      
+
       # If both before and after are from the same line, reclassify
       if (prev_line == next_line && prev_line != -1) {
         data$type[i] = 'keep'; data$line[i] = prev_line
@@ -906,9 +907,9 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
   # Handle data
   dur_five_num <- fivenum(data$duration) # Get five number summary of duration
   # Point sizes based on duration
-  m <- (pt_size_max - pt_size_min)/(dur_five_num[5] - dur_five_num[1]) 
+  m <- (pt_size_max - pt_size_min)/(dur_five_num[5] - dur_five_num[1])
   data$pt_size <- m*(data$duration - dur_five_num[1]) + pt_size_min
-  
+
   # Open a plot device
   if (draw_type == 'hand') png(file = paste(output_filehead, '_hand.png', sep=''), width = image_width, height = image_height, units = "px", res = 300, pointsize=4)
   if (draw_type == 'original') png(file = paste(output_filehead, '_ori.png', sep=''), width = image_width, height = image_height, units = "px", res = 300, pointsize=4)
@@ -919,7 +920,7 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
   else {
     # Is there a specific image for this subject and trial?
     if (file.exists(bg_image_name)) {
-      t_image <- readPNG(bg_image_name) # Load the image
+      t_image <- png::readPNG(bg_image_name) # Load the image
       t_image_height <- dim(t_image)[1]; t_image_width <- dim(t_image)[2]
       if (image_width == t_image_width & image_height == t_image_height) {
         # draw upon a background figure
@@ -966,7 +967,7 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
            legend=c('Kept', 'Kept', 'Out-of-Reading', 'Ambiguous'), 
            pch=c(1, 1, 1, 1), col=c('red', 'blue', 'cyan', 'purple'), cex = 1.2, bty='n')
   }
-  
+
   if (draw_type == 'original') {
     # for original fixation lines
     # separate different types of data
@@ -1008,7 +1009,7 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
                     paste('Fit_den: ', round(data$fit_den[1], digits=3)),
                     paste('Fit_ydiff: ', round(data$fit_y_diff[1], digits=3))), cex = 1.2, bty='n')
   }
-  
+
   if (draw_type == 'modified') {
     # for modified fixations
     # Separate out some more data
@@ -1047,6 +1048,6 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
                     paste('Fit_den: ', round(data$fit_den[1], digits=3)),
                     paste('Fit_ydiff: ', round(data$fit_y_diff[1], digits=3))), cex = 1.2, bty='n')
   }
-  
+
   dev.off() # close plot
 }
