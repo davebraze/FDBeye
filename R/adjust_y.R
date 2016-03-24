@@ -4,7 +4,7 @@ if (FALSE) {
   
   k_bounds <- c(-.1, .1)
   o_bounds <- c(-30, 30) # about half distance between adjacent line
-  s_bounds <- c(1, 12) # about 0.4 of o_bounds[0]
+  s_bounds <- c(1, 12) # about 0.4 of o_bounds[0]; this is from normal attempt, usually items having 2.5 SD from the mean will be viewed as outliers. 
   den_sd_cutoff <- Inf # remove points for which the density is > this many sd away from mean density
   den_ratio_cutoff <- 1 # remove points for which (max density)/(2nd max density) not high enough
   
