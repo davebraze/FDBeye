@@ -26,6 +26,14 @@
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @import ggplot2
 ##' @export
+##' @examples
+##' data <- data.frame(x=seq(10, 1270, length.out=10),
+##'               y=seq(10, 1014, length.out=10))
+##'
+##' fixPlot(data = data,
+##'         bgImage = "./../inst/extdata/story01.png",
+##'         xyMap = ggplot2::aes_string(x='x', y='y'),
+##'         pointMap =ggplot2::aes_string())
 fixPlot <- function(data,
                     bgImage=NULL,
                     bgAlpha=.33,
