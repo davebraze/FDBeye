@@ -1,44 +1,44 @@
 # helper functions
 if (FALSE) {
   require(png)
-  
+
   k_bounds <- c(-.1, .1)
   o_bounds <- c(-30, 30) # about half distance between adjacent line
-  s_bounds <- c(1, 12) # about 0.4 of o_bounds[0]; this is from normal attempt, usually items having 2.5 SD from the mean will be viewed as outliers. 
+  s_bounds <- c(1, 12) # about 0.4 of o_bounds[0]; this is from normal attempt, usually items having 2.5 SD from the mean will be viewed as outliers.
   den_sd_cutoff <- Inf # remove points for which the density is > this many sd away from mean density
   den_ratio_cutoff <- 1 # remove points for which (max density)/(2nd max density) not high enough
-  
+
   start_pts <- NULL
   start_pts <- rbind(start_pts, get_start_pts('story01.region.csv', 1))
   start_pts <- rbind(start_pts, get_start_pts('story02.region.csv', 2))
   start_pts <- rbind(start_pts, get_start_pts('story03.region.csv', 3))
-  
+
   init_params_sing <- c(0, 0, 0) # for create_lines: Intitial parameter values (slope, vertical offset, sd)
   init_params_mult1 <- rep(c(0,0,0), nrow(start_pts[start_pts$trial_num==1,])) # Intitial parameter values (slope, vertical offset, sd) for each line of data
   init_params_mult2 <- rep(c(0,0,0), nrow(start_pts[start_pts$trial_num==2,]))
   init_params_mult3 <- rep(c(0,0,0), nrow(start_pts[start_pts$trial_num==3,]))
-  
+
   xy_bounds <- NULL
   xy_bounds <- rbind(xy_bounds, get_xybounds('story01.region.csv', 1))
   xy_bounds <- rbind(xy_bounds, get_xybounds('story02.region.csv', 2))
   xy_bounds <- rbind(xy_bounds, get_xybounds('story03.region.csv', 3))
-  
+
   subjs <- c('1950036', '1950090', '1950138', '1950149', '1950162', '1950163', '1950169', '1950184')
-  
+
   for(subjID in subjs) {
-    
+
     # get FixReport data
     fileName <- paste("./", subjID, "/", subjID, "-FixReportLines.txt", sep="")
     data <- read.table(fileName, header=TRUE, na.strings = ".", sep = "\t", quote = "\"'", dec = ".",)
     # remove missing values
     data <- subset(data, !is.na(CURRENT_FIX_X) & !is.na(CURRENT_FIX_Y))
-    
+
     # add columns
     data$x_pos <- data$CURRENT_FIX_X; data$y_pos <- data$CURRENT_FIX_Y
     data$duration <- data$CURRENT_FIX_END - data$CURRENT_FIX_START
     data$type <- 'keep'
     data$hand_line <- data$CURRENT_FIX_LABEL
-    
+
     # for each trial
     num_trial <- 3
     data_m1 <- NULL; data_m2 <- NULL; data_m3 <- NULL; data_m4 <- NULL
@@ -47,49 +47,49 @@ if (FALSE) {
       subdata <- data[data$trial_num==cur_trial, c('trial_num', 'x_pos', 'y_pos', 'duration', 'type', 'hand_line')]
       # mark out of boundary fixations
       subdata <- mark_oob(subdata, xy_bounds, num_trial, cur_trial)
-      
+
       # generate classified data
       if (cur_trial==1) init_params <- init_params_mult1
       if (cur_trial==2) init_params <- init_params_mult2
       if (cur_trial==3) init_params <- init_params_mult3
-      
-      data_m1 <- rbind(data_m1, 
-                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params_sing, cat_lines1, 
+
+      data_m1 <- rbind(data_m1,
+                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params_sing, cat_lines1,
                                 k_bounds=k_bounds, o_bounds=o_bounds, s_bounds=s_bounds, den_sd_cutoff=den_sd_cutoff, den_ratio_cutoff=den_ratio_cutoff)
                        )
-      data_m2 <- rbind(data_m2, 
-                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params_sing, cat_lines2, 
+      data_m2 <- rbind(data_m2,
+                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params_sing, cat_lines2,
                                 k_bounds=k_bounds, o_bounds=o_bounds, s_bounds=s_bounds, den_sd_cutoff=den_sd_cutoff, den_ratio_cutoff=den_ratio_cutoff)
                        )
       data_m3 <- rbind(data_m3,
-                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params, cat_lines3, 
+                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params, cat_lines3,
                                 k_bounds=k_bounds, o_bounds=o_bounds, s_bounds=s_bounds, den_sd_cutoff=den_sd_cutoff, den_ratio_cutoff=den_ratio_cutoff)
                        )
       data_m4 <- rbind(data_m4,
-                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params, cat_lines4, 
+                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params, cat_lines4,
                                 k_bounds=k_bounds, o_bounds=o_bounds, s_bounds=s_bounds, den_sd_cutoff=den_sd_cutoff, den_ratio_cutoff=den_ratio_cutoff)
                        )
     }
-    
+
     # store results
     write.csv(data_m1, paste(subjID, '_m1.csv', sep=""), row.names = FALSE)
     write.csv(data_m2, paste(subjID, '_m2.csv', sep=""), row.names = FALSE)
     write.csv(data_m3, paste(subjID, '_m3.csv', sep=""), row.names = FALSE)
     write.csv(data_m4, paste(subjID, '_m4.csv', sep=""), row.names = FALSE)
   }
-  
+
   # draw picture
   num_methods <- 4
   bg_images <- c('story01.png', 'story02.png', 'story03.png')
-  
+
   for(subjID in subjs) {
     # draw categorized fixations based on different methods
     for (method in 1:num_methods) {
       Alldata <- read.csv(paste(subjID, '_m', method, '.csv', sep=''), na.strings = 'NA')
       for (cur_trial in 1:num_trial) {
-        trial_plots(Alldata[Alldata$trial_num==cur_trial,], start_pts[start_pts$trial_num==cur_trial,], 
+        trial_plots(Alldata[Alldata$trial_num==cur_trial,], start_pts[start_pts$trial_num==cur_trial,],
                     paste(subjID, '_t', cur_trial, '_m', method, sep=''), 'original', bg_images[cur_trial])
-        trial_plots(Alldata[Alldata$trial_num==cur_trial,], start_pts[start_pts$trial_num==cur_trial,], 
+        trial_plots(Alldata[Alldata$trial_num==cur_trial,], start_pts[start_pts$trial_num==cur_trial,],
                     paste(subjID, '_t', cur_trial, '_m', method, sep=''), 'modified', bg_images[cur_trial])
       }
     }
@@ -116,17 +116,22 @@ if (FALSE) {
 ##'
 ##' @details The function first uses optim() to optimize the parameters for FUN (classify_lines).
 ##'     Then, it uses FUN with optimized parameters to classify fixations into different text lines.
-##'     Finally, it returns the fixation dataframe with classified lines and optimized parameters. 
+##'     Finally, it returns the fixation dataframe with classified lines and optimized parameters.
 ##'
 ##' @param data A data.frame containing gaze data (fixations or samples), possibly from multiple subjects/trials.
-##' @param FUN A function to optimize in order to compute adjusted y-values for a single trial.
 ##' @param lines A vector of known y positions (centroids) of text lines for each trial contained in
 ##'     \code{data}. This argument is passed to \code{FUN}. [maybe this should be a data.frame]
+##' @param init_params TAO, PLEASE PROVIDE DESCRIPTION
+##' @param FUN A function to optimize in order to compute adjusted y-values for a single trial.
 ##' @param ... Additional arguments passed to \code{FUN}.
-##' @return A copy of data enriched with adjusted y values and fitted parameters.
-##' @author
-adjust_y <- function(data, lines, init_params, 
-                     FUN, ...) {
+##' @return A copy of data enriched with adjusted y values and fit parameters.
+##' @author Tao Gong <gtojty@@gmail.com>
+##' @export
+adjust_y <- function(data,
+                     lines,
+                     init_params,
+                     FUN,
+                     ...) {
   ## See fix_align.R, here: http://www.psych.umass.edu/PACLab/resources/
   ## And description of same in BRMIC: http://people.umass.edu/eyelab/CohenBRM.pdf
   ##
@@ -135,15 +140,15 @@ adjust_y <- function(data, lines, init_params,
   ## 2. We ADD modified y values, rather than replace existing ones.
   ## 3. We accomidate both sample data and fixation data.
   ## 4. Specific function used for optimisation is swappable.
-  
-  fit <- optim(init_params, FUN, data=data, start_pts=lines, 
+
+  fit <- optim(init_params, FUN, data=data, start_pts=lines,
                k_bounds=k_bounds, o_bounds=o_bounds, s_bounds=s_bounds, den_sd_cutoff=den_sd_cutoff, den_ratio_cutoff=den_ratio_cutoff) # Optimize
   data <- FUN(fit$par, fit_it=FALSE, data=data, start_pts=lines, k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff) # Find the best fitting parameters
   return (data) # Return
 }
 
 
-#' @title Get start_pts from region file
+#' @title Get y positions of text lines from region file
 #' @description This function extracts (x_pos, y_pos) of first word in each text line from the region file
 #' @details This function reads region_file and gets (x_pos, y_pos) of first word in each text line.
 #'          Then, it bounds (x_pos, y_pos) with trail_num into a data frame, and return the data frame.
@@ -151,26 +156,26 @@ adjust_y <- function(data, lines, init_params,
 #' @param region_file region file name (csv file)
 #' @param trial_num the trial number of the current start_pts
 #'
-#' @return
+#' @return TAO, PLEASE FILL IN RETURN VALUE HERE
+#' @author Tao Gong <gtojty@@gmail.com>
 #' @export
 #'
-#' @examples
-get_start_pts <- function(region_file, trial_num) {
-  
+get_start_pts <- function(region_file,
+                          trial_num) {
   if (is.null(region_file)) stop('Region file is not inputted!')
   if(!file.exists(region_file)) stop(paste('Region file: ', region_file, ' doesn\'t exist!', sep=''))
   regionDF <- read.csv(region_file, na.strings='NA')
-  
+
   n_lines <- max(regionDF$line_no)
   start_pts <- data.frame(matrix(ncol = 3, nrow = n_lines))
   names(start_pts) <- c('x_pos', 'y_pos', 'trial_num')
-  
+
   for (curline in 1:n_lines) {
     start_pts$x_pos[curline] <- regionDF$x1_pos[regionDF$line_no==curline][1]
     start_pts$y_pos[curline] <- regionDF$baseline[regionDF$line_no==curline][1]
   }
   start_pts$trial_num <- trial_num
-  
+
   return(start_pts)
 }
 
@@ -185,26 +190,26 @@ get_start_pts <- function(region_file, trial_num) {
 #' @param image_width default x_max boundary (1280)
 #' @param image_height default y_max boundary (1024)
 #'
-#' @return
+#' @return  TAO, PLEASE FILL IN RETURN VALUE HERE
+#' @author Tao Gong <gtojty@@gmail.com>
 #' @export
 #'
-#' @examples
-get_xybounds <- function(region_file, trial_num, 
+get_xybounds <- function(region_file, trial_num,
                          image_width=1280, image_height=1024) {
-  
+
   if (is.null(region_file)) stop('Region file is not inputted!')
   if(!file.exists(region_file)) stop(paste('Region file: ', region_file, ' doesn\'t exist!', sep=''))
   regionDF <- read.csv(region_file, na.strings='NA')
-  
+
   xy_buffer <- 0.1
   x_range <- max(regionDF$x2_pos) - min(regionDF$x1_pos)
   y_range <- max(regionDF$y2_pos) - min(regionDF$y1_pos)
-  
+
   x_min <- min(regionDF$x1_pos) - xy_buffer*x_range; if (x_min < 0.0) x_min <- 0.0
   x_max <- max(regionDF$x2_pos) + xy_buffer*x_range; if (x_max > image_width) x_min <- image_width
   y_min <- min(regionDF$y1_pos) - xy_buffer*y_range; if (y_min < 0.0) y_min <- 0.0
   y_max <- max(regionDF$y2_pos) + xy_buffer*y_range; if (y_max > image_height) y_max <- image_height
-  
+
   xy_bounds <- c(x_min, x_max, y_min, y_max, trial_num)
   return(xy_bounds)
 }
@@ -213,19 +218,18 @@ get_xybounds <- function(region_file, trial_num,
 #' @title Mark out of boundary fixations
 #' @description This function is modified from Cohen's paper
 #' @details This function marks fixations oustide boundary as 'oob'
-#' 
-#' @param data fixation data 
-#' @param xy_bounds boundary of fixations. If it has one row, all trials use the same boundary (xmin, xmax, ymin, ymax); 
+#'
+#' @param data fixation data
+#' @param xy_bounds boundary of fixations. If it has one row, all trials use the same boundary (xmin, xmax, ymin, ymax);
 #'        if it has many rows, the number of row should be equal to the number of trials.
-#' @param trial_num number of trials 
-#' @param cur_trial the current trail index 
+#' @param trial_num number of trials
+#' @param cur_trial the current trail index
 #'
 #' @return A copy of data with out of boundary fixations marked as 'oob'
+#' @author Tao Gong <gtojty@@gmail.com>
 #' @export
-#'
-#' @examples
 mark_oob <- function(data, xy_bounds, trial_num, cur_trial) {
-  
+
   if (is.null(xy_bounds)) stop('xy_bounds is not inputted')
   else {
     # Bounds for this trial
@@ -239,39 +243,52 @@ mark_oob <- function(data, xy_bounds, trial_num, cur_trial) {
     # Mark out-of-bounds fixations
     x_keep <- data$x_pos > xy_bounds_trial[1] & data$x_pos < xy_bounds_trial[2]
     y_keep <- data$y_pos > xy_bounds_trial[3] & data$y_pos < xy_bounds_trial[4]
-    # Mark as out-of-bounds 
+    # Mark as out-of-bounds
     data$type[!(x_keep & y_keep)] <- 'oob'
   }
   return(data) # Return data
 }
 
-
 #' @title Categorize fixations into appropriate text lines
-#' @description This function is from Cohen's paper
+#'
+#' @description This function follows closely upon that described in Cohen's paper
+#'
 #' @details This function optimizes the slope, offset and sd for all lines of fixations. It uses -sum(data_den_max)
 #'  as fit measure for optimization
-#' 
+#'
 #' @param params parameters (slope, offset, sd) for optimization
 #' @param fit_it TRUE -> return fit measure, FALSE -> return fit information
 #' @param data fixation data frame containing at least x_pos, y_pos
-#' @param start_pts dataframe contatining starting point of each base line (x_pos, y_pos, trial_num) 
+#' @param start_pts dataframe contatining starting point of each base line (x_pos, y_pos, trial_num)
 #' @param k_bounds boundary of slope (default: [-0.1, 0.1])
-#' @param o_bounds boundary of offset (default: [-0.5*dist of adjacent text lines, 0.5*dist of adjacent text line])
+#' @param o_bounds boundary of offset (default: [-0.5*dist of adjacent text lines, 0.5*dist of
+#'     adjacent text line])
 #' @param s_bounds boundary of sd (default: [1, 20])
-#' @param den_sd_cutoff cutoff threshold for density; 
-#'        If den_sd_cutoff is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7% are accepted)
-#' @param den_ratio_cutoff cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
-#' @param num_checkFirst number of starting fixations used for checking before reading bound (default 5)
-#' @param num_checkLast number of ending fixations used for checking end of reading bound (default 10)
-#' 
-#' @return new data frame including fixations, fit measures, and fitted lines information
-#' @export
+#' @param den_sd_cutoff cutoff threshold for density; If den_sd_cutoff is Inf, use
+#'     mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are
+#'     accepted)
+#' @param den_ratio_cutoff cutoff threshold for density ratio (ratio between the maximum density and
+#'     second maximum density)
+#' @param num_checkFirst number of starting fixations used for checking before reading bound
+#'     (default 5)
+#' @param num_checkLast number of ending fixations used for checking end of reading bound (default
+#'     10)
 #'
-#' @examples
-cat_lines1 <- function(params, fit_it=TRUE, data, start_pts, 
-                       k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff, 
-                       num_checkFirst=5, num_checkLast=10) {
-  
+#' @return new data frame including fixations, fit measures, and fitted lines information
+#' @author Tao Gong <gtojty@@gmail.com>
+#' @export
+cat_lines1 <- function(params,
+                       fit_it=TRUE,
+                       data,
+                       start_pts,
+                       k_bounds,
+                       o_bounds,
+                       s_bounds,
+                       den_sd_cutoff,
+                       den_ratio_cutoff,
+                       num_checkFirst=5,
+                       num_checkLast=10) {
+
   ys <- start_pts[,2] # The y-values for the lines
   n_lines <- length(ys) # The number of clusters is based off of the lines
   # Initialize matrices
@@ -312,7 +329,7 @@ cat_lines1 <- function(params, fit_it=TRUE, data, start_pts,
     ambig_rm <- data_den_ratio <= den_ratio_cutoff
     ambig_rm[ambig_rm==FALSE] <- 'keep'; ambig_rm[ambig_rm==TRUE] <- 'amb'
     data$type[data$type!='oob'] <- ambig_rm
-    
+
     # Mark points with very low density
     inv_dnorm <- function(x) {sqrt( -2*log(sqrt(2*pi) * x)) }
     mod_data_den <- inv_dnorm(exp(data_den_max))
@@ -322,10 +339,10 @@ cat_lines1 <- function(params, fit_it=TRUE, data, start_pts,
     density_rm[density_rm==FALSE] <- 'keep'; density_rm[density_rm==TRUE] <- 'den'
     density_rm[ambig_rm=='amb'] <- 'amb' # an ambiguous point is still kept as ambiguity
     data$type[data$type!='oob'] <- density_rm
-    
+
     # Method 1: Line membership	based on data_den
     data$line <- NA; data$line[data$type!='oob'] <- apply(data_den, 1, which.max)
-    
+
     # mark out of reading bound fixations
     if (num_checkFirst != 0) { # for the first few fixations
       templine <- data$line[1:num_checkFirst]
@@ -345,14 +362,14 @@ cat_lines1 <- function(params, fit_it=TRUE, data, start_pts,
         # there are no last line fixations, treating them as random elsewhere seeing.
         # here, max(templine, na.rm=TRUE) is used instead of n_lines, in case that no fixation is categorized in the last line
         ind <- max(which(templine == max(templine, na.rm=TRUE)), na.rm=TRUE)
-        if (ind < num_checkLast) { 
+        if (ind < num_checkLast) {
           for (i in (nrow(data)-num_checkLast+ind+1):nrow(data)) {
             if (!is.na(templine[i-nrow(data)+num_checkLast])) data$type[i] <- 'oob_r'
           }
         }
       }
     }
-    
+
     # Recategorize ambiguous pts based on surrounding fixations
     amb_ind <- which(data$type == 'amb') # Get indices of ambiguous pts
     # Go through each of these points
@@ -394,33 +411,36 @@ cat_lines1 <- function(params, fit_it=TRUE, data, start_pts,
     # Store fitted parameters and fit measures
     data$slope <- k; data$offset <- o; data$sd <- s
     data$fit_den <- fit_den; data$fit_y_diff <- fit_y_diff
-    
+
     return(data) # Return data
   }
 }
 
 
 #' @title Categorize fixations into appropriate text lines
-#' @description Function to optimize slope, offset and sd for all lines of fixations (extended from original paper)This function uses one slope, ver_offset, sd to fit all lines, and use sum(min y_diff)
-#'  as target measure for optimizationuses
-#' @details 
+#' @description Function to optimize slope, offset and sd for all lines of fixations (extended from
+#'     original paper)This function uses one slope, ver_offset, sd to fit all lines, and use sum(min
+#'     y_diff) as target measure for optimization uses.
+#' @details TAO, PLEASE PROVIDE DETAILS
 #' @param params parameters (slope, vert_offset, sd) for optimization
 #' @param fit_it TRUE -> return fit measure, FALSE -> return fit information
 #' @param data fixation data frame containing at least x_pos, y_pos
-#' @param start_pts starting point of each base line (x_pos, y_pos) 
+#' @param start_pts starting point of each base line (x_pos, y_pos)
 #' @param k_bounds boundary of slope
 #' @param o_bounds boundary of offset
 #' @param s_bounds boundary of sd
 #' @param den_sd_cutoff cutoff threshold for density
-#' @param den_ratio_cutoff cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
-#' @param num_checkFirst number of starting fixations used for checking before reading bound (default 5)
-#' @param num_checkLast number of ending fixations used for checking end of reading bound (default 10)
+#' @param den_ratio_cutoff cutoff threshold for density ratio (ratio between the maximum density and
+#'     second maximum density)
+#' @param num_checkFirst number of starting fixations used for checking before reading bound
+#'     (default 5)
+#' @param num_checkLast number of ending fixations used for checking end of reading bound (default
+#'     10)
 #'
 #' @return new data frame including fixations, fit measures, and fitted lines information
+#' @author Tao Gong <gtojty@@gmail.com>
 #' @export
-#'
-#' @examples
-cat_lines2 <- function(params, fit_it=TRUE, data, start_pts, 
+cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
                        k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff,
                        num_checkFirst=5, num_checkLast=10) {
 
@@ -429,7 +449,7 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
   # Initialize matrices
   data_den <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
   y_diff <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
-  
+
   # Unpack the parameters
   k <- k_bounds[1] + (k_bounds[2] - k_bounds[1])*pnorm(params[1])
   o <- o_bounds[1] + (o_bounds[2] - o_bounds[1])*pnorm(params[2])
@@ -464,7 +484,7 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
     ambig_rm <- data_den_ratio <= den_ratio_cutoff
     ambig_rm[ambig_rm==FALSE] <- 'keep'; ambig_rm[ambig_rm==TRUE] <- 'amb'
     data$type[data$type!='oob'] <- ambig_rm
-    
+
     # Mark points with very low density
     inv_dnorm <- function(x) {sqrt( -2*log(sqrt(2*pi) * x)) }
     mod_data_den <- inv_dnorm(exp(data_den_max))
@@ -474,10 +494,10 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
     density_rm[density_rm==FALSE] <- 'keep'; density_rm[density_rm==TRUE] <- 'den'
     density_rm[ambig_rm=='amb'] <- 'amb' # an ambiguous point is still kept as ambiguity
     data$type[data$type!='oob'] <- density_rm
-    
+
     # Method 2: Line membership	based on y_diff
     data$line <- NA; data$line[data$type!='oob'] <- apply(y_diff, 1, which.min)
-    
+
     # mark out of reading bound fixations
     if (num_checkFirst != 0) { # for the first few fixations
       templine <- data$line[1:num_checkFirst]
@@ -497,14 +517,14 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
         # there are no last line fixations, treating them as random elsewhere seeing.
         # here, max(templine, na.rm=TRUE) is used instead of n_lines, in case that no fixation is categorized in the last line
         ind <- max(which(templine == max(templine, na.rm=TRUE)), na.rm=TRUE)
-        if (ind < num_checkLast) { 
+        if (ind < num_checkLast) {
           for (i in (nrow(data)-num_checkLast+ind+1):nrow(data)) {
             if (!is.na(templine[i-nrow(data)+num_checkLast])) data$type[i] <- 'oob_r'
           }
         }
       }
     }
-    
+
     # Recategorize ambiguous pts based on surrounding fixations
     amb_ind <- which(data$type == 'amb') # Get indices of ambiguous pts
     # Go through each of these points
@@ -546,7 +566,7 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
     # Store fitted parameters and fit measures
     data$slope <- k; data$offset <- o; data$sd <- s
     data$fit_den <- fit_den; data$fit_y_diff <- fit_y_diff
-    
+
     return(data) # Return data
   }
 }
@@ -555,12 +575,12 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
 #' @title Categorize fixations into appropriate text line unction to optimize slope, offset and sd for all lines of fixations (extedned from original paper)
 #' @description This function uses many slopes, ver_offsets, sds to fit every lines, and use -sum(data_den_max)
 #'  as target measure for optimizationuses
-#' @details 
-#' 
+#' @details TAO, PLEASE PROVIDE DETAILS
+#'
 #' @param params parameters (slope, vert_offset, sd) for optimization
 #' @param fit_it TRUE -> return fit measure, FALSE -> return fit information
 #' @param data fixation data frame containing at least x_pos, y_pos
-#' @param start_pts data frame containing starting point of each base line (x_pos, y_pos) 
+#' @param start_pts data frame containing starting point of each base line (x_pos, y_pos)
 #' @param k_bounds boundary of slope
 #' @param o_bounds boundary of offset
 #' @param s_bounds boundary of sd
@@ -570,26 +590,25 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
 #' @param num_checkLast number of ending fixations used for checking end of reading bound (default 10)
 #'
 #' @return new data frame including fixations, fit measures, and fitted lines information
+#' @author Tao Gong <gtojty@@gmail.com>
 #' @export
-#'
-#' @examples
-cat_lines3 <- function(params, fit_it=TRUE, data, start_pts, 
+cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
                        k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff,
                        num_checkFirst=5, num_checkLast=10) {
-  
+
   ys <- start_pts[,2] # The y-values for the lines
   n_lines <- length(ys) # The number of clusters is based off of the lines
 
   # Initialize matrices
   data_den <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
   y_diff <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
-  
+
   for (l in 1:n_lines) {
     # Unpack the parameters
     k <- k_bounds[1] + (k_bounds[2] - k_bounds[1])*pnorm(params[(l-1)*3+1])
     o <- o_bounds[1] + (o_bounds[2] - o_bounds[1])*pnorm(params[(l-1)*3+2])
     s <- s_bounds[1] + (s_bounds[2] - s_bounds[1])*pnorm(params[(l-1)*3+3])
-    
+
     y_on_line <- o + k*(data$x_pos[data$type!='oob'] - start_pts[l,1]) + start_pts[l,2] # The value of each point on each line
     data_den[,l] <- log(dnorm(data$y_pos[data$type!='oob'], mean=y_on_line, sd=s)) # Log density value for each point based on the line and sd
     y_diff[,l] <- abs(data$y_pos[data$type!='oob'] - y_on_line) # Store the difference between the real and fitted value
@@ -618,7 +637,7 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
     ambig_rm <- data_den_ratio <= den_ratio_cutoff
     ambig_rm[ambig_rm==FALSE] <- 'keep'; ambig_rm[ambig_rm==TRUE] <- 'amb'
     data$type[data$type!='oob'] <- ambig_rm
-    
+
     # Mark points with very low density
     inv_dnorm <- function(x) {sqrt( -2*log(sqrt(2*pi) * x)) }
     mod_data_den <- inv_dnorm(exp(data_den_max))
@@ -628,10 +647,10 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
     density_rm[density_rm==FALSE] <- 'keep'; density_rm[density_rm==TRUE] <- 'den'
     density_rm[ambig_rm=='amb'] <- 'amb' # an ambiguous point is still kept as ambiguity
     data$type[data$type!='oob'] <- density_rm
-    
+
     # Method 3: Line membership	based on data_den
     data$line <- NA; data$line[data$type!='oob'] <- apply(data_den, 1, which.max)
-    
+
     # mark out of reading bound fixations
     if (num_checkFirst != 0) { # for the first few fixations
       templine <- data$line[1:num_checkFirst]
@@ -651,14 +670,14 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
         # there are no last line fixations, treating them as random elsewhere seeing.
         # here, max(templine, na.rm=TRUE) is used instead of n_lines, in case that no fixation is categorized in the last line
         ind <- max(which(templine == max(templine, na.rm=TRUE)), na.rm=TRUE)
-        if (ind < num_checkLast) { 
+        if (ind < num_checkLast) {
           for (i in (nrow(data)-num_checkLast+ind+1):nrow(data)) {
             if (!is.na(templine[i-nrow(data)+num_checkLast])) data$type[i] <- 'oob_r'
           }
         }
       }
     }
-    
+
     # Recategorize ambiguous pts based on surrounding fixations
     amb_ind <- which(data$type == 'amb') # Get indices of ambiguous pts
     # Go through each of these points
@@ -710,21 +729,22 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
       data$sd[(data$type!='oob') & (data$line==i)] <- newparams[(i-1)*3+3]
     }
     data$fit_den <- fit_den; data$fit_y_diff <- fit_y_diff
-    
+
     return(data) # Return data
   }
 }
 
 
-#' @title Function to optimize slope, offset and sd for all lines of fixations (extended from original paper)
-#' @description This function uses many slopes, ver_offsets, sds for every lines, and use sum(min y_diff)
-#'  as target measure for optimizationuses
-#' @details 
-#' 
+#' @title Function to optimize slope, offset and sd for all lines of fixations (extended from
+#'     original paper)
+#' @description This function uses many slopes, ver_offsets, sds for every lines, and use sum(min
+#'     y_diff) as target measure for optimizationuses
+#' @details TAO, PLEASE PROVIDE DETAILS
+#'
 #' @param params parameters (slope, vert_offset, sd) for optimization
 #' @param fit_it TRUE -> return fit measure, FALSE -> return fit information
 #' @param data fixation data frame containing at least x_pos, y_pos
-#' @param start_pts starting point of each base line (x_pos, y_pos) 
+#' @param start_pts starting point of each base line (x_pos, y_pos)
 #' @param k_bounds boundary of slope
 #' @param o_bounds boundary of offset
 #' @param s_bounds boundary of sd
@@ -734,26 +754,25 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
 #' @param num_checkLast number of ending fixations used for checking end of reading bound (default 10)
 #'
 #' @return new data frame including fixations, fit measures, and fitted lines information
+#' @author Tao Gong <gtojty@@gmail.com>
 #' @export
-#'
-#' @examples
-cat_lines4 <- function(params, fit_it=TRUE, data, start_pts, 
+cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
                        k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff,
                        num_checkFirst=5, num_checkLast=10) {
-  
+
   ys <- start_pts[,2] # The y-values for the lines
   n_lines <- length(ys) # The number of clusters is based off of the lines
 
   # Initialize matrices
   data_den <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
   y_diff <- matrix(numeric(0), nrow(data[data$type!='oob',]), n_lines)
-  
+
   for (l in 1:n_lines) {
     # Unpack the parameters
     k <- k_bounds[1] + (k_bounds[2] - k_bounds[1])*pnorm(params[(l-1)*3+1])
     o <- o_bounds[1] + (o_bounds[2] - o_bounds[1])*pnorm(params[(l-1)*3+2])
     s <- s_bounds[1] + (s_bounds[2] - s_bounds[1])*pnorm(params[(l-1)*3+3])
-    
+
     y_on_line <- o + k*(data$x_pos[data$type!='oob'] - start_pts[l,1]) + start_pts[l,2] # The value of each point on each line
     data_den[,l] <- log(dnorm(data$y_pos[data$type!='oob'], mean=y_on_line, sd=s)) # Log density value for each point based on the line and sd
     y_diff[,l] <- abs(data$y_pos[data$type!='oob'] - y_on_line) # Store the difference between the real and fitted value
@@ -782,7 +801,7 @@ cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
     ambig_rm <- data_den_ratio <= den_ratio_cutoff
     ambig_rm[ambig_rm==FALSE] <- 'keep'; ambig_rm[ambig_rm==TRUE] <- 'amb'
     data$type[data$type!='oob'] <- ambig_rm
-    
+
     # Mark points with very low density
     inv_dnorm <- function(x) {sqrt( -2*log(sqrt(2*pi) * x)) }
     mod_data_den <- inv_dnorm(exp(data_den_max))
@@ -792,10 +811,10 @@ cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
     density_rm[density_rm==FALSE] <- 'keep'; density_rm[density_rm==TRUE] <- 'den'
     density_rm[ambig_rm=='amb'] <- 'amb' # an ambiguous point is still kept as ambiguity
     data$type[data$type!='oob'] <- density_rm
-    
+
     # Method 4: Line membership	based on y_diff
     data$line <- NA; data$line[data$type!='oob'] <- apply(y_diff, 1, which.min)
-    
+
     # mark out of reading bound fixations
     if (num_checkFirst != 0) { # for the first few fixations
       templine <- data$line[1:num_checkFirst]
@@ -815,14 +834,14 @@ cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
         # there are no last line fixations, treating them as random elsewhere seeing.
         # here, max(templine, na.rm=TRUE) is used instead of n_lines, in case that no fixation is categorized in the last line
         ind <- max(which(templine == max(templine, na.rm=TRUE)), na.rm=TRUE)
-        if (ind < num_checkLast) { 
+        if (ind < num_checkLast) {
           for (i in (nrow(data)-num_checkLast+ind+1):nrow(data)) {
             if (!is.na(templine[i-nrow(data)+num_checkLast])) data$type[i] <- 'oob_r'
           }
         }
       }
     }
-    
+
     # Recategorize ambiguous pts based on surrounding fixations
     amb_ind <- which(data$type == 'amb') # Get indices of ambiguous pts
     # Go through each of these points
@@ -874,7 +893,7 @@ cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
       data$sd[(data$type!='oob') & (data$line==i)] <- newparams[(i-1)*3+3]
     }
     data$fit_den <- fit_den; data$fit_y_diff <- fit_y_diff
-    
+
     return(data) # Return data
   }
 }
@@ -882,28 +901,33 @@ cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
 
 #' @title This function draws original and modified fixations with fitted lines
 #' @description This function is suitable for values optimized by create_lines3 and create_lines4
-#' @details 
+#'
+#' @details TAO, PLEASE PROVIDE DETAILS
 #'
 #' @param data fixation data frame containing positions, durations, fitted measure and fitted line information
 #' @param start_pts starting point of each base line (x_pos, y_pos)
 #' @param output_filehead output figure file head
-#' @param draw_type 'hand' -> hand-made fixation lines, output file ends with '_hand' 
-#'                  'original' -> original fixation lines, output file ends with '_ori' 
+#' @param draw_type 'hand' -> hand-made fixation lines, output file ends with '_hand'
+#'                  'original' -> original fixation lines, output file ends with '_ori'
 #'                  'modified' -> residule fixation lines, output file ends with '_mod'
 #' @param bg_image_name background trial figure file
 #' @param image_width default image width (1280)
 #' @param image_height default image height (1024)
 #'
-#' @return nothing
+#' @return None. Called for the side effect of creating a plot.
+#' @author Tao Gong <gtojty@@gmail.com>
 #' @export
-#'
-#' @examples
-trial_plots <- function(data, start_pts, output_filehead, draw_type, 
-                        bg_image_name=NULL, image_width=1280, image_height=1024) {
+trial_plots <- function(data,
+                        start_pts,
+                        output_filehead,
+                        draw_type,
+                        bg_image_name=NULL,
+                        image_width=1280,
+                        image_height=1024) {
 
   pt_size_min = 1; pt_size_max = 4 # Constants
   n_lines <- nrow(start_pts) # Line info
-  
+
   # Handle data
   dur_five_num <- fivenum(data$duration) # Get five number summary of duration
   # Point sizes based on duration
@@ -911,10 +935,10 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
   data$pt_size <- m*(data$duration - dur_five_num[1]) + pt_size_min
 
   # Open a plot device
-  if (draw_type == 'hand') png(file = paste(output_filehead, '_hand.png', sep=''), width = image_width, height = image_height, units = "px", res = 300, pointsize=4)
-  if (draw_type == 'original') png(file = paste(output_filehead, '_ori.png', sep=''), width = image_width, height = image_height, units = "px", res = 300, pointsize=4)
-  if (draw_type == 'modified') png(file = paste(output_filehead, '_mod.png', sep=''), width = image_width, height = image_height, units = "px", res = 300, pointsize=4)
-  
+  if (draw_type == 'hand') png(filename = paste(output_filehead, '_hand.png', sep=''), width = image_width, height = image_height, units = "px", res = 300, pointsize=4)
+  if (draw_type == 'original') png(filename = paste(output_filehead, '_ori.png', sep=''), width = image_width, height = image_height, units = "px", res = 300, pointsize=4)
+  if (draw_type == 'modified') png(filename = paste(output_filehead, '_mod.png', sep=''), width = image_width, height = image_height, units = "px", res = 300, pointsize=4)
+
   # Handle background picture
   if (is.null(bg_image_name)) plot(1, type='n', main='Fixations with Classifications', xlab='x_pos', ylab='y_pos', xlim=c(0, image_width), ylim=c(image_height, 0)) # draw a blank plot
   else {
@@ -937,21 +961,21 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
       plot(1, type='n', main='Fixations with Classifications', xlab='x_pos', ylab='y_pos', xlim=c(0, image_width), ylim=c(image_height, 0))
     }
   }
-  
+
   if (draw_type == 'hand') {
     # for hand made categorization
     # separate different types of data
     data_hand <- data[data$hand_line %in% 1:n_lines,] # only draw hand categorized fixations
     data_oob_r <- data[data$hand_line==n_lines+1,] # end of reading fixations
     data_amb <- data[!(data$hand_line %in% 1:n_lines) & (data$hand_line!=n_lines+1),] # between line fixations
-    
+
     # Drawing
     # 1) fixation ordering
     points(data$x_pos, data$y_pos, cex=data$pt_size, col='yellow', pch=1, type='l', lty='dashed')
     # 2) kept fixations
     for (i in 1:n_lines) {
       cat <- data_hand$hand_line == i
-      points(data_hand$x_pos[cat], data_hand$y_pos[cat], cex=data_hand$pt_size[cat], 
+      points(data_hand$x_pos[cat], data_hand$y_pos[cat], cex=data_hand$pt_size[cat],
              col=c('blue', 'red')[i%%2+1], pch=1)
     }
     # 3) other types of fixations
@@ -959,12 +983,12 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
     points(data_amb$x_pos, data_amb$y_pos, cex=data_amb$pt_size, col='purple', pch=1)
     # 4) fitted lines (base lines)
     for (i in 1:n_lines) {
-      lines(c(start_pts[i,1], max(data$x_pos)), c(start_pts[i,2], start_pts[i,2]), 
+      lines(c(start_pts[i,1], max(data$x_pos)), c(start_pts[i,2], start_pts[i,2]),
             col=c('blue', 'red')[i%%2+1])
     }
     # legends for fixations (no oob fixations)
-    legend(x='topright', 
-           legend=c('Kept', 'Kept', 'Out-of-Reading', 'Ambiguous'), 
+    legend(x='topright',
+           legend=c('Kept', 'Kept', 'Out-of-Reading', 'Ambiguous'),
            pch=c(1, 1, 1, 1), col=c('red', 'blue', 'cyan', 'purple'), cex = 1.2, bty='n')
   }
 
@@ -976,14 +1000,14 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
     data_oob_r <- data[data$type == 'oob_r',] # fixations out of reading boundary at the beginning and the ending
     data_den <-  data[data$type == 'den',] # fixations with low density
     data_amb <-  data[data$type == 'amb',] # ambiguous fixations
-    
+
     # Drawing
     # 1) fixation ordering
     points(data$x_pos, data$y_pos, cex=data$pt_size, col='yellow', pch=1, type='l', lty='dashed')
     # 2) kept fixations
     for (i in 1:n_lines) {
       cat <- data_keep$line == i
-      points(data_keep$x_pos[cat], data_keep$y_pos[cat], cex=data_keep$pt_size[cat], 
+      points(data_keep$x_pos[cat], data_keep$y_pos[cat], cex=data_keep$pt_size[cat],
              col=c('blue', 'red')[i%%2+1], pch=1)
     }
     # 3) deleted fixations
@@ -994,12 +1018,12 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
     # 4) fitted lines
     for (i in 1:n_lines) {
       slope <- data$slope[(i-1)*3+1]; offset <- data$offset[(i-1)*3+2]
-      lines(c(start_pts[i,1], max(data$x_pos)), c(start_pts[i,2] + offset, start_pts[i,2] + slope*(max(data$x_pos) - start_pts[i,1]) + offset), 
+      lines(c(start_pts[i,1], max(data$x_pos)), c(start_pts[i,2] + offset, start_pts[i,2] + slope*(max(data$x_pos) - start_pts[i,1]) + offset),
             col=c('blue', 'red')[i%%2+1])
     }
     # legends for fixations
-    legend(x='topright', 
-           legend=c('Kept', 'Kept', 'Out-of-bounds', 'Out-of-Reading', 'Low density', 'Ambiguous'), 
+    legend(x='topright',
+           legend=c('Kept', 'Kept', 'Out-of-bounds', 'Out-of-Reading', 'Low density', 'Ambiguous'),
            pch=c(1, 1, 1, 1, 1, 1), col=c('red', 'blue', 'gray', 'cyan', 'orange', 'purple'), cex = 1.2, bty='n')
     # legends for line parameters
     legend(x='bottomright',
@@ -1017,28 +1041,28 @@ trial_plots <- function(data, start_pts, output_filehead, draw_type,
     data_oob_r <- data[data$type == 'oob_r',] # fixations out of reading boundary at the beginning and the ending
     data_den <-  data[data$type == 'den',] # fixations with low density
     data_amb <-  data[data$type == 'amb',] # ambiguous fixations
-    
+
     # Drawing
     # 1) fixation ordering (no oob fixations)
     points(data$x_pos[data$type!='oob'], data$y_line[data$type!='oob'] + data$y_res[data$type!='oob'], cex=data$pt_size[data$type!='oob'], col='yellow', pch=1, type='l', lty='dashed')
     # 2) kept fixations
     for (i in 1:n_lines) {
       cat <- data_keep$line == i
-      points(data_keep$x_pos[cat], data_keep$y_line[cat] + data_keep$y_res[cat], cex=data_keep$pt_size[cat], 
+      points(data_keep$x_pos[cat], data_keep$y_line[cat] + data_keep$y_res[cat], cex=data_keep$pt_size[cat],
              col=c('blue', 'red')[i%%2+1], pch=1)
     }
     # 3) deleted fixations
-    points(data_oob_r$x_pos, data_oob_r$y_line + data_oob_r$y_res, cex=data_oob_r$pt_size, col='cyan', pch=1) 
+    points(data_oob_r$x_pos, data_oob_r$y_line + data_oob_r$y_res, cex=data_oob_r$pt_size, col='cyan', pch=1)
     points(data_den$x_pos, data_den$y_line + data_den$y_res, cex=data_den$pt_size, col='orange', pch=1)
     points(data_amb$x_pos, data_amb$y_line + data_amb$y_res, cex=data_amb$pt_size, col='purple', pch=1)
     # 4) fitted lines (base lines)
     for (i in 1:n_lines) {
-      lines(c(start_pts[i,1], max(data$x_pos)), c(start_pts[i,2], start_pts[i,2]), 
+      lines(c(start_pts[i,1], max(data$x_pos)), c(start_pts[i,2], start_pts[i,2]),
             col=c('blue', 'red')[i%%2+1])
     }
     # legends for fixations (no oob fixations)
-    legend(x='topright', 
-           legend=c('Kept', 'Kept', 'Out-of-Reading', 'Low density', 'Ambiguous'), 
+    legend(x='topright',
+           legend=c('Kept', 'Kept', 'Out-of-Reading', 'Low density', 'Ambiguous'),
            pch=c(1, 1, 1, 1, 1), col=c('red', 'blue', 'cyan', 'orange', 'purple'), cex = 1.2, bty='n')
     # legends for line parameters
     legend(x='bottomright',

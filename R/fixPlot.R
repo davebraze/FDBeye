@@ -29,9 +29,9 @@
 ##' @examples
 ##' data <- data.frame(x=seq(10, 1270, length.out=10),
 ##'               y=seq(10, 1014, length.out=10))
-##'
+##' bg <- system.file("extdata/story01.png", package="FDBeye")
 ##' fixPlot(data = data,
-##'         bgImage = "./../inst/extdata/story01.png",
+##'         bgImage = bg,
 ##'         xyMap = ggplot2::aes_string(x='x', y='y'),
 ##'         pointMap =ggplot2::aes_string())
 fixPlot <- function(data,

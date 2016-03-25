@@ -46,6 +46,15 @@ This is a convenience function for using ggplot() to lay fixation data over a
     these will correspond to the visual stimulus viewed by subjects while gaze was
     recorded. Function returns a ggplot2 object which can be further modified by ggplot2 geoms.
 }
+\examples{
+data <- data.frame(x=seq(10, 1270, length.out=10),
+              y=seq(10, 1014, length.out=10))
+bg <- system.file("extdata/story01.png", package="FDBeye")
+fixPlot(data = data,
+        bgImage = bg,
+        xyMap = ggplot2::aes_string(x='x', y='y'),
+        pointMap =ggplot2::aes_string())
+}
 \author{
 Dave Braze \email{davebraze@gmail.com}
 }

@@ -21,13 +21,15 @@ Filename and path to anonymized file.
 \description{
 Remove potentially identifying information from header of an SRR *ASC file. Write
     the new file to the current working directory. This is a superficial
-    method of anonymization, but it should do for most cases.
+    method of de-identification or anonymization, but it should do for most cases.
 }
 \details{
-By default, newly created anonymous *ASC file will will use the same name as the
-    source *ASC file, but with "-anon" appended. In this case, the same base filename will be
-    used as the name of the *EDF filename in the "CONVERTED FROM" line of the anonynmized *ASC
-    file.
+By default, newly created anonymous *ASC file will will use the same name as the source
+    *ASC file, but with "-anon" appended. In this case, the same base filename will be used as
+    the name of the *EDF filename in the "CONVERTED FROM" line of the anonynmized *ASC
+    file. This is problematic in that, under our usual operating procedures, the filename itself
+    usually consists of an identifier that is uniquely traceable to the participant. In order to
+    make the file truly anonymous, the newName argument must be used.
 
     If newName is provided, that will be used as the basename for the EDF file in the CONVERTED
     FROM line, as well as the output file name.
