@@ -15,6 +15,7 @@ Imports:
     grid,
     plyr,
     png,
+    stringi,
     stringr,
     tools
 Description:

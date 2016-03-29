@@ -23,11 +23,7 @@ A copy of data with out of boundary fixations marked as 'oob'
 This function is modified from Cohen's paper
 }
 \details{
-<<<<<<< HEAD
 This function marks fixations outside boundary as 'oob'
-=======
-This function marks fixations oustide boundary as 'oob'
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 }
 \author{
 Tao Gong <gtojty@gmail.com>

@@ -15,11 +15,7 @@ cat_lines1(params, fit_it = TRUE, data, start_pts, k_bounds, o_bounds,
 
 \item{data}{fixation data frame containing at least x_pos, y_pos}
 
-<<<<<<< HEAD
 \item{start_pts}{dataframe containing starting point of each base line (x_pos, y_pos, trial_num).}
-=======
-\item{start_pts}{dataframe contatining starting point of each base line (x_pos, y_pos, trial_num)}
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 
 \item{k_bounds}{boundary of slope (default: [-0.1, 0.1])}
 
@@ -48,13 +44,8 @@ new data frame including fixations, fit measures, and fitted lines information
 This function follows closely upon that described in Cohen's paper
 }
 \details{
-<<<<<<< HEAD
 This function optimizes the slope, offset and sd for all lines of fixations. It uses
     -sum(data_den_max) as fit measure for optimization.
-=======
-This function optimizes the slope, offset and sd for all lines of fixations. It uses -sum(data_den_max)
- as fit measure for optimization
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 }
 \author{
 Tao Gong <gtojty@gmail.com>
