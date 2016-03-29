@@ -1,8 +1,8 @@
 Package: FDBeye
 Type: Package
 Title: Functions to Ease Work with Eyetracker Data
-Version: 0.0.8
-Date: 2016-02-06
+Version: 0.0.9
+Date: 2016-03-29
 Author: David Braze
 Maintainer: David Braze <davebraze@gmail.com>
 Depends:
