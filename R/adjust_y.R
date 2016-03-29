@@ -4,12 +4,8 @@ if (FALSE) {
 
   k_bounds <- c(-.1, .1)
   o_bounds <- c(-30, 30) # about half distance between adjacent line
-<<<<<<< HEAD
   s_bounds <- c(1, 12) # about 0.4 of o_bounds[0]; this is from normal attempt, usually items having
                        # 2.5 SD from the mean will be viewed as outliers.
-=======
-  s_bounds <- c(1, 12) # about 0.4 of o_bounds[0]; this is from normal attempt, usually items having 2.5 SD from the mean will be viewed as outliers.
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
   den_sd_cutoff <- Inf # remove points for which the density is > this many sd away from mean density
   den_ratio_cutoff <- 1 # remove points for which (max density)/(2nd max density) not high enough
 
@@ -63,7 +59,6 @@ if (FALSE) {
       if (cur_trial==3) init_params <- init_params_mult3
 
       data_m1 <- rbind(data_m1,
-<<<<<<< HEAD
                        adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,],
                                 init_params_sing, cat_lines1, k_bounds=k_bounds, o_bounds=o_bounds,
                                 s_bounds=s_bounds, den_sd_cutoff=den_sd_cutoff,
@@ -84,22 +79,6 @@ if (FALSE) {
                        adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params,
                                 cat_lines4, k_bounds=k_bounds, o_bounds=o_bounds, s_bounds=s_bounds,
                                 den_sd_cutoff=den_sd_cutoff, den_ratio_cutoff=den_ratio_cutoff)
-=======
-                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params_sing, cat_lines1,
-                                k_bounds=k_bounds, o_bounds=o_bounds, s_bounds=s_bounds, den_sd_cutoff=den_sd_cutoff, den_ratio_cutoff=den_ratio_cutoff)
-                       )
-      data_m2 <- rbind(data_m2,
-                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params_sing, cat_lines2,
-                                k_bounds=k_bounds, o_bounds=o_bounds, s_bounds=s_bounds, den_sd_cutoff=den_sd_cutoff, den_ratio_cutoff=den_ratio_cutoff)
-                       )
-      data_m3 <- rbind(data_m3,
-                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params, cat_lines3,
-                                k_bounds=k_bounds, o_bounds=o_bounds, s_bounds=s_bounds, den_sd_cutoff=den_sd_cutoff, den_ratio_cutoff=den_ratio_cutoff)
-                       )
-      data_m4 <- rbind(data_m4,
-                       adjust_y(subdata, start_pts[start_pts$trial_num==cur_trial,], init_params, cat_lines4,
-                                k_bounds=k_bounds, o_bounds=o_bounds, s_bounds=s_bounds, den_sd_cutoff=den_sd_cutoff, den_ratio_cutoff=den_ratio_cutoff)
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
                        )
     }
 
@@ -119,17 +98,10 @@ if (FALSE) {
     for (method in 1:num_methods) {
       Alldata <- read.csv(paste(subjID, '_m', method, '.csv', sep=''), na.strings = 'NA')
       for (cur_trial in 1:num_trial) {
-<<<<<<< HEAD
           trial_plots(Alldata[Alldata$trial_num==cur_trial,], start_pts[start_pts$trial_num==cur_trial,],
                       paste(subjID, '_t', cur_trial, '_m', method, sep=''), 'original', bg_images[cur_trial])
           trial_plots(Alldata[Alldata$trial_num==cur_trial,], start_pts[start_pts$trial_num==cur_trial,],
                       paste(subjID, '_t', cur_trial, '_m', method, sep=''), 'modified', bg_images[cur_trial])
-=======
-        trial_plots(Alldata[Alldata$trial_num==cur_trial,], start_pts[start_pts$trial_num==cur_trial,],
-                    paste(subjID, '_t', cur_trial, '_m', method, sep=''), 'original', bg_images[cur_trial])
-        trial_plots(Alldata[Alldata$trial_num==cur_trial,], start_pts[start_pts$trial_num==cur_trial,],
-                    paste(subjID, '_t', cur_trial, '_m', method, sep=''), 'modified', bg_images[cur_trial])
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
       }
     }
     # draw hand made categorization
@@ -233,15 +205,10 @@ get_start_pts <- function(region_file,
 #' @author Tao Gong <gtojty@@gmail.com>
 #' @export
 #'
-<<<<<<< HEAD
 get_xybounds <- function(region_file,
                          trial_num,
                          image_width=1280,
                          image_height=1024) {
-=======
-get_xybounds <- function(region_file, trial_num,
-                         image_width=1280, image_height=1024) {
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 
   if (is.null(region_file)) stop('Region file is not inputted!')
   if(!file.exists(region_file)) stop(paste('Region file: ', region_file, ' doesn\'t exist!', sep=''))
@@ -263,11 +230,7 @@ get_xybounds <- function(region_file, trial_num,
 
 #' @title Mark out of boundary fixations
 #' @description This function is modified from Cohen's paper
-<<<<<<< HEAD
 #' @details This function marks fixations outside boundary as 'oob'
-=======
-#' @details This function marks fixations oustide boundary as 'oob'
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 #'
 #' @param data fixation data
 #' @param xy_bounds boundary of fixations. If it has one row, all trials use the same boundary (xmin, xmax, ymin, ymax);
@@ -278,14 +241,10 @@ get_xybounds <- function(region_file, trial_num,
 #' @return A copy of data with out of boundary fixations marked as 'oob'
 #' @author Tao Gong <gtojty@@gmail.com>
 #' @export
-<<<<<<< HEAD
 mark_oob <- function(data,
                      xy_bounds,
                      trial_num,
                      cur_trial) {
-=======
-mark_oob <- function(data, xy_bounds, trial_num, cur_trial) {
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 
   if (is.null(xy_bounds)) stop('xy_bounds is not inputted')
   else {
@@ -310,22 +269,13 @@ mark_oob <- function(data, xy_bounds, trial_num, cur_trial) {
 #'
 #' @description This function follows closely upon that described in Cohen's paper
 #'
-<<<<<<< HEAD
 #' @details This function optimizes the slope, offset and sd for all lines of fixations. It uses
 #'     -sum(data_den_max) as fit measure for optimization.
-=======
-#' @details This function optimizes the slope, offset and sd for all lines of fixations. It uses -sum(data_den_max)
-#'  as fit measure for optimization
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 #'
 #' @param params parameters (slope, offset, sd) for optimization
 #' @param fit_it TRUE -> return fit measure, FALSE -> return fit information
 #' @param data fixation data frame containing at least x_pos, y_pos
-<<<<<<< HEAD
 #' @param start_pts dataframe containing starting point of each base line (x_pos, y_pos, trial_num).
-=======
-#' @param start_pts dataframe contatining starting point of each base line (x_pos, y_pos, trial_num)
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 #' @param k_bounds boundary of slope (default: [-0.1, 0.1])
 #' @param o_bounds boundary of offset (default: [-0.5*dist of adjacent text lines, 0.5*dist of
 #'     adjacent text line])
@@ -506,7 +456,6 @@ cat_lines1 <- function(params,
 #' @return new data frame including fixations, fit measures, and fitted lines information
 #' @author Tao Gong <gtojty@@gmail.com>
 #' @export
-<<<<<<< HEAD
 cat_lines2 <- function(params,
                        fit_it=TRUE,
                        data,
@@ -518,11 +467,6 @@ cat_lines2 <- function(params,
                        den_ratio_cutoff,
                        num_checkFirst=5,
                        num_checkLast=10) {
-=======
-cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
-                       k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff,
-                       num_checkFirst=5, num_checkLast=10) {
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 
   ys <- start_pts[,2] # The y-values for the lines
   n_lines <- length(ys) # The number of clusters is based off of the lines
@@ -672,7 +616,6 @@ cat_lines2 <- function(params, fit_it=TRUE, data, start_pts,
 #' @return new data frame including fixations, fit measures, and fitted lines information
 #' @author Tao Gong <gtojty@@gmail.com>
 #' @export
-<<<<<<< HEAD
 cat_lines3 <- function(params,
                        fit_it=TRUE,
                        data,
@@ -684,11 +627,6 @@ cat_lines3 <- function(params,
                        den_ratio_cutoff,
                        num_checkFirst=5,
                        num_checkLast=10) {
-=======
-cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
-                       k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff,
-                       num_checkFirst=5, num_checkLast=10) {
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 
   ys <- start_pts[,2] # The y-values for the lines
   n_lines <- length(ys) # The number of clusters is based off of the lines
@@ -850,7 +788,6 @@ cat_lines3 <- function(params, fit_it=TRUE, data, start_pts,
 #' @return new data frame including fixations, fit measures, and fitted lines information
 #' @author Tao Gong <gtojty@@gmail.com>
 #' @export
-<<<<<<< HEAD
 cat_lines4 <- function(params,
                        fit_it=TRUE,
                        data,
@@ -862,11 +799,6 @@ cat_lines4 <- function(params,
                        den_ratio_cutoff,
                        num_checkFirst=5,
                        num_checkLast=10) {
-=======
-cat_lines4 <- function(params, fit_it=TRUE, data, start_pts,
-                       k_bounds, o_bounds, s_bounds, den_sd_cutoff, den_ratio_cutoff,
-                       num_checkFirst=5, num_checkLast=10) {
->>>>>>> 2385479... adjust_y.R, edits to roxygen blocks
 
   ys <- start_pts[,2] # The y-values for the lines
   n_lines <- length(ys) # The number of clusters is based off of the lines
