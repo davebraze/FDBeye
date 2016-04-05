@@ -60,6 +60,8 @@ know. Better yet, fork this repository, make the changes yourself, and send me a
 
 ### *Python* packages ###
 
+  * ***cili***: on github <https://github.com/beOn/cili>. Reduce overhead in working with SRR Eyelink data. Extracts
+    events from SRR ASC files and provides as pandas DataFrames.
   * ***DynAOI***: on launchpad <https://launchpad.net/dynaoi>. Described in *Behav Res*
     <https://www.iwm-tuebingen.de/cybermedia/dynaoi/PapenmeierHuffBRM.pdf>. Analysis of EM in relation to
     moving objects. Python codebase, relies on Blender for some functions. Last update in 2011.
