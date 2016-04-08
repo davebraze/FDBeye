@@ -96,6 +96,9 @@ know. Better yet, fork this repository, make the changes yourself, and send me a
     analysis. Last update in 2014. Described in J. of *Eye Movement Research* <http://www.jemr.org/online/7/1/1>.
   * ***ScanMatch***: web page <http://seis.bris.ac.uk/~psidg/ScanMatch/>. Described in *Behav Res*
     <http://seis.bris.ac.uk/~psidg/ScanMatch/CMTG2010.pdf>. Scan path analysis. Matlab toolbox. Last update 2009.
+  * ***calib_adjust_code*** web page at <http://langcog.stanford.edu/materials/calib.html>. Method for offline
+    calibration adjustment of Tobii eyetrackers, specifically geared toward work with infants. Additional description in
+    the journal _Infancy_ <http://langcog.stanford.edu/papers/FVS-infancy2012.pdf>.
 
 ### Other languages ###
 
