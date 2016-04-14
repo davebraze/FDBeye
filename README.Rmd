@@ -81,7 +81,11 @@ know. Better yet, fork this repository, make the changes yourself, and send me a
   * ***pyeparse***: on github <https://github.com/pyeparse/pyeparse>. Python codebase. "analyzing eye tracking data from
     cogntive sciences experiments," SRR eyelink trackers. Last update in 2015. Seems active.
   * ***PyGaze***: on github <https://github.com/esdalmaijer/PyGaze>. Python codebase. Focussed on data collection
-    "programming of eyetracking experiments". Web site at <http://www.pygaze.org/>. Actively developed.
+    "programming of eyetracking experiments". Web site at <http://www.pygaze.org/>. Also see BRM paper
+    <http://link.springer.com/article/10.3758%2Fs13428-013-0422-2>. Actively developed.
+  * ***PyGazeAnalyser***: Post-acquisition processing tools associated with PyGaze. On GitHub at
+    <https://github.com/esdalmaijer/PyGazeAnalyser>. Parses SRR ASC files and SensoMotoric IDF ASCII files. Plots
+    heatmaps, scanpaths, fixation locations.
   * ***Samara***: on github <https://github.com/m-macaskill/Samara>. Python codebase. Saccade analysis, SMI iView
     trackers. Last update in 2013.
 
