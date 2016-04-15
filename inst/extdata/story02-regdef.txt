@@ -1,0 +1,69 @@
+---
+screen:			# screen width and height in pixels
+  width: 1280
+  height: 1024
+font:
+  name: NA		# name of font used for text display on screen
+  size: NA		# nominal size of font on screen, in points
+character:
+  width: 11		# character width on screen, in pixels, assumes monospace font
+  height: 14
+lines:
+  spacing: 61		# baseline to baseline distance between lines on screen (pixels)
+  baselines:		# locations of baselines on screen, on for each line of text (pixels)
+  - 86
+  - 147
+  - 208
+  - 269
+  - 330
+  - 395
+  - 456
+  - 521
+  - 582
+margins:
+  top: 72 		# distance from top of screen to top of 1st line of text in pixels
+  left: 215		# distance from left edge of screen to left edge of 1st character in line of text, in pixels.
+  bottom: 585
+  right: 1039
+regions:
+  maxH: 30		# extent of scoring region above baseline in pixels. Good default probably 1/2(lines$spacing)
+  minH: 30		# extent of scoring region below baseline in pixels. Good default probably 1/2(lines$spacing)
+  padL: 0		# extent to pad 1st region on line to left of 1st character, in pixels.
+  padR: 0		# extent to pad last region on line to right of last character, in pixels.
+---
+
+The trial pack of Beauty-Forever pills made the couple feel 
+[ ][    ][   ][ ][             ][    ][   ][  ][     ][   ]
+[  |     |    |  |              |     |    |   |      |   ]
+
+more attractive than either had ever imagined possibly. Suddenly
+[  ][         ][   ][     ][  ][   ][       ][        ][       ]
+[   |          |    |      |   |    |        |         |       ]
+
+their marriage was filled with more laughter, more cuddling, more
+[   ][       ][  ][     ][   ][   ][        ][   ][        ][   ]
+[    |        |   |      |    |    |         |    |         |   ]
+
+passionate sex more often. Convinced, they became loyal customers.
+[        ][  ][   ][     ][         ][   ][     ][    ][         ]
+[         |   |    |      |          |    |      |     |         ]
+
+One day, lying in bed, their seemingly perfect bodies naked and 
+[ ][   ][    ][ ][   ][    ][        ][      ][     ][    ][  ]
+[  |    |     |  |    |     |         |       |      |     |  ]
+
+spent together, the wife said, "Did you think I was beautiful before?"
+[   ][        ][  ][   ][    ][   ][  ][    ][][  ][        ][       ]
+[    |         |   |    |     |    |   |     | |   |         |       ]
+
+The husband said, "Of course I did." She replied, "Then let's stop taking
+[ ][      ][    ][  ][     ][][    ][  ][       ][    ][    ][   ][     ]
+[  |       |     |   |      | |     |   |        |     |     |    |     ]
+
+the pills. Let's see each other as we really are." The husband looked
+[ ][     ][    ][  ][   ][    ][ ][ ][     ][    ][  ][      ][     ]
+[  |      |     |   |    |     |  |  |      |     |   |       |     ]
+
+at her, radiant beside him and said, "Maybe tomorrow, dear. Maybe tomorrow."
+[][   ][      ][     ][  ][  ][    ][     ][        ][    ][    ][         ]
+[ |    |       |      |   |   |     |      |         |     |     |         ]
