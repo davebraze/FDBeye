@@ -6,10 +6,10 @@ font:
   name: NA		# name of font used for text display on screen
   size: NA		# nominal size of font on screen, in points
 character:
-  width: 11		# character width on screen, in pixels, assumes monospace font
+  width: 11		# character width on screen (pixels), assumes monospace font
   height: 14
 lines:
-  spacing: 61		# baseline to baseline distance between lines on screen (pixels)
+  spacing: 61		# nominal baseline to baseline distance between lines on screen (pixels)
   baselines:		# locations of baselines on screen, on for each line of text (pixels)
   - 86
   - 147
