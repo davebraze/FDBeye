@@ -20,6 +20,7 @@
 ##'     \item bottom: Integer indicating lower extent of line in pixels.
 ##' }
 ##'
+##' @author Dave Braze <davebraze@@gmail.com>
 getLines <- function(canvas){
 
 }
@@ -45,7 +46,6 @@ if (FALSE) {
 
 }
 
-
 ##' @title Sweep each line of text in a text cavas to estimate
 ##'     character locations.
 ##'
@@ -63,14 +63,17 @@ if (FALSE) {
 ##'     \item right: Integer indicating right-most extent of character in pixels.
 ##' }
 ##'
+##' @author Dave Braze <davebraze@@gmail.com>
 getChars <- function(canvas, lines){}
 
 ##' @title Find the margins in a text canvas
+##'
 ##' @description None yet
 ##'
 ##' @details None yet
 ##'
 ##' @param canvas
 ##' @return A named 4 vector containing top, right, bottom and left margins
-##' @author
+##' @author Dave Braze <davebraze@@gmail.com>
+##'
 getMargins <- function(canvas){}
