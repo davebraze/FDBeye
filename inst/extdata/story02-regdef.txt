@@ -3,8 +3,8 @@ screen:			# screen width and height in pixels
   width: 1280
   height: 1024
 font:
-  name: NA		# name of font used for text display on screen
-  size: NA		# nominal size of font on screen, in points
+  name: LucidaConsole	# name of font used for text display on screen
+  spacing: mono		# prop(ortional) or mono(space)
 character:
   width: 11		# character width on screen, in pixels, assumes monospace font
   height: 14
@@ -32,7 +32,7 @@ regions:
   padR: 0		# extent to pad last region on line to right of last character, in pixels.
 ---
 
-The trial pack of Beauty-Forever pills made the couple feel 
+The trial pack of Beauty-Forever pills made the couple feel
 [ ][    ][   ][ ][             ][    ][   ][  ][     ][   ]
 [  |     |    |  |              |     |    |   |      |   ]
 
@@ -48,7 +48,7 @@ passionate sex more often. Convinced, they became loyal customers.
 [        ][  ][   ][     ][         ][   ][     ][    ][         ]
 [         |   |    |      |          |    |      |     |         ]
 
-One day, lying in bed, their seemingly perfect bodies naked and 
+One day, lying in bed, their seemingly perfect bodies naked and
 [ ][   ][    ][ ][   ][    ][        ][      ][     ][    ][  ]
 [  |    |     |  |    |     |         |       |      |     |  ]
 

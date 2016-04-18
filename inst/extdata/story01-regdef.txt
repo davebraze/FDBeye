@@ -3,8 +3,8 @@ screen:			# screen width and height in pixels
   width: 1280
   height: 1024
 font:
-  name: NA		# name of font used for text display on screen
-  size: NA		# nominal size of font on screen, in points
+  name: LucidaConsole	# name of font used for text display on screen
+  spacing: mono		# prop(ortional) or mono(space)
 character:
   width: 11		# character width on screen, in pixels, assumes monospace font
   height: 14
@@ -32,7 +32,7 @@ margins:
 regions:
   maxH: 30		# extent of scoring region above baseline in pixels. Good default probably 1/2(lines$spacing)
   minH: 30		# extent of scoring region below baseline in pixels. Good default probably 1/2(lines$spacing)
-  padL: 0		# extent to pad 1st region on line to left of 1st character, in pixels. 
+  padL: 0		# extent to pad 1st region on line to left of 1st character, in pixels.
   padR: 0		# extent to pad last region on line to right of last character, in pixels.
 ---
 
@@ -43,7 +43,7 @@ Alex and Tim are lost. Alex's wife had recently passed away and he couldn't
 find the motivation to live a normal life. Tim has been charged with embezzlement
 [  ][  ][         ][ ][   ][][     ][    ][  ][  ][   ][      ][   ][           ]
 [   |   |          |  |    | |      |     |   |   |    |       |    |           ]
- 
+
 and is going to prison soon. The thought of that terrified him. So they decided
 [ ][ ][    ][ ][     ][    ][  ][      ][ ][   ][        ][   ][ ][   ][      ]
 [  |  |     |  |      |     |   |       |  |    |         |    |  |    |      ]
@@ -59,7 +59,7 @@ way. If you are lost, that is good. Alex has never rafted down this river before
 but Tim has many times. Tim tells Alex that the rapids can be a dangerous place.
 [ ][  ][  ][   ][     ][  ][    ][   ][   ][  ][     ][  ][ ][][        ][     ]
 [  |   |   |    |      |   |     |    |    |   |      |   |  | |         |     ]
- 
+
 Boats can overturn and people fall in. Concerned, Alex asks a river guide for
 [   ][  ][       ][  ][     ][   ][  ][         ][   ][   ][][    ][    ][  ]
 [    |   |        |   |      |    |   |          |    |    | |     |     |  ]

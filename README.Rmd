@@ -28,6 +28,8 @@ Contributing
 Contributions are welcome. _IMPORTANT: By submitting a pull request to this project, you agree to release your
 contribution to the FDBeye package under the MIT license._
 
+You might want to send me an email before wading in too deep (<davebraze@gmail.com>).
+
 Other Eye Tracking Tools
 --------------
 
