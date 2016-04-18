@@ -17,6 +17,17 @@ library(devtools)
 install_github("davebraze/FDBeye")
 ```
 
+License
+-------
+
+FDBeye is released under the MIT open source license. See the LICENSE file for details.
+
+Contributing
+------------
+
+Contributions are welcome. _IMPORTANT: By submitting a pull request to this project, you agree to release your
+contribution to the FDBeye package under the MIT license._
+
 Other Eye Tracking Tools
 --------------
 
