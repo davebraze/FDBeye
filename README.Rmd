@@ -17,6 +17,19 @@ library(devtools)
 install_github("davebraze/FDBeye")
 ```
 
+License
+-------
+
+FDBeye is released under the MIT open source license. See the LICENSE file for details.
+
+Contributing
+------------
+
+Contributions are welcome. _IMPORTANT: By submitting a pull request to this project, you agree to release your
+contribution to the FDBeye package under the MIT license._
+
+You might want to send me an email before wading in too deep (<davebraze@gmail.com>).
+
 Other Eye Tracking Tools
 --------------
 
@@ -60,6 +73,8 @@ know. Better yet, fork this repository, make the changes yourself, and send me a
 
 ### *Python* packages ###
 
+  * ***cili***: on github <https://github.com/beOn/cili>. Reduce overhead in working with SRR Eyelink data. Extracts
+    events from SRR ASC files and provides as pandas DataFrames.
   * ***DynAOI***: on launchpad <https://launchpad.net/dynaoi>. Described in *Behav Res*
     <https://www.iwm-tuebingen.de/cybermedia/dynaoi/PapenmeierHuffBRM.pdf>. Analysis of EM in relation to
     moving objects. Python codebase, relies on Blender for some functions. Last update in 2011.
@@ -79,7 +94,11 @@ know. Better yet, fork this repository, make the changes yourself, and send me a
   * ***pyeparse***: on github <https://github.com/pyeparse/pyeparse>. Python codebase. "analyzing eye tracking data from
     cogntive sciences experiments," SRR eyelink trackers. Last update in 2015. Seems active.
   * ***PyGaze***: on github <https://github.com/esdalmaijer/PyGaze>. Python codebase. Focussed on data collection
-    "programming of eyetracking experiments". Web site at <http://www.pygaze.org/>. Actively developed.
+    "programming of eyetracking experiments". Web site at <http://www.pygaze.org/>. Also see BRM paper
+    <http://link.springer.com/article/10.3758%2Fs13428-013-0422-2>. Actively developed.
+  * ***PyGazeAnalyser***: Post-acquisition processing tools associated with PyGaze. On GitHub at
+    <https://github.com/esdalmaijer/PyGazeAnalyser>. Parses SRR ASC files and SensoMotoric IDF ASCII files. Plots
+    heatmaps, scanpaths, fixation locations.
   * ***Samara***: on github <https://github.com/m-macaskill/Samara>. Python codebase. Saccade analysis, SMI iView
     trackers. Last update in 2013.
 
@@ -94,6 +113,9 @@ know. Better yet, fork this repository, make the changes yourself, and send me a
     analysis. Last update in 2014. Described in J. of *Eye Movement Research* <http://www.jemr.org/online/7/1/1>.
   * ***ScanMatch***: web page <http://seis.bris.ac.uk/~psidg/ScanMatch/>. Described in *Behav Res*
     <http://seis.bris.ac.uk/~psidg/ScanMatch/CMTG2010.pdf>. Scan path analysis. Matlab toolbox. Last update 2009.
+  * ***calib_adjust_code*** web page at <http://langcog.stanford.edu/materials/calib.html>. Method for offline
+    calibration adjustment of Tobii eyetrackers, specifically geared toward work with infants. Additional description in
+    the journal _Infancy_ <http://langcog.stanford.edu/papers/FVS-infancy2012.pdf>.
 
 ### Other languages ###
 

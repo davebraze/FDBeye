@@ -1,0 +1,36 @@
+---
+screen:			# screen width and height in pixels
+  width: 1280
+  height: 1024
+font:
+  name: courier new	# name of font used for text display on screen
+  size: 11.5		# nominal size of font on screen, in points
+character:
+  width: 12		# character width on screen, in pixels, assumes monospace font
+  height: 20
+lines:
+  spacing: 36		# baseline to baseline distance between lines on screen (pixels)
+  baselines:		# locations of baselines on screen, on for each line of text (pixels)
+  - 100
+  - 136
+  - 172
+  - 208
+margins:
+  top: 94 		# distance from top of screen to top of 1st line of text in pixels
+  left: 150		# distance from left edge of screen to left edge of 1st character in line of text, in pixels.
+  bottom: 100
+  right: 100
+regions:
+  maxH: 18		# extent of scoring region above baseline in pixels. Good default probably 1/2(lines$spacing)
+  minH: 18		# extent of scoring region below baseline in pixels. Good default probably 1/2(lines$spacing)
+  padL: 0		# extent to pad 1st region on line to left of 1st character, in pixels.
+  padR: 0		# extent to pad last region on line to right of last character, in pixels.
+---
+
+The quick brown fox
+[ ][    ][    ][  ]
+[  |     |     |  ]
+
+
+jumps over the lazy dog.
+[   ][   ][  ][   ][   ]

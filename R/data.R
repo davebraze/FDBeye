@@ -4,7 +4,8 @@
 ##'     poor quality (by choice).
 ##'
 ##' @details Data were collected using an SR Research Eyelink 1000+ eye tracker with remote camera
-##'     configuration and head stabilization. Data were extracted from EDF files as "fixation reports".
+##'     configuration and head stabilization. Data were extracted from EDF files as
+##'     "fixation reports".
 ##'
 ##' @format A data.frame with 6676 rows and 8 variables:
 ##' \describe{
@@ -24,7 +25,8 @@
 ##'                     correspond to pixel locations in the bitmaps.}
 ##' }
 ##'
-##' @source Data collected as part of U.S. National Institutes of Health grant R01 HD071988 to Haskins Laboratories.
+##' @source Data collected as part of U.S. National Institutes of Health grant R01 HD071988 to
+##'     Haskins Laboratories.
 ##'
 "EToralreading"
 

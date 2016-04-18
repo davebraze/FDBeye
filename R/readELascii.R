@@ -273,6 +273,8 @@ readELascii <- function(file,
 
 if(FALSE) {
     fname <- "../inst/extdata/1950006-RAN.asc"
+    ## TODO: need to compress (gzip??) the ELascii files provided with this package. readLines()
+    ## seems to handle gzipped files transparently.
 
 #    debug(readELascii)
     e <- readELascii(fname)
