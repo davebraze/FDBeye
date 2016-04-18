@@ -20,14 +20,16 @@
 ##'     \item bottom: Integer indicating lower extent of line in pixels.
 ##' }
 ##'
+getLines <- function(canvas){
+
+}
 if (FALSE) {
     cnvs <- system.file("extdata/story01.png", package="FDBeye")
     cnvs <- png::readPNG(cnvs) # Look into imager::, maybe also see what EBImage:: has to offer?
-
     cnvs <- cnvs[,,1] # for simplicity just grab 1 layer, later need to work with all layers
 
-    ## get background color; table is not very efficient; find something better
-    bg <- table(cnvs)
+    ## get background color; table() is not very efficient; find something better
+    system.time( bg <- table(cnvs) )
     bg <- as.numeric(names(which.max(bg)))
 
     ## find rows with pixels that are NOT the background color, within some tolerance
@@ -40,9 +42,6 @@ if (FALSE) {
         sum((bg-v)>tol)
     }
     cbind(apply(cnvs, 1, nbg, bg=bg, tol=tol))
-
-}
-getLines <- function(canvas){
 
 }
 
@@ -66,3 +65,12 @@ getLines <- function(canvas){
 ##'
 getChars <- function(canvas, lines){}
 
+##' @title Find the margins in a text canvas
+##' @description None yet
+##'
+##' @details None yet
+##'
+##' @param canvas
+##' @return A named 4 vector containing top, right, bottom and left margins
+##' @author
+getMargins <- function(canvas){}
