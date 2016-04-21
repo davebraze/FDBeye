@@ -132,7 +132,8 @@ if (FALSE) {
 ##' @param data A data.frame containing gaze data (fixations or samples), possibly from multiple subjects/trials.
 ##' @param lines A vector of known y positions (centroids) of text lines for each trial contained in
 ##'     \code{data}. This argument is passed to \code{FUN}. [maybe this should be a data.frame]
-##' @param init_params TAO, PLEASE PROVIDE DESCRIPTION
+##' @param init_params the set of parameters to be optimized; based on different cat_line functions,
+##'     the paramters can be a list or a matrix (each row is a list of parameters for one fitted line.
 ##' @param FUN A function to optimize in order to compute adjusted y-values for a single trial.
 ##' @param ... Additional arguments passed to \code{FUN}.
 ##' @return A copy of data enriched with adjusted y values and fit parameters.
@@ -167,7 +168,7 @@ adjust_y <- function(data,
 #' @param region_file region file name (csv file)
 #' @param trial_num the trial number of the current start_pts
 #'
-#' @return TAO, PLEASE FILL IN RETURN VALUE HERE
+#' @return A dataframe [columns: x_pos, y_pos, trial_num] recording the left position of the first word in each line of the text in each trial.
 #' @author Tao Gong <gtojty@@gmail.com>
 #' @export
 #'
@@ -201,7 +202,7 @@ get_start_pts <- function(region_file,
 #' @param image_width default x_max boundary (1280)
 #' @param image_height default y_max boundary (1024)
 #'
-#' @return  TAO, PLEASE FILL IN RETURN VALUE HERE
+#' @return A matrix (x_min, x_max, y_min, y_max, trial_num) recording the eye-movement recording boundary in each trial.
 #' @author Tao Gong <gtojty@@gmail.com>
 #' @export
 #'
@@ -940,9 +941,10 @@ cat_lines4 <- function(params,
 
 
 #' @title This function draws original and modified fixations with fitted lines
-#' @description This function is suitable for values optimized by create_lines3 and create_lines4
+#' @description This function is suitable for values optimized by cat_line functions; it can also draw results of hand-made categorization of fixations
 #'
-#' @details TAO, PLEASE PROVIDE DETAILS
+#' @details This function first draws the background text file, and then, draws different types of fixations categorized by hands or cat_line functions onto it
+#'        And finally, it saves the plot. 
 #'
 #' @param data fixation data frame containing positions, durations, fitted measure and fitted line information
 #' @param start_pts starting point of each base line (x_pos, y_pos)
