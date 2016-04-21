@@ -7,12 +7,18 @@
 get_start_pts(region_file, trial_num)
 }
 \arguments{
-\item{region_file}{region file name (csv file)}
+\item{region_file}{A "*.csv" character list recording the name of the region file}
 
-\item{trial_num}{the trial number of the current start_pts}
+\item{trial_num}{An integer indicating the trial number of the current start_pts}
 }
 \value{
-A dataframe [columns: x_pos, y_pos, trial_num] recording the left position of the first word in each line of the text in each trial.
+A data.frame recording the left position of the first word in each line of the text in each trial. It has three columns:
+
+\enumerate{
+    \item x_pos: x position of the first word in each line of the text.
+    \item y_pos: y position of the first word in each line of the text.
+    \item trial_num: Integer indicating the trial number of the current start_pts.
+}
 }
 \description{
 This function extracts (x_pos, y_pos) of first word in each text line from the region file
@@ -22,6 +28,6 @@ This function reads region_file and gets (x_pos, y_pos) of first word in each te
          Then, it bounds (x_pos, y_pos) with trail_num into a data frame, and return the data frame.
 }
 \author{
-Tao Gong <gtojty@gmail.com>
+Tao Gong \email{gtojty@gmail.com}
 }
 
