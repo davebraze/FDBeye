@@ -12,7 +12,7 @@ get_start_pts(region_file, trial_num)
 \item{trial_num}{the trial number of the current start_pts}
 }
 \value{
-TAO, PLEASE FILL IN RETURN VALUE HERE
+A dataframe [columns: x_pos, y_pos, trial_num] recording the left position of the first word in each line of the text in each trial.
 }
 \description{
 This function extracts (x_pos, y_pos) of first word in each text line from the region file

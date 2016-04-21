@@ -28,10 +28,11 @@ trial_plots(data, start_pts, output_filehead, draw_type, bg_image_name = NULL,
 None. Called for the side effect of creating a plot.
 }
 \description{
-This function is suitable for values optimized by create_lines3 and create_lines4
+This function is suitable for values optimized by cat_line functions; it can also draw results of hand-made categorization of fixations
 }
 \details{
-TAO, PLEASE PROVIDE DETAILS
+This function first draws the background text file, and then, draws different types of fixations categorized by hands or cat_line functions onto it
+       And finally, it saves the plot.
 }
 \author{
 Tao Gong <gtojty@gmail.com>

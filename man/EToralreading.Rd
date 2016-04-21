@@ -22,7 +22,8 @@
                     correspond to pixel locations in the bitmaps.}
 }}
 \source{
-Data collected as part of U.S. National Institutes of Health grant R01 HD071988 to Haskins Laboratories.
+Data collected as part of U.S. National Institutes of Health grant R01 HD071988 to
+    Haskins Laboratories.
 }
 \usage{
 EToralreading
@@ -33,7 +34,8 @@ Nine different readers reading the same three stories. Much of the included data
 }
 \details{
 Data were collected using an SR Research Eyelink 1000+ eye tracker with remote camera
-    configuration and head stabilization. Data were extracted from EDF files as "fixation reports".
+    configuration and head stabilization. Data were extracted from EDF files as
+    "fixation reports".
 }
 \keyword{datasets}
 

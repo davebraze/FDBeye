@@ -9,7 +9,8 @@ cat_lines2(params, fit_it = TRUE, data, start_pts, k_bounds, o_bounds,
   num_checkLast = 10)
 }
 \arguments{
-\item{params}{parameters (slope, vert_offset, sd) for optimization}
+\item{params}{parameters (slope, vert_offset, sd) for optimization. TAO, PLEASE ELABORATE ON THE
+KIND OF OBJECT THAT IS USED TO WRAP THE PARAMETERS. IS IT A DATA.FRAME? SOMETHING ELSE?}
 
 \item{fit_it}{TRUE -> return fit measure, FALSE -> return fit information}
 

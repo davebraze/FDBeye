@@ -12,7 +12,8 @@ adjust_y(data, lines, init_params, FUN, ...)
 \item{lines}{A vector of known y positions (centroids) of text lines for each trial contained in
 \code{data}. This argument is passed to \code{FUN}. [maybe this should be a data.frame]}
 
-\item{init_params}{TAO, PLEASE PROVIDE DESCRIPTION}
+\item{init_params}{the set of parameters to be optimized; based on different cat_line functions,
+the paramters can be a list or a matrix (each row is a list of parameters for one fitted line.}
 
 \item{FUN}{A function to optimize in order to compute adjusted y-values for a single trial.}
 

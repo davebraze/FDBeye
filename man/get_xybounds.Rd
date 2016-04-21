@@ -17,7 +17,7 @@ get_xybounds(region_file, trial_num, image_width = 1280,
 \item{image_height}{default y_max boundary (1024)}
 }
 \value{
-TAO, PLEASE FILL IN RETURN VALUE HERE
+A matrix (x_min, x_max, y_min, y_max, trial_num) recording the eye-movement recording boundary in each trial.
 }
 \description{
 This function extracts (x_min, x_max, y_min, y_max) from the region file
