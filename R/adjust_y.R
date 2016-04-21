@@ -439,7 +439,8 @@ cat_lines1 <- function(params,
 #'     original paper)This function uses one slope, ver_offset, sd to fit all lines, and use sum(min
 #'     y_diff) as target measure for optimization uses.
 #' @details TAO, PLEASE PROVIDE DETAILS
-#' @param params parameters (slope, vert_offset, sd) for optimization
+#' @param params parameters (slope, vert_offset, sd) for optimization. TAO, PLEASE ELABORATE ON THE
+#'     KIND OF OBJECT THAT IS USED TO WRAP THE PARAMETERS. IS IT A DATA.FRAME? SOMETHING ELSE?
 #' @param fit_it TRUE -> return fit measure, FALSE -> return fit information
 #' @param data fixation data frame containing at least x_pos, y_pos
 #' @param start_pts starting point of each base line (x_pos, y_pos)
@@ -944,7 +945,7 @@ cat_lines4 <- function(params,
 #' @description This function is suitable for values optimized by cat_line functions; it can also draw results of hand-made categorization of fixations
 #'
 #' @details This function first draws the background text file, and then, draws different types of fixations categorized by hands or cat_line functions onto it
-#'        And finally, it saves the plot. 
+#'        And finally, it saves the plot.
 #'
 #' @param data fixation data frame containing positions, durations, fitted measure and fitted line information
 #' @param start_pts starting point of each base line (x_pos, y_pos)
