@@ -37,6 +37,7 @@ getBGcol <- function(cnvs) {
     bgcol <- as.numeric(names(which.max(cols)))
     bgcol
 
+
     ## median(cnvs) ## This may work in general, but have to think it through. What happens if the
     ## background value is found in fewer (or many fewer) than half the elements of cnvs? Maybe
     ## check to see if bg is a low proportion of values in cnvs and issue a warning() in that case.
@@ -124,6 +125,7 @@ getLines <- function(canvas){
 }
 
 if (FALSE) {
+    library(FDBeye)
     cnvs <- system.file("extdata/story01.png", package="FDBeye")
     cnvs <- png::readPNG(cnvs) # Look into imager::
     fcnvs <- apply(cnvs, c(1,2), sum) # flatten the into a single plane
