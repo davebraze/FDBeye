@@ -12,8 +12,7 @@ adjust_y(data, lines, init_params, FUN, ...)
 \item{lines}{A vector of known y positions (centroids) of text lines for each trial contained in
 \code{data}. This argument is passed to \code{FUN}. [maybe this should be a data.frame]}
 
-\item{init_params}{the set of parameters to be optimized; based on different cat_line functions,
-the paramters can be a list or a matrix (each row is a list of parameters for one fitted line.}
+\item{init_params}{A vector or a matrix (each row is a vector of parameters for one fitted line) containing the parameters to be optimized using different cat_line functions,}
 
 \item{FUN}{A function to optimize in order to compute adjusted y-values for a single trial.}
 
@@ -38,6 +37,6 @@ The function first uses optim() to optimize the parameters for FUN (classify_lin
     Finally, it returns the fixation dataframe with classified lines and optimized parameters.
 }
 \author{
-Tao Gong <gtojty@gmail.com>
+Tao Gong \email{gtojty@gmail.com}
 }
 

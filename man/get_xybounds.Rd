@@ -17,7 +17,14 @@ get_xybounds(region_file, trial_num, image_width = 1280,
 \item{image_height}{default y_max boundary (1024)}
 }
 \value{
-A matrix (x_min, x_max, y_min, y_max, trial_num) recording the eye-movement recording boundary in each trial.
+A matrix recording the eye-movement recording boundary in the trial trial_num. Each row has five columns:
+ \enumerate{
+    \item x_min: Minimum x value across all text lines.
+    \item x_max: Maximum x value across all text lines.
+    \item y_min: Minimum y value across all text lines.
+    \item y_max: Maximum y value across all text lines.
+    \item trial_num: Integer indicating the trial number of the current start_pts.
+}
 }
 \description{
 This function extracts (x_min, x_max, y_min, y_max) from the region file
@@ -27,6 +34,6 @@ This function reads region_file and gets (x_min, x_max, y_min, y_max) of all tex
          Then, it bounds (x_min, x_max, y_min, y_max) with trail_num into a list, and return it.
 }
 \author{
-Tao Gong <gtojty@gmail.com>
+Tao Gong \email{gtojty@gmail.com}
 }
 

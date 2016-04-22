@@ -7,17 +7,26 @@
 mark_oob(data, xy_bounds, trial_num, cur_trial)
 }
 \arguments{
-\item{data}{fixation data}
+\item{data}{A data.frame containing the fixation data}
 
-\item{xy_bounds}{boundary of fixations. If it has one row, all trials use the same boundary (xmin, xmax, ymin, ymax);
-if it has many rows, the number of row should be equal to the number of trials.}
+\item{xy_bounds}{A mtraix containing the boundaries of fixations. 
+If it has only one row, all trials use the same boundary.
+If it has many rows, the number of row should be equal to the number of trials, 
+and each row corresponds to the boundary of the corresponding trial.
+In each row, it has four columns:
+\enumerate{
+  \item x_min: Left boundary (minimum x value within the boundary).
+  \item x_max: Right boundary (maximum x value within the boundary).
+  \item y_min: Top boundary (minimum y value within the boundary).
+  \item y_max: Bottom boundary (maximum y value within the boundary).
+}}
 
-\item{trial_num}{number of trials}
+\item{trial_num}{Integer indicating the total number of trials}
 
-\item{cur_trial}{the current trail index}
+\item{cur_trial}{Integer indicating the current trail}
 }
 \value{
-A copy of data with out of boundary fixations marked as 'oob'
+A copy of data with out of boundary fixations marked as 'oob' in column type
 }
 \description{
 This function is modified from Cohen's paper
@@ -26,6 +35,6 @@ This function is modified from Cohen's paper
 This function marks fixations outside boundary as 'oob'
 }
 \author{
-Tao Gong <gtojty@gmail.com>
+Tao Gong \email{gtojty@gmail.com}
 }
 

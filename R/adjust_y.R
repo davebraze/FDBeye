@@ -132,12 +132,11 @@ if (FALSE) {
 ##' @param data A data.frame containing gaze data (fixations or samples), possibly from multiple subjects/trials.
 ##' @param lines A vector of known y positions (centroids) of text lines for each trial contained in
 ##'     \code{data}. This argument is passed to \code{FUN}. [maybe this should be a data.frame]
-##' @param init_params the set of parameters to be optimized; based on different cat_line functions,
-##'     the paramters can be a list or a matrix (each row is a list of parameters for one fitted line.
+##' @param init_params A vector or a matrix (each row is a vector of parameters for one fitted line) containing the parameters to be optimized using different cat_line functions,
 ##' @param FUN A function to optimize in order to compute adjusted y-values for a single trial.
 ##' @param ... Additional arguments passed to \code{FUN}.
 ##' @return A copy of data enriched with adjusted y values and fit parameters.
-##' @author Tao Gong <gtojty@@gmail.com>
+##' @author Tao Gong \email{gtojty@@gmail.com}
 ##' @export
 adjust_y <- function(data,
                      lines,
@@ -165,11 +164,17 @@ adjust_y <- function(data,
 #' @details This function reads region_file and gets (x_pos, y_pos) of first word in each text line.
 #'          Then, it bounds (x_pos, y_pos) with trail_num into a data frame, and return the data frame.
 #'
-#' @param region_file region file name (csv file)
-#' @param trial_num the trial number of the current start_pts
+#' @param region_file A "*.csv" character list recording the name of the region file
+#' @param trial_num An integer indicating the trial number of the current start_pts
 #'
-#' @return A dataframe [columns: x_pos, y_pos, trial_num] recording the left position of the first word in each line of the text in each trial.
-#' @author Tao Gong <gtojty@@gmail.com>
+#' @return A data.frame recording the left position of the first word in each line of the text in each trial. It has three columns:
+#'
+#' \enumerate{
+#'     \item x_pos: x position of the first word in each line of the text.
+#'     \item y_pos: y position of the first word in each line of the text.
+#'     \item trial_num: Integer indicating the trial number of the current start_pts.
+#' }
+#' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 #'
 get_start_pts <- function(region_file,
@@ -202,8 +207,15 @@ get_start_pts <- function(region_file,
 #' @param image_width default x_max boundary (1280)
 #' @param image_height default y_max boundary (1024)
 #'
-#' @return A matrix (x_min, x_max, y_min, y_max, trial_num) recording the eye-movement recording boundary in each trial.
-#' @author Tao Gong <gtojty@@gmail.com>
+#' @return A matrix recording the eye-movement recording boundary in the trial trial_num. Each row has five columns:
+#'  \enumerate{
+#'     \item x_min: Minimum x value across all text lines.
+#'     \item x_max: Maximum x value across all text lines.
+#'     \item y_min: Minimum y value across all text lines.
+#'     \item y_max: Maximum y value across all text lines.
+#'     \item trial_num: Integer indicating the trial number of the current start_pts.
+#' }
+#' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 #'
 get_xybounds <- function(region_file,
@@ -233,14 +245,23 @@ get_xybounds <- function(region_file,
 #' @description This function is modified from Cohen's paper
 #' @details This function marks fixations outside boundary as 'oob'
 #'
-#' @param data fixation data
-#' @param xy_bounds boundary of fixations. If it has one row, all trials use the same boundary (xmin, xmax, ymin, ymax);
-#'        if it has many rows, the number of row should be equal to the number of trials.
-#' @param trial_num number of trials
-#' @param cur_trial the current trail index
+#' @param data A data.frame containing the fixation data
+#' @param xy_bounds A mtraix containing the boundaries of fixations. 
+#'        If it has only one row, all trials use the same boundary.
+#'        If it has many rows, the number of row should be equal to the number of trials, 
+#'        and each row corresponds to the boundary of the corresponding trial.
+#'        In each row, it has four columns:
+#'        \enumerate{
+#'          \item x_min: Left boundary (minimum x value within the boundary).
+#'          \item x_max: Right boundary (maximum x value within the boundary).
+#'          \item y_min: Top boundary (minimum y value within the boundary).
+#'          \item y_max: Bottom boundary (maximum y value within the boundary).
+#'        }
+#' @param trial_num Integer indicating the total number of trials
+#' @param cur_trial Integer indicating the current trail
 #'
-#' @return A copy of data with out of boundary fixations marked as 'oob'
-#' @author Tao Gong <gtojty@@gmail.com>
+#' @return A copy of data with out of boundary fixations marked as 'oob' in column type
+#' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 mark_oob <- function(data,
                      xy_bounds,
@@ -273,26 +294,39 @@ mark_oob <- function(data,
 #' @details This function optimizes the slope, offset and sd for all lines of fixations. It uses
 #'     -sum(data_den_max) as fit measure for optimization.
 #'
-#' @param params parameters (slope, offset, sd) for optimization
-#' @param fit_it TRUE -> return fit measure, FALSE -> return fit information
-#' @param data fixation data frame containing at least x_pos, y_pos
-#' @param start_pts dataframe containing starting point of each base line (x_pos, y_pos, trial_num).
-#' @param k_bounds boundary of slope (default: [-0.1, 0.1])
-#' @param o_bounds boundary of offset (default: [-0.5*dist of adjacent text lines, 0.5*dist of
-#'     adjacent text line])
-#' @param s_bounds boundary of sd (default: [1, 20])
-#' @param den_sd_cutoff cutoff threshold for density; If den_sd_cutoff is Inf, use
-#'     mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are
-#'     accepted)
-#' @param den_ratio_cutoff cutoff threshold for density ratio (ratio between the maximum density and
-#'     second maximum density)
-#' @param num_checkFirst number of starting fixations used for checking before reading bound
-#'     (default 5)
-#' @param num_checkLast number of ending fixations used for checking end of reading bound (default
-#'     10)
+#' @param params A vector of parameters for optimization, the three values in it refer to slope, offset, and sd
+#' @param fit_it A bollean variable; if it is TRUE, the function will return fit measure; if it is FALSE, the function will return fit information
+#' @param data A data.frame storing the fixation data including at least the x_pos and y_pos of each fixation
+#' @param start_pts A data.frame containing the starting position of each text line. It has three columns:
+#'        \enumerate{
+#'        \item x_pos: x position of the first word in each text line.
+#'        \item y_pos: y position of the first word in each text line.
+#'        \item trial_num: the trial number of the current start_pts
+#'        }
+#' @param k_bounds A list containing the lower and upper boundaries of slope; 
+#'                default value is [-0.1, 0.1]
+#' @param o_bounds A list containing the lower and upper boundaries of offset; 
+#'                defaul value is [-0.5*dist of adjacent text lines, 0.5*dist of adjacent text line])
+#' @param s_bounds A list containing the lower and upper boundaries of sd; default value is [1, 20]
+#' @param den_sd_cutoff A float variable for cutoff threshold for density; 
+#'                If it is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are accepted)
+#' @param den_ratio_cutoff A float variable for cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
+#' @param num_checkFirst An integer denoting the number of starting fixations used for checking start-reading bound; default value is 5
+#' @param num_checkLast An integer denoting the number of ending fixations used for checking end-reading bound; default value is 10
 #'
-#' @return new data frame including fixations, fit measures, and fitted lines information
-#' @author Tao Gong <gtojty@@gmail.com>
+#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information. 
+#'        It adds the following columns:
+#'        \enumerate{
+#'        \item line: Text line that each fixation belongs to
+#'        \item y_line: y position of the text line that each fixation is assigned to
+#'        \item y_res: Residualized y position of each fixation y_line + y_res will give the original y position of each fixation
+#'        \item slope: Optimized slope value for all fitted lines
+#'        \item offset: Optimizaed offset value for all fitted lines
+#'        \item sd: Optimized sd value for all fitted lines
+#'        \item fit_den: fitted density value
+#'        \item fit_y_diff: fitted y difference (accumulated y differences between each fixation and the fitted line)  
+#'        } 
+#' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 cat_lines1 <- function(params,
                        fit_it=TRUE,
@@ -436,27 +470,44 @@ cat_lines1 <- function(params,
 
 #' @title Categorize fixations into appropriate text lines
 #' @description Function to optimize slope, offset and sd for all lines of fixations (extended from
-#'     original paper)This function uses one slope, ver_offset, sd to fit all lines, and use sum(min
+#'     original paper)This function uses one slope, offset, sd to fit all lines, and use sum(min
 #'     y_diff) as target measure for optimization uses.
-#' @details TAO, PLEASE PROVIDE DETAILS
-#' @param params parameters (slope, vert_offset, sd) for optimization. TAO, PLEASE ELABORATE ON THE
-#'     KIND OF OBJECT THAT IS USED TO WRAP THE PARAMETERS. IS IT A DATA.FRAME? SOMETHING ELSE?
-#' @param fit_it TRUE -> return fit measure, FALSE -> return fit information
-#' @param data fixation data frame containing at least x_pos, y_pos
-#' @param start_pts starting point of each base line (x_pos, y_pos)
-#' @param k_bounds boundary of slope
-#' @param o_bounds boundary of offset
-#' @param s_bounds boundary of sd
-#' @param den_sd_cutoff cutoff threshold for density
-#' @param den_ratio_cutoff cutoff threshold for density ratio (ratio between the maximum density and
-#'     second maximum density)
-#' @param num_checkFirst number of starting fixations used for checking before reading bound
-#'     (default 5)
-#' @param num_checkLast number of ending fixations used for checking end of reading bound (default
-#'     10)
+#' @details This function optimizes the slope, offset and sd for all lines of fixations. It uses
+#'     sum(min(y_diff)) as fit measure for optimization.
+#' 
+#' @param params A vector of parameters for optimization, the three values in it refer to slope, offset, and sd
+#' @param fit_it A bollean variable; if it is TRUE, the function will return fit measure; if it is FALSE, the function will return fit information
+#' @param data A data.frame storing the fixation data including at least the x_pos and y_pos of each fixation
+#' @param start_pts A data.frame containing the starting position of each text line. It has three columns:
+#'        \enumerate{
+#'        \item x_pos: x position of the first word in each text line.
+#'        \item y_pos: y position of the first word in each text line.
+#'        \item trial_num: the trial number of the current start_pts
+#'        }
+#' @param k_bounds A list containing the lower and upper boundaries of slope; 
+#'                default value is [-0.1, 0.1]
+#' @param o_bounds A list containing the lower and upper boundaries of offset; 
+#'                defaul value is [-0.5*dist of adjacent text lines, 0.5*dist of adjacent text line])
+#' @param s_bounds A list containing the lower and upper boundaries of sd; default value is [1, 20]
+#' @param den_sd_cutoff A float variable for cutoff threshold for density; 
+#'                If it is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are accepted)
+#' @param den_ratio_cutoff A float variable for cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
+#' @param num_checkFirst An integer denoting the number of starting fixations used for checking start-reading bound; default value is 5
+#' @param num_checkLast An integer denoting the number of ending fixations used for checking end-reading bound; default value is 10
 #'
-#' @return new data frame including fixations, fit measures, and fitted lines information
-#' @author Tao Gong <gtojty@@gmail.com>
+#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information. 
+#'        It adds the following columns:
+#'        \enumerate{
+#'        \item line: Text line that each fixation belongs to
+#'        \item y_line: y position of the text line that each fixation is assigned to
+#'        \item y_res: Residualized y position of each fixation y_line + y_res will give the original y position of each fixation
+#'        \item slope: Optimized slope value for all fitted lines
+#'        \item offset: Optimizaed offset value for all fitted lines
+#'        \item sd: Optimized sd value for all fitted lines
+#'        \item fit_den: fitted density value
+#'        \item fit_y_diff: fitted y difference (accumulated y differences between each fixation and the fitted line)  
+#'        } 
+#' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 cat_lines2 <- function(params,
                        fit_it=TRUE,
@@ -601,22 +652,42 @@ cat_lines2 <- function(params,
 #' @title Categorize fixations into appropriate text line unction to optimize slope, offset and sd for all lines of fixations (extedned from original paper)
 #' @description This function uses many slopes, ver_offsets, sds to fit every lines, and use -sum(data_den_max)
 #'  as target measure for optimizationuses
-#' @details TAO, PLEASE PROVIDE DETAILS
+#' @details This function uses many slopes, ver_offsets, sds to fit every lines, and use -sum(data_den_max)
+#'  as target measure for optimizationuses
 #'
-#' @param params parameters (slope, vert_offset, sd) for optimization
-#' @param fit_it TRUE -> return fit measure, FALSE -> return fit information
-#' @param data fixation data frame containing at least x_pos, y_pos
-#' @param start_pts data frame containing starting point of each base line (x_pos, y_pos)
-#' @param k_bounds boundary of slope
-#' @param o_bounds boundary of offset
-#' @param s_bounds boundary of sd
-#' @param den_sd_cutoff cutoff threshold for density
-#' @param den_ratio_cutoff cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
-#' @param num_checkFirst number of starting fixations used for checking before reading bound (default 5)
-#' @param num_checkLast number of ending fixations used for checking end of reading bound (default 10)
+#' @param params A vector of parameters for optimization, the three values in it refer to slope, offset, and sd
+#' @param fit_it A bollean variable; if it is TRUE, the function will return fit measure; if it is FALSE, the function will return fit information
+#' @param data A data.frame storing the fixation data including at least the x_pos and y_pos of each fixation
+#' @param start_pts A data.frame containing the starting position of each text line. It has three columns:
+#'        \enumerate{
+#'        \item x_pos: x position of the first word in each text line.
+#'        \item y_pos: y position of the first word in each text line.
+#'        \item trial_num: the trial number of the current start_pts
+#'        }
+#' @param k_bounds A list containing the lower and upper boundaries of slope; 
+#'                default value is [-0.1, 0.1]
+#' @param o_bounds A list containing the lower and upper boundaries of offset; 
+#'                defaul value is [-0.5*dist of adjacent text lines, 0.5*dist of adjacent text line])
+#' @param s_bounds A list containing the lower and upper boundaries of sd; default value is [1, 20]
+#' @param den_sd_cutoff A float variable for cutoff threshold for density; 
+#'                If it is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are accepted)
+#' @param den_ratio_cutoff A float variable for cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
+#' @param num_checkFirst An integer denoting the number of starting fixations used for checking start-reading bound; default value is 5
+#' @param num_checkLast An integer denoting the number of ending fixations used for checking end-reading bound; default value is 10
 #'
-#' @return new data frame including fixations, fit measures, and fitted lines information
-#' @author Tao Gong <gtojty@@gmail.com>
+#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information. 
+#'        It adds the following columns:
+#'        \enumerate{
+#'        \item line: Text line that each fixation belongs to
+#'        \item y_line: y position of the text line that each fixation is assigned to
+#'        \item y_res: Residualized y position of each fixation y_line + y_res will give the original y position of each fixation
+#'        \item slope: Optimized slope value for the fitted line that current fixation belongs to
+#'        \item offset: Optimizaed offset value for the fitted line that current fixation belongs to
+#'        \item sd: Optimized sd value for the fitted line that current fixation belongs to
+#'        \item fit_den: fitted density value of the fitted line that current fixation belongs to
+#'        \item fit_y_diff: fitted y difference of the fitted line that current fixation belongs to (accumulated y differences between each fixation and fitted lines)  
+#'        } 
+#' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 cat_lines3 <- function(params,
                        fit_it=TRUE,
@@ -773,22 +844,42 @@ cat_lines3 <- function(params,
 #'     original paper)
 #' @description This function uses many slopes, ver_offsets, sds for every lines, and use sum(min
 #'     y_diff) as target measure for optimizationuses
-#' @details TAO, PLEASE PROVIDE DETAILS
+#' @details This function uses many slopes, ver_offsets, sds for every lines, and use sum(min
+#'     y_diff) as target measure for optimizationuses
 #'
-#' @param params parameters (slope, vert_offset, sd) for optimization
-#' @param fit_it TRUE -> return fit measure, FALSE -> return fit information
-#' @param data fixation data frame containing at least x_pos, y_pos
-#' @param start_pts starting point of each base line (x_pos, y_pos)
-#' @param k_bounds boundary of slope
-#' @param o_bounds boundary of offset
-#' @param s_bounds boundary of sd
-#' @param den_sd_cutoff cutoff threshold for density
-#' @param den_ratio_cutoff cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
-#' @param num_checkFirst number of starting fixations used for checking before reading bound (default 5)
-#' @param num_checkLast number of ending fixations used for checking end of reading bound (default 10)
+#' @param params A vector of parameters for optimization, the three values in it refer to slope, offset, and sd
+#' @param fit_it A bollean variable; if it is TRUE, the function will return fit measure; if it is FALSE, the function will return fit information
+#' @param data A data.frame storing the fixation data including at least the x_pos and y_pos of each fixation
+#' @param start_pts A data.frame containing the starting position of each text line. It has three columns:
+#'        \enumerate{
+#'        \item x_pos: x position of the first word in each text line.
+#'        \item y_pos: y position of the first word in each text line.
+#'        \item trial_num: the trial number of the current start_pts
+#'        }
+#' @param k_bounds A list containing the lower and upper boundaries of slope; 
+#'                default value is [-0.1, 0.1]
+#' @param o_bounds A list containing the lower and upper boundaries of offset; 
+#'                defaul value is [-0.5*dist of adjacent text lines, 0.5*dist of adjacent text line])
+#' @param s_bounds A list containing the lower and upper boundaries of sd; default value is [1, 20]
+#' @param den_sd_cutoff A float variable for cutoff threshold for density; 
+#'                If it is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are accepted)
+#' @param den_ratio_cutoff A float variable for cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
+#' @param num_checkFirst An integer denoting the number of starting fixations used for checking start-reading bound; default value is 5
+#' @param num_checkLast An integer denoting the number of ending fixations used for checking end-reading bound; default value is 10
 #'
-#' @return new data frame including fixations, fit measures, and fitted lines information
-#' @author Tao Gong <gtojty@@gmail.com>
+#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information. 
+#'        It adds the following columns:
+#'        \enumerate{
+#'        \item line: Text line that each fixation belongs to
+#'        \item y_line: y position of the text line that each fixation is assigned to
+#'        \item y_res: Residualized y position of each fixation y_line + y_res will give the original y position of each fixation
+#'        \item slope: Optimized slope value for the fitted line that current fixation belongs to
+#'        \item offset: Optimizaed offset value for the fitted line that current fixation belongs to
+#'        \item sd: Optimized sd value for the fitted line that current fixation belongs to
+#'        \item fit_den: fitted density value for the fitted line that current fixation belongs to 
+#'        \item fit_y_diff: fitted y difference for the fitted line that current fixation belongs to (accumulated y differences between each fixation and fitted lines)  
+#'        } 
+#' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 cat_lines4 <- function(params,
                        fit_it=TRUE,
@@ -947,18 +1038,26 @@ cat_lines4 <- function(params,
 #' @details This function first draws the background text file, and then, draws different types of fixations categorized by hands or cat_line functions onto it
 #'        And finally, it saves the plot.
 #'
-#' @param data fixation data frame containing positions, durations, fitted measure and fitted line information
-#' @param start_pts starting point of each base line (x_pos, y_pos)
-#' @param output_filehead output figure file head
-#' @param draw_type 'hand' -> hand-made fixation lines, output file ends with '_hand'
-#'                  'original' -> original fixation lines, output file ends with '_ori'
-#'                  'modified' -> residule fixation lines, output file ends with '_mod'
-#' @param bg_image_name background trial figure file
-#' @param image_width default image width (1280)
-#' @param image_height default image height (1024)
+#' @param data A data.frame containing fixations and optimized information generated by different cut_line functions
+#' @param start_pts A data.frame containing the starting position of each text line. It has three columns:
+#'        \enumerate{
+#'        \item x_pos: x position of the first word in each text line.
+#'        \item y_pos: y position of the first word in each text line.
+#'        \item trial_num: the trial number of the current start_pts
+#'        }
+#' @param output_filehead A string as the output figure file head, the remaining name is determined by draw_type, the output figure file is a png file
+#' @param draw_type A string indicating the way of drawing. It can have the following three options:
+#'        \enumerate{
+#'          \item 'hand': hand-made fixation lines, output file ends with '_hand'
+#'          \item 'original': original fixation lines, output file ends with '_ori'
+#'          \item 'modified': residule fixation lines, output file ends with '_mod'
+#'        }
+#' @param bg_image_name Name of the background trial figure file (*.png); such file is optional, if no such file, the figure has a white background
+#' @param image_width Integer indicating the width of image drawn; default value is 1280
+#' @param image_height Integer indicating the height of the image drawn; default value is 1024
 #'
-#' @return None. Called for the side effect of creating a plot.
-#' @author Tao Gong <gtojty@@gmail.com>
+#' @return None. A plot is automatically generated and stored.
+#' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 trial_plots <- function(data,
                         start_pts,
