@@ -15,9 +15,9 @@ A data frame containing 1 row for each line of text in the canvas, and the follo
     columns:
 
 \enumerate{
-    \item line: Integer indicating line number, counting from the top of the canvas.
+    \item line: Integer indicating text line number, counting from the top of the canvas.
     \item top: Integer indicating upper extent of line in pixels.
-    \item baseline: Integer indicating location of line's baseline (estimated) in pixels.
+    \item baseline: Integer indicating location of line's baseline (estimated) in pixels. NOT YET IMPLEMENTED.
     \item bottom: Integer indicating lower extent of line in pixels.
 }
 }
@@ -66,6 +66,15 @@ TODO: Work on getting top and bottom bounds for each line, as well as estimated 
     script subdirectory "runtime/images" in a meaningful way. Most helpful would be to get a
     list of those files that SRR DataViewer knows to used as background images for a specific
     EDF file.
+}
+\examples{
+    cnvs <- system.file("extdata/story01.png", package="FDBeye")
+    cnvs <- png::readPNG(cnvs)
+    fcnvs <- apply(cnvs, c(1,2), sum) # flatten to a single plane for convenience
+
+    ## get lines
+    getLines(fcnvs)
+
 }
 \author{
 Dave Braze <davebraze@gmail.com>

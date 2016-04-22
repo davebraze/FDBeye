@@ -25,6 +25,12 @@ A data frame containing 1 row for each character in each
     \item right: Integer indicating right-most extent of character in pixels.
 }
 }
+\description{
+None yet
+}
+\details{
+None yet
+}
 \author{
 Dave Braze <davebraze@gmail.com>
 }

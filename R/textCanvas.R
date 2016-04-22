@@ -110,7 +110,7 @@ getBGcol <- function(cnvs) {
 ##'
 getLines <- function(canvas){
     bgcol <- getBGcol(canvas)
-    ink <- apply(canvas, 1, inked, bg=bgcol, tol=tol)
+    ink <- apply(canvas, 1, inked, bg=bgcol)
 
     inkb <- ink>0
     inki <- FDB1::series(as.integer(inkb), step=0) ## find rows with ink
@@ -180,11 +180,11 @@ getChars <- function(canvas, lines){}
 ##'     getMargins(fcnvs)
 getMargins <- function(canvas){
     bgcol <- getBGcol(canvas)
-    inkr <- apply(canvas, 1, inked, bg=bgcol, tol=tol)
+    inkr <- apply(canvas, 1, inked, bg=bgcol)
     top <- min(which(inkr > 0))-1 ## top margin
     bottom <- max(which(inkr > 0))+1 ## bottom margin
 
-    inkc <- apply(canvas, 2, inked, bg=bgcol, tol=tol)
+    inkc <- apply(canvas, 2, inked, bg=bgcol)
     left <- min(which(inkc > 0))-1 ## left margin
     right <- max(which(inkc > 0))+1 ## right margin
 

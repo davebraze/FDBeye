@@ -61,7 +61,8 @@ D$label <- as.factor(as.integer(D$label))
 
 fixPlot(data=subset(D, subset=(subj=="s0149")&(story=="1")&(label \%in\% as.character(1:13))),
         bgImage=system.file("extdata/story01.png", package="FDBeye"),
-        pointMap=ggplot2::aes_string(color="as.factor(as.integer(label)\%\%3)"), size=5, pointAlpha=.5)
+        pointMap=ggplot2::aes_string(color="as.factor(as.integer(label)\%\%3)"), size=5,
+                                     pointAlpha=.5)
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}

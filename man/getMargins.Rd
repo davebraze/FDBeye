@@ -19,6 +19,14 @@ None yet
 \details{
 None yet
 }
+\examples{
+    cnvs <- system.file("extdata/story01.png", package="FDBeye")
+    cnvs <- png::readPNG(cnvs)
+    fcnvs <- apply(cnvs, c(1,2), sum) # flatten to a single plane for convenience
+
+    ## get margins
+    getMargins(fcnvs)
+}
 \author{
 Dave Braze <davebraze@gmail.com>
 }
