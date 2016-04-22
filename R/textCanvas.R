@@ -1,6 +1,47 @@
 ## Let's refer to a bitmap image of text used for display of text
 ## stimuli as a "text canvas".
 
+##' @title Counts 'inked' values in a vector.
+##'
+##' @description Counts number of values in a vector that are different from the 'background'.
+##'
+##' @details Counts number of values in a vector that are different from the 'background'. Intended
+##'     to be apply()ed to the rows or columns of a matrix (a color plane in a text canvas).
+##'
+##'     Not necessarily intended to be called by the end user.
+##' @param v A vector of pixels. It will generally be either a row or column from a text canvas.
+##' @param bg The background value.
+##' @param tol A tolerance around the background value. Defaults to 1/(2^32).
+##' @return A numeric value corresponding to the number of non-background values in \code{v}.
+##' @author Dave Braze <davebraze@@gmail.com>
+##' @export
+inked <- function(v,
+                  bg,
+                  tol=1/(2^32)) {
+    sum(abs(bg-v)>tol)
+}
+
+##' @title Finds 'background' value in a matrix.
+##'
+##' @description Finds the most common value in a matrix and returns it.
+##'
+##' @details Finds the 'background' value in a matrix, defined as the most common value in a matrix.
+##'
+##'     Not necessarily intended to be called by the end user.
+##' @param cnvs A matrix representing a text canvas.
+##' @return A numeric value corresponding to the the most common value in \code{cnvs}.
+##' @author Dave Braze <davebraze@@gmail.com>
+##' @export
+getBGcol <- function(cnvs) {
+    cols <- table(cnvs) # table is inefficient; find something better
+    bgcol <- as.numeric(names(which.max(cols)))
+    bgcol
+
+    ## median(cnvs) ## This may work in general, but have to think it through. What happens if the
+    ## background value is found in fewer (or many fewer) than half the elements of cnvs? Maybe
+    ## check to see if bg is a low proportion of values in cnvs and issue a warning() in that case.
+}
+
 ##' @title Estimate locations of text lines within text canvases.
 ##'
 ##' @description None yet
@@ -51,35 +92,47 @@
 ##'     columns:
 ##'
 ##' \enumerate{
-##'     \item line: Integer indicating line number, counting from the top of the canvas.
+##'     \item line: Integer indicating text line number, counting from the top of the canvas.
 ##'     \item top: Integer indicating upper extent of line in pixels.
-##'     \item baseline: Integer indicating location of line's baseline (estimated) in pixels.
+##'     \item baseline: Integer indicating location of line's baseline (estimated) in pixels. NOT YET IMPLEMENTED.
 ##'     \item bottom: Integer indicating lower extent of line in pixels.
 ##' }
 ##'
 ##' @author Dave Braze <davebraze@@gmail.com>
+##' @export
+##' @examples
+##'     cnvs <- system.file("extdata/story01.png", package="FDBeye")
+##'     cnvs <- png::readPNG(cnvs)
+##'     fcnvs <- apply(cnvs, c(1,2), sum) # flatten to a single plane for convenience
+##'
+##'     ## get lines
+##'     getLines(fcnvs)
+##'
 getLines <- function(canvas){
+    bgcol <- getBGcol(canvas)
+    ink <- apply(canvas, 1, inked, bg=bgcol, tol=tol)
 
+    inkb <- ink>0
+    inki <- FDB1::series(as.integer(inkb), step=0) ## find rows with ink
+    erun <- apply(inki[,2:3], 1, sum)-1
+    lines <- cbind(inki, erun)
+    lines <- lines[lines[,1]==1,]
+    colnames(lines) <- c("line", "top", "baseline", "bottom")
+    lines[,'baseline'] <- NA
+    lines[,'line'] <- 1:dim(lines)[1]
+    lines
 }
+
 if (FALSE) {
     cnvs <- system.file("extdata/story01.png", package="FDBeye")
-    cnvs <- png::readPNG(cnvs) # Look into imager::, maybe also see what EBImage:: has to offer?
-    cnvs <- cnvs[,,1] # for simplicity just grab 1 layer, later need to work with all layers
+    cnvs <- png::readPNG(cnvs) # Look into imager::
+    fcnvs <- apply(cnvs, c(1,2), sum) # flatten the into a single plane
 
-    ## get background color; table() is not very efficient; find something better
-    system.time( bg <- table(cnvs) )
-    bg <- as.numeric(names(which.max(bg)))
+    ## get margins
+    getMargins(fcnvs)
 
-    ## find rows with pixels that are NOT the background color, within some tolerance
-    tol <- 1/(2^32) # 32 bits per plane?
-    (bg - cnvs[1]) > tol
-    length(which((bg - cnvs) > tol))
-
-    ## wrap it into a function that can be apply()ed.
-    nbg <- function(v, bg, tol) {
-        sum((bg-v)>tol)
-    }
-    cbind(apply(cnvs, 1, nbg, bg=bg, tol=tol))
+    ## get lines
+    getLines(fcnvs)
 
 }
 
@@ -117,5 +170,23 @@ getChars <- function(canvas, lines){}
 ##'     corresponding to bitmap image.
 ##' @return A named 4 vector containing top, right, bottom and left margins
 ##' @author Dave Braze <davebraze@@gmail.com>
+##' @export
+##' @examples
+##'     cnvs <- system.file("extdata/story01.png", package="FDBeye")
+##'     cnvs <- png::readPNG(cnvs)
+##'     fcnvs <- apply(cnvs, c(1,2), sum) # flatten to a single plane for convenience
 ##'
-getMargins <- function(canvas){}
+##'     ## get margins
+##'     getMargins(fcnvs)
+getMargins <- function(canvas){
+    bgcol <- getBGcol(canvas)
+    inkr <- apply(canvas, 1, inked, bg=bgcol, tol=tol)
+    top <- min(which(inkr > 0))-1 ## top margin
+    bottom <- max(which(inkr > 0))+1 ## bottom margin
+
+    inkc <- apply(canvas, 2, inked, bg=bgcol, tol=tol)
+    left <- min(which(inkc > 0))-1 ## left margin
+    right <- max(which(inkc > 0))+1 ## right margin
+
+    c(top=top, right=right, bottom=bottom, left=left)
+}

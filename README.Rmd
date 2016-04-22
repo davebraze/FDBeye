@@ -31,12 +31,12 @@ contribution to the FDBeye package under the MIT license._
 You might want to send me an email before wading in too deep (<davebraze@gmail.com>).
 
 Other Eye Tracking Tools
---------------
+------------------------
 
 I've kept this list short, limited to tools for post-acquisition summarization and analysis, and where the source code
-can be freely downloaded (i.e., you don't have to ask for it, but some of the stuff I've linked to lacks an Open Source
-License). I'm sure the list is incomplete. If you know of something that seems like ought to be included, let me
-know. Better yet, fork this repository, make the changes yourself, and send me a pull request.
+can be freely downloaded (i.e., you don't have to ask for it, but some of the stuff I've linked to lacks an explicit
+Open Source License). I'm sure the list is incomplete. If you know of something that seems like it ought to be included,
+let me know. Better yet, fork this repository, make the changes yourself, and send me a pull request.
 
 ### *R* packages ###
 
