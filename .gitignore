@@ -11,6 +11,7 @@
 .Rapp.history
 .RData
 .Rproj.user
+
 ## Documentation generated files
 vignettes/*.html
 vignettes/*.pdf
