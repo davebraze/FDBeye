@@ -2,10 +2,11 @@ FDBeye
 ====
 
 Tools to ease working with eyetracker data. I'm gradually (slowly) migrating stuff from my junkpile of project specific
-code into this package. What's here now is focussed on my own workflows involving data from SRR Eyelink systems,
-although some stuff may be more generally useful. Functionality is a bit thin. Pitch in and help if you like.
+code into this package. This package is about post-acquisition data processing. What's here now is focussed on my own
+workflows involving data from SRR Eyelink systems, although some stuff may be more generally useful. Functionality is a
+bit thin. Pitch in and help if you like (see _Contributing_).
 
-Before you dive into FDBeye, you might want to look at what else is available. See the list below.
+Before you try FDBeye, you might want to look at what else is available. See the list below.
 
 Installing FDBeye
 -----------------
@@ -26,7 +27,7 @@ Contributing
 ------------
 
 Contributions are welcome. _IMPORTANT: By submitting a pull request to this project, you agree to release your
-contribution to the FDBeye package under the MIT license._
+contribution to the FDBeye package under the [MIT license](https://opensource.org/licenses/MIT)._
 
 You might want to send me an email before wading in too deep (<davebraze@gmail.com>).
 
