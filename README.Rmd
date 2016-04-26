@@ -6,7 +6,7 @@ code into this package. This package is about post-acquisition data processing. 
 workflows involving data from SRR Eyelink systems, although some stuff may be more generally useful. Functionality is a
 bit thin. Pitch in and help if you like (see _Contributing_).
 
-Before you try FDBeye, you might want to look at what else is available. See the list below.
+Before you try FDBeye, you might want to look at what else is available. See the list of other ET tools below.
 
 Installing FDBeye
 -----------------
@@ -21,7 +21,8 @@ install_github("davebraze/FDBeye")
 License
 -------
 
-FDBeye is released under the MIT open source license. See the LICENSE file for details.
+FDBeye is released under the MIT open source license. See the
+[LICENSE](https://github.com/davebraze/FDBeye/blob/master/LICENSE) file for details.
 
 Contributing
 ------------
