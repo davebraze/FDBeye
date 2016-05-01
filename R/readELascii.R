@@ -34,7 +34,7 @@ getEyelinkTrialData <- function(bounds,
     ## Evel <- grepl("VEL", eventsLine) ## this flag not valid for EVENTS, SAMPLES only
     Eleft <- grepl("LEFT", eventsLine)
     Eright <- grepl("RIGHT", eventsLine)
-    Ebinoc <- (Left && Right)
+    Ebinoc <- (Eleft && Eright)
     Erate <- unlist(stringr::str_split(stringr::str_extract(eventsLine, "RATE\\W+[0-9.]+"), "[ \t]+"))[2]
     ## Maybe also get tracking mode (pupil, cr) and filter level
 
@@ -46,7 +46,7 @@ getEyelinkTrialData <- function(bounds,
     Svel <- grepl("VEL", eventsLine) ## this flag not valid for EVENTS, SAMPLES only
     Sleft <- grepl("LEFT", eventsLine)
     Sright <- grepl("RIGHT", eventsLine)
-    Sbinoc <- (Left && Right)
+    Sbinoc <- (Sleft && Sright)
     Srate <- unlist(stringr::str_split(stringr::str_extract(eventsLine, "RATE\\W+[0-9.]+"), "[ \t]+"))[2]
 
     ## There is also an HTARGET flag that adds columns (three, to SAMPLE lines. Definitely need to
