@@ -12,7 +12,9 @@
 ##'     option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"), either in the script itself or, more
 ##'     permanently, in their .Rprofile file. Before calling the utility, this function will check
 ##'     to see that the specified file exists and is executable. As a meager security check, we also
-##'     ensure that the basename of the file includes the string "edf2asc".
+##'     ensure that the basename of the file includes the string "edf2asc". However, if the selected
+##'     version of the edf2asc executable is in some way incompatible with your platform, then this
+##'     function will fail with a cryptic error.
 ##'
 ##'     The function edf2asc() also checks getOption("FDBeye_edf2asc_opts"). If this option
 ##'     exists, it should be a valid string of command line options to pass to the SRR edf2asc
@@ -34,6 +36,14 @@
 ##' @return A character vector listing output files.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
+##' @examples
+##' \dontrun{
+##' option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe") ## this only needs to  be done once.
+##'
+##' f <- list.files(".", pattern="edf$", recursive=TRUE)
+##' done <- edf2asc(f)
+##' done
+##' }
 edf2asc <- function(edffiles) {
 
     exe <- getOption("FDBeye_edf2asc_exec")
@@ -56,7 +66,7 @@ edf2asc <- function(edffiles) {
 
     for (ff in edffiles) {
         ## see R function shQuote() for help building the command line string.
-        log <- system(paste(shQuote(exe), opts, shQuote(ff)),
+        log <- system(paste(shQuote(exe), opts, shQuote(ff)),   ## should update this to use system2() instead of system().
                       intern=TRUE)
         if(exists("logfile")) logfile <- c(logfile, log)
         else logfile <- log

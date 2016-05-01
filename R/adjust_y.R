@@ -246,9 +246,9 @@ get_xybounds <- function(region_file,
 #' @details This function marks fixations outside boundary as 'oob'
 #'
 #' @param data A data.frame containing the fixation data
-#' @param xy_bounds A mtraix containing the boundaries of fixations. 
+#' @param xy_bounds A mtraix containing the boundaries of fixations.
 #'        If it has only one row, all trials use the same boundary.
-#'        If it has many rows, the number of row should be equal to the number of trials, 
+#'        If it has many rows, the number of row should be equal to the number of trials,
 #'        and each row corresponds to the boundary of the corresponding trial.
 #'        In each row, it has four columns:
 #'        \enumerate{
@@ -303,18 +303,18 @@ mark_oob <- function(data,
 #'        \item y_pos: y position of the first word in each text line.
 #'        \item trial_num: the trial number of the current start_pts
 #'        }
-#' @param k_bounds A list containing the lower and upper boundaries of slope; 
+#' @param k_bounds A list containing the lower and upper boundaries of slope;
 #'                default value is [-0.1, 0.1]
-#' @param o_bounds A list containing the lower and upper boundaries of offset; 
+#' @param o_bounds A list containing the lower and upper boundaries of offset;
 #'                defaul value is [-0.5*dist of adjacent text lines, 0.5*dist of adjacent text line])
 #' @param s_bounds A list containing the lower and upper boundaries of sd; default value is [1, 20]
-#' @param den_sd_cutoff A float variable for cutoff threshold for density; 
+#' @param den_sd_cutoff A float variable for cutoff threshold for density;
 #'                If it is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are accepted)
 #' @param den_ratio_cutoff A float variable for cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
 #' @param num_checkFirst An integer denoting the number of starting fixations used for checking start-reading bound; default value is 5
 #' @param num_checkLast An integer denoting the number of ending fixations used for checking end-reading bound; default value is 10
 #'
-#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information. 
+#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information.
 #'        It adds the following columns:
 #'        \enumerate{
 #'        \item line: Text line that each fixation belongs to
@@ -324,8 +324,8 @@ mark_oob <- function(data,
 #'        \item offset: Optimizaed offset value for all fitted lines
 #'        \item sd: Optimized sd value for all fitted lines
 #'        \item fit_den: fitted density value
-#'        \item fit_y_diff: fitted y difference (accumulated y differences between each fixation and the fitted line)  
-#'        } 
+#'        \item fit_y_diff: fitted y difference (accumulated y differences between each fixation and the fitted line)
+#'        }
 #' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 cat_lines1 <- function(params,
@@ -474,7 +474,7 @@ cat_lines1 <- function(params,
 #'     y_diff) as target measure for optimization uses.
 #' @details This function optimizes the slope, offset and sd for all lines of fixations. It uses
 #'     sum(min(y_diff)) as fit measure for optimization.
-#' 
+#'
 #' @param params A vector of parameters for optimization, the three values in it refer to slope, offset, and sd
 #' @param fit_it A bollean variable; if it is TRUE, the function will return fit measure; if it is FALSE, the function will return fit information
 #' @param data A data.frame storing the fixation data including at least the x_pos and y_pos of each fixation
@@ -484,18 +484,18 @@ cat_lines1 <- function(params,
 #'        \item y_pos: y position of the first word in each text line.
 #'        \item trial_num: the trial number of the current start_pts
 #'        }
-#' @param k_bounds A list containing the lower and upper boundaries of slope; 
+#' @param k_bounds A list containing the lower and upper boundaries of slope;
 #'                default value is [-0.1, 0.1]
-#' @param o_bounds A list containing the lower and upper boundaries of offset; 
+#' @param o_bounds A list containing the lower and upper boundaries of offset;
 #'                defaul value is [-0.5*dist of adjacent text lines, 0.5*dist of adjacent text line])
 #' @param s_bounds A list containing the lower and upper boundaries of sd; default value is [1, 20]
-#' @param den_sd_cutoff A float variable for cutoff threshold for density; 
+#' @param den_sd_cutoff A float variable for cutoff threshold for density;
 #'                If it is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are accepted)
 #' @param den_ratio_cutoff A float variable for cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
 #' @param num_checkFirst An integer denoting the number of starting fixations used for checking start-reading bound; default value is 5
 #' @param num_checkLast An integer denoting the number of ending fixations used for checking end-reading bound; default value is 10
 #'
-#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information. 
+#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information.
 #'        It adds the following columns:
 #'        \enumerate{
 #'        \item line: Text line that each fixation belongs to
@@ -505,8 +505,8 @@ cat_lines1 <- function(params,
 #'        \item offset: Optimizaed offset value for all fitted lines
 #'        \item sd: Optimized sd value for all fitted lines
 #'        \item fit_den: fitted density value
-#'        \item fit_y_diff: fitted y difference (accumulated y differences between each fixation and the fitted line)  
-#'        } 
+#'        \item fit_y_diff: fitted y difference (accumulated y differences between each fixation and the fitted line)
+#'        }
 #' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 cat_lines2 <- function(params,
@@ -664,18 +664,18 @@ cat_lines2 <- function(params,
 #'        \item y_pos: y position of the first word in each text line.
 #'        \item trial_num: the trial number of the current start_pts
 #'        }
-#' @param k_bounds A list containing the lower and upper boundaries of slope; 
+#' @param k_bounds A list containing the lower and upper boundaries of slope;
 #'                default value is [-0.1, 0.1]
-#' @param o_bounds A list containing the lower and upper boundaries of offset; 
+#' @param o_bounds A list containing the lower and upper boundaries of offset;
 #'                defaul value is [-0.5*dist of adjacent text lines, 0.5*dist of adjacent text line])
 #' @param s_bounds A list containing the lower and upper boundaries of sd; default value is [1, 20]
-#' @param den_sd_cutoff A float variable for cutoff threshold for density; 
+#' @param den_sd_cutoff A float variable for cutoff threshold for density;
 #'                If it is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are accepted)
 #' @param den_ratio_cutoff A float variable for cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
 #' @param num_checkFirst An integer denoting the number of starting fixations used for checking start-reading bound; default value is 5
 #' @param num_checkLast An integer denoting the number of ending fixations used for checking end-reading bound; default value is 10
 #'
-#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information. 
+#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information.
 #'        It adds the following columns:
 #'        \enumerate{
 #'        \item line: Text line that each fixation belongs to
@@ -685,8 +685,8 @@ cat_lines2 <- function(params,
 #'        \item offset: Optimizaed offset value for the fitted line that current fixation belongs to
 #'        \item sd: Optimized sd value for the fitted line that current fixation belongs to
 #'        \item fit_den: fitted density value of the fitted line that current fixation belongs to
-#'        \item fit_y_diff: fitted y difference of the fitted line that current fixation belongs to (accumulated y differences between each fixation and fitted lines)  
-#'        } 
+#'        \item fit_y_diff: fitted y difference of the fitted line that current fixation belongs to (accumulated y differences between each fixation and fitted lines)
+#'        }
 #' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 cat_lines3 <- function(params,
@@ -856,18 +856,18 @@ cat_lines3 <- function(params,
 #'        \item y_pos: y position of the first word in each text line.
 #'        \item trial_num: the trial number of the current start_pts
 #'        }
-#' @param k_bounds A list containing the lower and upper boundaries of slope; 
+#' @param k_bounds A list containing the lower and upper boundaries of slope;
 #'                default value is [-0.1, 0.1]
-#' @param o_bounds A list containing the lower and upper boundaries of offset; 
+#' @param o_bounds A list containing the lower and upper boundaries of offset;
 #'                defaul value is [-0.5*dist of adjacent text lines, 0.5*dist of adjacent text line])
 #' @param s_bounds A list containing the lower and upper boundaries of sd; default value is [1, 20]
-#' @param den_sd_cutoff A float variable for cutoff threshold for density; 
+#' @param den_sd_cutoff A float variable for cutoff threshold for density;
 #'                If it is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are accepted)
 #' @param den_ratio_cutoff A float variable for cutoff threshold for density ratio (ratio between the maximum density and second maximum density)
 #' @param num_checkFirst An integer denoting the number of starting fixations used for checking start-reading bound; default value is 5
 #' @param num_checkLast An integer denoting the number of ending fixations used for checking end-reading bound; default value is 10
 #'
-#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information. 
+#' @return A data.frame including fixation data, and fitting data including fit measures and fitted lines information.
 #'        It adds the following columns:
 #'        \enumerate{
 #'        \item line: Text line that each fixation belongs to
@@ -876,9 +876,9 @@ cat_lines3 <- function(params,
 #'        \item slope: Optimized slope value for the fitted line that current fixation belongs to
 #'        \item offset: Optimizaed offset value for the fitted line that current fixation belongs to
 #'        \item sd: Optimized sd value for the fitted line that current fixation belongs to
-#'        \item fit_den: fitted density value for the fitted line that current fixation belongs to 
-#'        \item fit_y_diff: fitted y difference for the fitted line that current fixation belongs to (accumulated y differences between each fixation and fitted lines)  
-#'        } 
+#'        \item fit_den: fitted density value for the fitted line that current fixation belongs to
+#'        \item fit_y_diff: fitted y difference for the fitted line that current fixation belongs to (accumulated y differences between each fixation and fitted lines)
+#'        }
 #' @author Tao Gong \email{gtojty@@gmail.com}
 #' @export
 cat_lines4 <- function(params,
