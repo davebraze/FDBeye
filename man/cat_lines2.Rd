@@ -22,15 +22,15 @@ cat_lines2(params, fit_it = TRUE, data, start_pts, k_bounds, o_bounds,
 \item trial_num: the trial number of the current start_pts
 }}
 
-\item{k_bounds}{A list containing the lower and upper boundaries of slope; 
+\item{k_bounds}{A list containing the lower and upper boundaries of slope;
 default value is [-0.1, 0.1]}
 
-\item{o_bounds}{A list containing the lower and upper boundaries of offset; 
+\item{o_bounds}{A list containing the lower and upper boundaries of offset;
 defaul value is [-0.5*dist of adjacent text lines, 0.5*dist of adjacent text line])}
 
 \item{s_bounds}{A list containing the lower and upper boundaries of sd; default value is [1, 20]}
 
-\item{den_sd_cutoff}{A float variable for cutoff threshold for density; 
+\item{den_sd_cutoff}{A float variable for cutoff threshold for density;
 If it is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_den_max))) as cutoff (99.7\% are accepted)}
 
 \item{den_ratio_cutoff}{A float variable for cutoff threshold for density ratio (ratio between the maximum density and second maximum density)}
@@ -40,7 +40,7 @@ If it is Inf, use mean(inv_dnorm(exp(data_den_max))) + 3*sd(inv_dnorm(exp(data_d
 \item{num_checkLast}{An integer denoting the number of ending fixations used for checking end-reading bound; default value is 10}
 }
 \value{
-A data.frame including fixation data, and fitting data including fit measures and fitted lines information. 
+A data.frame including fixation data, and fitting data including fit measures and fitted lines information.
        It adds the following columns:
        \enumerate{
        \item line: Text line that each fixation belongs to
@@ -50,7 +50,7 @@ A data.frame including fixation data, and fitting data including fit measures an
        \item offset: Optimizaed offset value for all fitted lines
        \item sd: Optimized sd value for all fitted lines
        \item fit_den: fitted density value
-       \item fit_y_diff: fitted y difference (accumulated y differences between each fixation and the fitted line)  
+       \item fit_y_diff: fitted y difference (accumulated y differences between each fixation and the fitted line)
        }
 }
 \description{

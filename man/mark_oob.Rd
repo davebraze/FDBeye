@@ -9,9 +9,9 @@ mark_oob(data, xy_bounds, trial_num, cur_trial)
 \arguments{
 \item{data}{A data.frame containing the fixation data}
 
-\item{xy_bounds}{A mtraix containing the boundaries of fixations. 
+\item{xy_bounds}{A mtraix containing the boundaries of fixations.
 If it has only one row, all trials use the same boundary.
-If it has many rows, the number of row should be equal to the number of trials, 
+If it has many rows, the number of row should be equal to the number of trials,
 and each row corresponds to the boundary of the corresponding trial.
 In each row, it has four columns:
 \enumerate{

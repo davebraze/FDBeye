@@ -27,7 +27,9 @@ Call SR Research "edf2asc" command line utility to convert *edf files to *asc
     option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"), either in the script itself or, more
     permanently, in their .Rprofile file. Before calling the utility, this function will check
     to see that the specified file exists and is executable. As a meager security check, we also
-    ensure that the basename of the file includes the string "edf2asc".
+    ensure that the basename of the file includes the string "edf2asc". However, if the selected
+    version of the edf2asc executable is in some way incompatible with your platform, then this
+    function will fail with a cryptic error.
 
     The function edf2asc() also checks getOption("FDBeye_edf2asc_opts"). If this option
     exists, it should be a valid string of command line options to pass to the SRR edf2asc
@@ -43,6 +45,15 @@ Call SR Research "edf2asc" command line utility to convert *edf files to *asc
          \item Documentation is in the EL1000+ manual, section 4.8 "Using ASC files".
          \item Make sure edfapi library (e.g., edfapi.dll) is somewhere on the PATH.
     }
+}
+\examples{
+\dontrun{
+option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe") ## this only needs to  be done once.
+
+f <- list.files(".", pattern="edf$", recursive=TRUE)
+done <- edf2asc(f)
+done
+}
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}

@@ -94,16 +94,52 @@ getEyelinkTrialData <- function(bounds,
         blink <- NULL
     }
 
+
     ## Get trial variables
-    trialvar <- grep("TRIAL_VAR", lines[bounds[1]:bounds[2]], value=TRUE)
-    trialvar <- stringr::str_split(trialvar, pattern="[ \t]+")
+    if(FALSE) {
+
+        tv <- c("MSG	93985635 !V TRIAL_VAR cohort_set 19",  # test cases
+                "MSG	93985635 !V TRIAL_VAR condition NCohort",
+                "MSG	93985637 !V TRIAL_VAR frame see",
+                "MSG	93985637 !V TRIAL_VAR image_1 nail.bmp",
+                "MSG	93985638 !V TRIAL_VAR image_2 pencil.bmp",
+                "MSG	93985639 !V TRIAL_VAR image_3 wand.bmp",
+                "MSG	93985640 !V TRIAL_VAR image_4 church.bmp",
+                "MSG	93985641 !V TRIAL_VAR location_1 (737, 608)",
+                "MSG	93985643 !V TRIAL_VAR location_2 (337, 608)",
+                "MSG	93985644 !V TRIAL_VAR location_3 (737, 208)",
+                "MSG	93985645 !V TRIAL_VAR location_4 (337, 208)",
+                "MSG	93985645 !V TRIAL_VAR sound_1 pencil.wav",
+                "MSG	93985646 !V TRIAL_VAR sound_2 pencil_see.wav",
+                "MSG	93985647 !V TRIAL_VAR wordonset 603",
+                "MSG	93985648 !V TRIAL_VAR sound_1_len 2000",
+                "MSG	93985649 !V TRIAL_VAR sound_2_len 2500")
+
+        trialvar <- stringr::str_split(tv, pattern="[ \t]+", n=6)
+        if (length(trialvar) > 0) {
+            trialvar <- matrix(unlist(trialvar), ncol=length(tv))[5:6,]
+            hdr <- trialvar[1,]
+            trialvar <- data.frame(rbind(trialvar[2,]), stringsAsFactors=FALSE)
+            names(trialvar) <- hdr
+            ## toN <- sapply(trialvar, function(v) all(FDB1::is.numeral(v)))
+            ## trialvar <- data.frame(sapply(trialvar[!toN], as.factor=FALSE, simplify=FALSE),
+            ##                        sapply(trialvar[toN], as.numeric, simplify=FALSE))
+        } else {
+            trialvar <- NULL
+        }
+
+
+    }
+    tvblock <- grep("TRIAL_VAR", lines[bounds[1]:bounds[2]], value=TRUE)
+    trialvar <- stringr::str_split(tvblock, pattern="[ \t]+", n=6)
     if (length(trialvar) > 0) {
-        trialvar <- t(matrix(unlist(trialvar), ncol=length(trialvar[[1]]), byrow=TRUE)[,5:6])
+        trialvar <- matrix(unlist(trialvar), ncol=length(tvblock))[5:6,]
         hdr <- trialvar[1,]
         trialvar <- data.frame(rbind(trialvar[2,]), stringsAsFactors=FALSE)
         names(trialvar) <- hdr
-        toN <- sapply(trialvar, function(v) all(FDB1::is.numeral(v)))
-        trialvar <- data.frame(sapply(trialvar[!toN], as.factor, simplify=FALSE), sapply(trialvar[toN], as.numeric, simplify=FALSE))
+        ## toN <- sapply(trialvar, function(v) all(FDB1::is.numeral(v)))  ## maybe wait to do the conversion to numeric when building reports
+        ## trialvar <- data.frame(sapply(trialvar[!toN], as.factor, simplify=FALSE),
+        ##                        sapply(trialvar[toN], as.numeric, simplify=FALSE))
     } else {
         trialvar <- NULL
     }
