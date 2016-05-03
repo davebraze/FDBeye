@@ -40,19 +40,20 @@ getEyelinkTrialData <- function(bounds,
 
     ## Get SAMPLES meta-data
     samplesLine <- grep("^SAMPLES", lines[bounds[1]:bounds[2]], value=TRUE)
-    samplesLine <- "SAMPLES	GAZE	RIGHT	VEL	RES	RATE	 250.00	TRACKING	CR	FILTER	2"
-    Sgaze <- grepl("GAZE", eventsLine)
-    Sres <- grepl("RES", eventsLine)
-    Svel <- grepl("VEL", eventsLine) ## this flag not valid for EVENTS, SAMPLES only
-    Sleft <- grepl("LEFT", eventsLine)
-    Sright <- grepl("RIGHT", eventsLine)
+    ## samplesLine <- "SAMPLES	GAZE	RIGHT	VEL	RES	RATE	 250.00	TRACKING	CR	FILTER	2"
+    Sgaze <- grepl("GAZE", samplesLine)
+    Sres <- grepl("RES", samplesLine)
+    Starget <- grepl("HTARGET", samplesLine)
+    Svel <- grepl("VEL", samplesLine) ## this flag not valid for EVENTS, SAMPLES only
+    Sleft <- grepl("LEFT", samplesLine)
+    Sright <- grepl("RIGHT", samplesLine)
     Sbinoc <- (Sleft && Sright)
-    Srate <- unlist(stringr::str_split(stringr::str_extract(eventsLine, "RATE\\W+[0-9.]+"), "[ \t]+"))[2]
+    Srate <- unlist(stringr::str_split(stringr::str_extract(samplesLine, "RATE\\W+[0-9.]+"), "[ \t]+"))[2]
 
     ## There is also an HTARGET flag that adds columns (three, to SAMPLE lines. Definitely need to
-    ## deal with that. HTARGET only occurs with remote systems in head. One of it's columns seems to
-    ## be camera-to-target distance in mm. Not sure about the others. An INPUT flag also adds a
-    ## single column.
+    ## deal with that. HTARGET only occurs with remote systems in head-free mode. One of it's
+    ## columns seems to be camera-to-target distance in mm. Not sure about the others. An INPUT flag
+    ## also adds a single column.
 
     ## Get fixation events
     fix <- grep("^EFIX", lines[bounds[1]:bounds[2]], value=TRUE)
@@ -98,38 +99,25 @@ getEyelinkTrialData <- function(bounds,
     ## Get trial variables
     if(FALSE) {
 
-        tv <- c("MSG	93985635 !V TRIAL_VAR cohort_set 19",  # test cases
-                "MSG	93985635 !V TRIAL_VAR condition NCohort",
-                "MSG	93985637 !V TRIAL_VAR frame see",
-                "MSG	93985637 !V TRIAL_VAR image_1 nail.bmp",
-                "MSG	93985638 !V TRIAL_VAR image_2 pencil.bmp",
-                "MSG	93985639 !V TRIAL_VAR image_3 wand.bmp",
-                "MSG	93985640 !V TRIAL_VAR image_4 church.bmp",
-                "MSG	93985641 !V TRIAL_VAR location_1 (737, 608)",
-                "MSG	93985643 !V TRIAL_VAR location_2 (337, 608)",
-                "MSG	93985644 !V TRIAL_VAR location_3 (737, 208)",
-                "MSG	93985645 !V TRIAL_VAR location_4 (337, 208)",
-                "MSG	93985645 !V TRIAL_VAR sound_1 pencil.wav",
-                "MSG	93985646 !V TRIAL_VAR sound_2 pencil_see.wav",
-                "MSG	93985647 !V TRIAL_VAR wordonset 603",
-                "MSG	93985648 !V TRIAL_VAR sound_1_len 2000",
-                "MSG	93985649 !V TRIAL_VAR sound_2_len 2500")
-
-        trialvar <- stringr::str_split(tv, pattern="[ \t]+", n=6)
-        if (length(trialvar) > 0) {
-            trialvar <- matrix(unlist(trialvar), ncol=length(tv))[5:6,]
-            hdr <- trialvar[1,]
-            trialvar <- data.frame(rbind(trialvar[2,]), stringsAsFactors=FALSE)
-            names(trialvar) <- hdr
-            ## toN <- sapply(trialvar, function(v) all(FDB1::is.numeral(v)))
-            ## trialvar <- data.frame(sapply(trialvar[!toN], as.factor=FALSE, simplify=FALSE),
-            ##                        sapply(trialvar[toN], as.numeric, simplify=FALSE))
-        } else {
-            trialvar <- NULL
-        }
-
+        tvblock <- c("MSG	93985635 !V TRIAL_VAR cohort_set 19",  # test cases
+                     "MSG	93985635 !V TRIAL_VAR condition NCohort",
+                     "MSG	93985637 !V TRIAL_VAR frame see",
+                     "MSG	93985637 !V TRIAL_VAR image_1 nail.bmp",
+                     "MSG	93985638 !V TRIAL_VAR image_2 pencil.bmp",
+                     "MSG	93985639 !V TRIAL_VAR image_3 wand.bmp",
+                     "MSG	93985640 !V TRIAL_VAR image_4 church.bmp",
+                     "MSG	93985641 !V TRIAL_VAR location_1 (737, 608)",
+                     "MSG	93985643 !V TRIAL_VAR location_2 (337, 608)",
+                     "MSG	93985644 !V TRIAL_VAR location_3 (737, 208)",
+                     "MSG	93985645 !V TRIAL_VAR location_4 (337, 208)",
+                     "MSG	93985645 !V TRIAL_VAR sound_1 pencil.wav",
+                     "MSG	93985646 !V TRIAL_VAR sound_2 pencil_see.wav",
+                     "MSG	93985647 !V TRIAL_VAR wordonset 603",
+                     "MSG	93985648 !V TRIAL_VAR sound_1_len 2000",
+                     "MSG	93985649 !V TRIAL_VAR sound_2_len 2500")
 
     }
+
     tvblock <- grep("TRIAL_VAR", lines[bounds[1]:bounds[2]], value=TRUE)
     trialvar <- stringr::str_split(tvblock, pattern="[ \t]+", n=6)
     if (length(trialvar) > 0) {
@@ -151,6 +139,7 @@ getEyelinkTrialData <- function(bounds,
     samp <- stringr::str_split(samp, pattern="[ \t]+")
     if (length(samp) > 0) {
         samp <- data.frame(matrix(unlist(samp), ncol=length(samp[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
+        print(samp[1,])
         ## NEED SOME ADDITIONAL HANDLING here to take care of '...' (when either left or right eye is
         ## not tracked) and similar composite fields
         ## Problem: fields in sample lines are different depending on
@@ -165,7 +154,7 @@ getEyelinkTrialData <- function(bounds,
         ##   . monoc/remote recording, 9 fields (time, xpos, ypos, pupil, CR, xtarg, ytarg, ztarg (distance), IP field)
 
         if (!(Sbinoc||Svel||Sres)) {           ## monocular data; no velocity; no resolution
-
+            print("!(Sbinoc||Svel||Sres)")
             ## For monocular data determine which eye was measured, label columns
             ## accordingly. Within a study using monocular recording, some subjects may contribute R
             ## eye data while others L eye data. If this is the case then coordinate and pupil size
@@ -182,14 +171,18 @@ getEyelinkTrialData <- function(bounds,
             ## MAYBE: Also insert columns for unmeasured eye and fill them with NAs.
 
             if (Sleft) {
-                ## 5 columns        <time> <xpl> <ypl> <psl> ...
+                ## 5 columns <time> <xpl> <ypl> <psl> ...  5th column (...) is only present in
+                ## corneal reflection mode. This warning field is "..." if no warnings. First
+                ## character is "I" if sample was interpolated. Second characters is "C" if CR is
+                ## missing. Third character is "R" if CR recovery in progress. See page 122 of
+                ## EyeLink 1000 plus Manual v1.0.6.
             } else {
                 ## 5 columns        <time> <xpr> <ypr> <psr> ...
             }
 
 
         } else if(Svel && !(Sbinoc||Sres)) {   ## monocular; velocity; no resolution
-
+            print("Svel && !(Sbinoc||Sres)")
             if (Sleft) {
                 ## 7 columns        <time> <xpl> <ypl> <psl> <xv> <yv> ...
             } else {
@@ -197,7 +190,7 @@ getEyelinkTrialData <- function(bounds,
             }
 
         } else if(Sres && !(Sbinoc||Svel)) {   ## monocular; no velocity;  resolution
-
+            print("Sres && !(Sbinoc||Svel)")
             if (Sleft) {
                 ## 7 columns        <time> <xpl> <ypl> <psl> <xr> <yr> ...
             } else {
@@ -205,7 +198,7 @@ getEyelinkTrialData <- function(bounds,
             }
 
         } else if((Svel&&Sres) && !Sbinoc) {   ## monocular; velocity;  resolution
-
+            print("(Svel&&Sres) && !Sbinoc")
             if (Sleft) {
                 ## 7 columns        <time> <xpl> <ypl> <psl> <xv> <yv> <xr> <yr> ...
             } else {
@@ -213,12 +206,22 @@ getEyelinkTrialData <- function(bounds,
             }
 
         } else if (Sbinoc && !(Svel||Sres)) {  ## binocular data; no velocity; no resolution
+            print("Sbinoc && !(Svel||Sres)")
             ## 8 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> ...
+            ##
+            ## 8th column (.....) is only present in corneal reflection mode. This warning field is
+            ## "....." if no warnings. First character is "I" if sample was interpolated. Second
+            ## characters is "C" if LEFT CR is missing. Third character is "R" if LEFT CR recovery
+            ## in progress. Fourth characters is "C" if RIGHT CR is missing. Fifth character is "R"
+            ## if RIGHT CR recovery in progress. See page 122 of EyeLink 1000 plus Manual v1.0.6.
         } else if((Sbinoc && Svel) && !Sres) { ## binocular; velocity; no resolution
+            print("(Sbinoc && Svel) && !Sres")
             ## 10 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xv> <yv> ...
         } else if(Sres && !(Sbinoc||Svel)) {   ## binocular; no velocity;  resolution
+            print("Sres && !(Sbinoc||Svel)")
             ## 10 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xr> <yr> ...
         } else if((Svel&&Sres) && !Sbinoc) {   ## binocular; velocity;  resolution
+            print("(Svel&&Sres) && !Sbinoc")
             ## 12 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xv> <yv> <xr> <yr> ...
         }
 
