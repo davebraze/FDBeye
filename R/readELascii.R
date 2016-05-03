@@ -264,22 +264,35 @@ getEyelinkTrialData <- function(bounds,
 ##' (fixations, saccades, blinks), specified MSG events, and TRIAL_VARs from them.
 ##'
 ##' @param file A string giving path/fname to input file (ELascii file).
-##' @param tStartRE A string containing regular expression that uniquely identifies beginnings of trials.
-##' @param tEndRE A string containing regular expression that uniquely identifies ends of trials.
-##' @param msgSet A character vector. Each element identifies a MSG event to recover from the data file.
+##' @param tStartRE A string containing regular expression that uniquely identifies beginnings of
+##'     trials.
+##' @param tEndRE A string containing regular expression that uniquely identifies ends of trials. If
+##'     an experiment is aborted prematurely, then the *edf file (and so the *asc file) may not have
+##'     a proper trial end event. TODO: test for that case and handle it while throwing a warning.
+##' @param msgSet A character vector. Each element identifies a MSG event to recover from the data
+##'     file.
+##' @param subjID If NULL (default), use filename as subject ID. Otherwise use specified string.
 ##' @return List with two elements, one for session information, and one containing a list of
-##' trials. Each trial element is itself a list of 6 elements: data.frames enumerating fixations,
-##' saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
+##'     trials. Each trial element is itself a list of 6 elements: data.frames enumerating
+##'     fixations, saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
 readELascii <- function(file,
                         tStartRE="TRIALID",
                         tEndRE="TRIAL_RESULT",
-                        msgSet=NA) {
-    ## FIXME: maybe change tStartRE to "Prepare_sequence"
+                        msgSet=NA,
+                        subjID=NULL) {
+    ## TODO: maybe change default tStartRE to "Prepare_sequence"
     f <- file(file, "r", blocking=FALSE)
     lines <- readLines(f, warn=TRUE, n=-1)
     close(f)
+
+    ## use filename as subject ID, unless otherwise specified
+    if(is.null(subjID)) {
+        subj <- unlist(stringr::str_split(tools::file_path_sans_ext(f), .Platform$file.sep))[-1]
+    } else {
+        subj <- subjID
+    }
 
     ## get session information from file header
     ## FIXME: Also need to capture version of edfapi/edf2asc used for file conversion.
@@ -288,7 +301,7 @@ readELascii <- function(file,
     sessdate <- unlist(stringr::str_split(grep("DATE:", header, value=TRUE), ": "))[2]
     srcfile <- unlist(stringr::str_split(grep("CONVERTED FROM", header, value=TRUE), " (FROM|using) "))[2]
     srcfile <- basename(srcfile)
-    session <- data.frame(script, sessdate, srcfile)
+    session <- data.frame(subj, script, sessdate, srcfile)
 
     ## get start and end lines for each trial block
     tStart <- grep(tStartRE, lines)
