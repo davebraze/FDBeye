@@ -4,10 +4,10 @@ output: html_document
 FDBeye
 ====
 
-Tools to ease working with eyetracker data. I'm gradually (slowly) migrating stuff from my junkpile of project specific
-code into this package. This package is about post-acquisition data processing. What's here now is focussed on my own
-workflows involving data from SRR Eyelink systems, although some stuff may be more generally useful. Functionality is a
-bit thin. Pitch in and help if you like (see _Contributing_).
+Tools to ease working with eyetracker data. I'm slowly migrating stuff from my junkpile of project specific code into
+this package. This package is about post-acquisition data processing. What's here now is focussed on my own workflows
+involving data from SRR Eyelink systems, although some stuff may be more generally useful. Functionality is a bit
+thin. Pitch in and help if you like (see _Contributing_).
 
 Before you try FDBeye, you might want to look at what else is available. See the list of other ET tools below.
 
@@ -45,9 +45,10 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
 
 ### *R* packages ###
 
-  * ***edf***: R package for reading SRR *edf files directly. Codebase is both R and C++, and requires SRR's
-    edfapi. Source available on SRR's help forum (login via free account required)
-    <https://www.sr-support.com/showthread.php?1416-Reading-EDF-files-in-GNU-R>.
+  * ***edfR***: R package for reading SRR *edf files directly. Codebase is both R and C++, and requires SRR's
+    edfapi. Source available on github <https://github.com/jashubbard/edfR>. Linux and OSX only (no Windows), as of
+    May 2016.  Alternate download at SRR help forum
+    <https://www.sr-support.com/showthread.php?1416-Reading-EDF-files-in-GNU-R> (requires login via free account).
   * ***em2***: "package for computing reading time measures for psycholinguistics," i.e. regional reading time
         measures. R package, underlying code mostly C++. Source available on github <https://github.com/cran/em2>.
   * ***emov***: Functions for fixation/saccade detection. On CRAN <https://cran.r-project.org/web/packages/emov/>. Source is
@@ -70,6 +71,7 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
     redistributed, or even used without first obtaining explicit permission from UMass. Odd.
   * ***gazepath***: Functions for fixation/saccade detection. On CRAN
     <https://cran.r-project.org/web/packages/gazepath/>. Source on github <https://github.com/cran/gazepath>.
+  * ***itrackR***: Read and analyze data from SRR eyelink systems. On github <https://github.com/jashubbard/itrackR>.
   * ***saccades***: Functions for fixation/saccade detection. On CRAN
     <https://cran.r-project.org/web/packages/saccades/>. Source on github
     <https://github.com/tmalsburg/saccades>. author's website <http://pages.ucsd.edu/~tvondermalsburg/saccades/>.
@@ -88,10 +90,6 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
   * ***EyeSimplify***: web site at <http://www.cl.uni-heidelberg.de/seminare/studpro06/eyesimplify/>. Convenience wrapper
     with automation for UMass tools (*EyeDoctor* etc.). Possibly superceded by *RoboDoc.py*. Python codebase. Last
     update in 2007.
-  * ***iMap***: author's website <http://perso.unifr.ch/roberto.caldara/index.php?page=3>. Fixation pattern
-    analysis and visualization. Described in a couple of journal articles: *Behav Res*
-    <http://perso.unifr.ch/roberto.caldara/pdfs/caldara_11.pdf> and *J of Vision*
-    <http://jov.arvojournals.org/article.aspx?articleid=2433901>. Matlab toolbox. Seems current.
   * ***ocupy***: on github <https://github.com/nwilming/ocupy>. Python codebase. "tools for analyzing eye-tracking
     data". last update in 2015, sluggish development.
   * ***pyarbus***: on github <https://github.com/ivanov/pyarbus>. Python codebase. Major functionality seems to be
@@ -116,6 +114,12 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
     in MATLAB," with SRR eyelink systems. Seems active.
   * ***EyeMMV***: on github <https://github.com/krasvas/EyeMMV>. Matlab toolbox. post-collection eye movement
     analysis. Last update in 2014. Described in J. of *Eye Movement Research* <http://www.jemr.org/online/7/1/1>.
+  * ***iMap***: author's website <http://perso.unifr.ch/roberto.caldara/index.php?page=3>. Fixation pattern
+    analysis and visualization. Described in a couple of journal articles: *Behav Res*
+    <http://perso.unifr.ch/roberto.caldara/pdfs/caldara_11.pdf> and *J of Vision*
+    <http://jov.arvojournals.org/article.aspx?articleid=2433901>. Matlab toolbox. Seems current.
+  * ***iTrack***: on github <https://github.com/jashubbard/iTrack>. "Matlab toolbox for importing and processing eye
+    tracking data from EyeLink eye trackers".
   * ***ScanMatch***: web page <http://seis.bris.ac.uk/~psidg/ScanMatch/>. Described in *Behav Res*
     <http://seis.bris.ac.uk/~psidg/ScanMatch/CMTG2010.pdf>. Scan path analysis. Matlab toolbox. Last update 2009.
   * ***calib_adjust_code*** web page at <http://langcog.stanford.edu/materials/calib.html>. Method for offline
