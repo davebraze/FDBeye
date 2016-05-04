@@ -306,7 +306,7 @@ readELascii <- function(file,
     ## get start and end lines for each trial block
     tStart <- grep(tStartRE, lines)
     tEnd <- grep(tEndRE, lines)
-    stopifnot (length(tStart) == length(tEnd))
+    stopifnot (length(tStart) == length(tEnd)) ##TODO: something more elegant of there's a mismatch here.
     trialidx <- cbind(tStart, tEnd)
 
     ## get trial IDs
