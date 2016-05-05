@@ -1,5 +1,5 @@
 ---
-title: "SRR Experiment Builder Text Canvases"
+title: "Text Canvases part 1: SRR Experiment Builder"
 author: "Dave Braze"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -8,6 +8,59 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+In our terminology, a *text canvas* is a bitmap image of text,
+formatted as it might appear on a printed page. A *text canvas* is the
+kind of stimulus used in an experiment where participants' eye
+movements are recorded while they read from a computer monitor.
+
+In our lab, we typically generate *text canvas* stimuli for an
+experiment offline and then provide those to whatever experiment
+control software will be used for data acquisition. For us, most often
+that's SRR _Experiment Builder_. This offline approach to stimulus
+construction gives us complete control over the appearance of the
+visual stimuli, and lets us use pixel-identical stimuli on different
+computers, or with different experiment control software (e.g.,
+_Experiment Builder_, _E-Prime_, _Presentation_).
+
+An offline approach also let's us use our own tools for creating and
+modifying regions of interest (aka interest areas). These ROIs are
+used for the purpose of summarizing gaze behavior over a text. The
+most natural default for regions of interest is that they correspond
+to the individual words in the text. But it is often the case that
+mapping gaze data onto multi-word regions that correspond to larger
+syntactic or semantic constituents is useful. The tools provided by,
+e.g., _Experiment Builder_ for redefining ROIs are tedious to use and
+not very intuitive. Ours are better.
+
+However, _Experiment Builder_ (and presumably other experiment control
+software) can also create *text canvases* internally, from plain text
+(ascii or unicode) provided to them. _Experiment Builder_ will do so
+only if the IMAGE\_RESOURCE used to display the text in _EB_ project
+has its _Prebuild to Image_ property checked. In that case, the text
+canvases will be saved to the `/runtime/images/` subfolder within the
+project as PNG bitmaps. Unfortunately, they are give rather cryptic
+file names, like `-6812265288292522003.png`.
+
+You can determine which of these PNG files was used in which trial, by
+checking a set of _EB_ generated text files located in the
+`/runtime/dataviewer/[EDF filename]/graphics/` subfolder of the
+project. These files will have a vcl extension and the filenames
+include numbers that correspond to trial numbers (e.g., `VC\_1.vcl`,
+`VC\_2.vcl`). The content of a file will look something like this:
+
+```
+0 IMGLOAD TOP_LEFT  ../../runtime/images/-6812265288292522003.png 0 0 1024 768
+```
+
+The filename of the *text canvas* used for the particular trial is
+clearly specified. An simple R script to extract this information will
+not be too hard to construct. (Of course, you could also copy the
+information out by hand....)
+
+See the email appended below for details on how to extract this
+information from an _Experiment Builder_ project using SRR _Data
+Viewer_.
 
 ```
 -------- Forwarded Message --------
