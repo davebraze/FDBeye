@@ -85,6 +85,8 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
   * ***DynAOI***: on launchpad <https://launchpad.net/dynaoi>. Described in *Behav Res*
     <https://www.iwm-tuebingen.de/cybermedia/dynaoi/PapenmeierHuffBRM.pdf>. Analysis of EM in relation to
     moving objects. Python codebase, relies on Blender for some functions. Last update in 2011.
+  * ***EMDAT***: A library for processing eye gaze data exported from Tobii studio software. Available from authors' web
+    site <https://www.cs.ubc.ca/~skardan/EMDAT/>. Last update in 2012.
   * ***eventdetect***: on github <https://github.com/gian/eventdetect>. Repository of event detection algorithms. Python
     codebase. Last update in 2015. Development seems sluggish.
   * ***EyeSimplify***: web site at <http://www.cl.uni-heidelberg.de/seminare/studpro06/eyesimplify/>. Convenience wrapper
@@ -107,6 +109,9 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
 
 ### *Matlab* toolkits ###
 
+  * ***calib_adjust_code*** web page at <http://langcog.stanford.edu/materials/calib.html>. Method for offline
+    calibration adjustment of Tobii eyetrackers, specifically geared toward work with infants. Additional description in
+    the journal _Infancy_ <http://langcog.stanford.edu/papers/FVS-infancy2012.pdf>.
   * ***EALab***: web site <https://ealab-matlabtoolbox.rhcloud.com/>.  Described in *Neuroinform*
     <http://dx.doi.org/10.1007/s12021-015-9275-4>. Matlab toolbox. Classification and extraction of eye
     activity/events. Seems current.
@@ -116,6 +121,9 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
     analysis. Last update in 2014. Described in J. of *Eye Movement Research* <http://www.jemr.org/online/7/1/1>.
   * ***eyetrack-tools***: on github <https://github.com/racheldenison/eyetrack-tools>. "Tools for interfacing between
     EyeLink 1000 and Psychtoolbox (Matlab)". No updates since April 2014.
+  * ***GazeAlyze***: Purports to handle data from ISCAN, SMI, Arrington Research, and Tobii devices. Deals with both
+    static and dynamic stimuli. Last release in Dec. 2015. Code available on SourceForge
+    <https://sourceforge.net/projects/gazealyze/files/gazealyze170.zip/download>.
   * ***iEye***: Matlab toolbox providing GUI based interface for interacting with eye-movement data. On Github
     <https://github.com/wemackey/iEye>. Install instructions on developer's web site
     <http://wemackey.github.io/iEye/>. Uses SRR edf2asc command line utility to convert *edf files to *asc files. Reads
@@ -128,9 +136,6 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
     tracking data from EyeLink eye trackers".
   * ***ScanMatch***: web page <http://seis.bris.ac.uk/~psidg/ScanMatch/>. Described in *Behav Res*
     <http://seis.bris.ac.uk/~psidg/ScanMatch/CMTG2010.pdf>. Scan path analysis. Matlab toolbox. Last update 2009.
-  * ***calib_adjust_code*** web page at <http://langcog.stanford.edu/materials/calib.html>. Method for offline
-    calibration adjustment of Tobii eyetrackers, specifically geared toward work with infants. Additional description in
-    the journal _Infancy_ <http://langcog.stanford.edu/papers/FVS-infancy2012.pdf>.
 
 ### Other languages ###
 
@@ -146,3 +151,7 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
     Python. Seems current.
   * ***OGAMA***: on codeplex <http://www.ogama.net/>. Data collection, fixation detection, scanpath analysis, and
     heatmaps. Supports Tobii and Alea Tech ET systems only. Also does mouse tracking. C# codebase. Seems current.
+  * ***VizFix***: A "tool for visualizing gaze fixations and other data from eye tracking experiments." Seems to be
+    focussed on data from LC Tech devices. Objective-C codebase requires Mac OS X 10.5 or better. Download source at
+    Google Code: <https://code.google.com/archive/p/vizfix/source>. Authors' web site is here:
+    <https://www.cs.uoregon.edu/research/cm-hci/VizFix/>. Last update in 2010.
