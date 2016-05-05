@@ -289,7 +289,8 @@ readELascii <- function(file,
 
     ## use filename as subject ID, unless otherwise specified
     if(is.null(subjID)) {
-        subj <- unlist(stringr::str_split(tools::file_path_sans_ext(f), .Platform$file.sep))[-1]
+        subj <- unlist(stringr::str_split(tools::file_path_sans_ext(file), .Platform$file.sep))
+        subj <- subj[length(subj)]
     } else {
         subj <- subjID
     }
@@ -324,7 +325,7 @@ readELascii <- function(file,
 
 
 if(FALSE) {
-    fname <- "../inst/extdata/1950006-RAN.asc"
+    fname <- "d:/braze/R/development/FDBeye-dev/FDBeye/inst/extdata/1950006-RAN.asc"
     ## TODO: need to compress (gzip??) the ELascii files provided with this package. readLines()
     ## seems to handle gzipped files transparently.
 
