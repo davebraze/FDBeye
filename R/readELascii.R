@@ -55,6 +55,15 @@ getEyelinkTrialData <- function(bounds,
     ## columns seems to be camera-to-target distance in mm. Not sure about the others. An INPUT flag
     ## also adds a single column.
 
+    ## Maybe a better way to handle sample data is to use the flags in the samplesLine to build a
+    ## header for sample df directly. So
+    ## hdr <- "time"
+    ## if (grepl("LEFT", samplesLine)
+    ##     hdr <- c(hdr, c("xL", "yL", "pL"))
+    ## if (grepl("RIGHT", samplesLine)
+    ##     hdr <- c(hdr, c("xR", "yR", "pR"))
+    ## And so on.
+
     ## Get fixation events
     fix <- grep("^EFIX", lines[bounds[1]:bounds[2]], value=TRUE)
     fix <- stringr::str_split(fix, pattern="[ \t]+")
@@ -133,7 +142,6 @@ getEyelinkTrialData <- function(bounds,
     }
 
     ## TODO: Get sample level data put in separate list item (data.frame).
-    ## browser()
     ## Get samples
     samp <- grep("^[0-9]+", lines[bounds[1]:bounds[2]], value=TRUE)
     samp <- stringr::str_split(samp, pattern="[ \t]+")
