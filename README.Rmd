@@ -30,8 +30,7 @@ FDBeye is released under the MIT open source license. See the
 Contributing
 ------------
 
-Contributions are welcome. _IMPORTANT: By submitting a pull request to this project, you agree to release your
-contribution to the FDBeye package under the [MIT license](https://opensource.org/licenses/MIT). In other words, in opening a pull request, you thereby agree to apply the MIT license to the code that you contribute to this project.
+Contributions are welcome. _IMPORTANT_: In opening a pull request to FDBeye, (a) you affirm that you are the copyright owner for the material contained in the pull request, and (b) you agree to apply the  [MIT license](https://opensource.org/licenses/MIT) to the material contained in the pull request.  
 
 You might want to send me an email before wading in too deep (<davebraze@gmail.com>).
 
