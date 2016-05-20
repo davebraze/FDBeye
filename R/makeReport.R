@@ -49,7 +49,7 @@ fixReport <- function(gaze) {
 }
 
 if(FALSE) {
-    fname <- "../inst/extdata/1950006-RAN.asc"
+    fname <- "../inst/extdata/1950006-RAN.asc.gz"
     e <- readELascii(fname)
     efix <- fixReport(e)
 }

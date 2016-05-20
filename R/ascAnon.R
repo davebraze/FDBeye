@@ -24,7 +24,7 @@
 ##' @author Dave Braze <davebraze@@gmail.com>
 ##' @export
 ##' @examples
-##' file <- system.file("extdata/1950168.asc", package="FDBeye")
+##' file <- system.file("extdata/1950168.asc.gz", package="FDBeye")
 ##' ascAnon(file)
 ##' ascAnon(file, newName="fred")
 ascAnon <- function(file,

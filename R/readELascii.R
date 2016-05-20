@@ -333,7 +333,7 @@ readELascii <- function(file,
 
 
 if(FALSE) {
-    fname <- "d:/braze/R/development/FDBeye-dev/FDBeye/inst/extdata/1950006-RAN.asc"
+    fname <- "d:/braze/R/development/FDBeye-dev/FDBeye/inst/extdata/1950006-RAN.asc.gz"
     ## TODO: need to compress (gzip??) the ELascii files provided with this package. readLines()
     ## seems to handle gzipped files transparently.
 
