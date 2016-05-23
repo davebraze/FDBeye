@@ -24,9 +24,9 @@
 ##' @author Dave Braze <davebraze@@gmail.com>
 ##' @export
 ##' @examples
-##' file <- system.file("extdata/1950168.asc", package="FDBeye")
+##' file <- system.file("extdata/1950168.asc.gz", package="FDBeye")
 ##' ascAnon(file)
-##' ascAnon(file, newName="fred")
+##' ascAnon(file, newName="fred") # TODO: this throws a warning when run on a .gz file. Sort it out.
 ascAnon <- function(file,
                     newName=NULL) {
 

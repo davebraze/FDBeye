@@ -24,6 +24,10 @@
 ##'
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
+##' @examples
+##' fname <- system.file("/extdata/1950006-RAN.asc.gz", package="FDBeye")
+##' e <- readELascii(fname)
+##' efix <- fixReport(e)
 fixReport <- function(gaze) {
     if (!("ELascii" %in% class(gaze))) {
         stop("Argument 'gaze' must have class 'ELascii'.")
@@ -47,14 +51,6 @@ fixReport <- function(gaze) {
     retval <- data.frame(subject, retval)
     retval
 }
-
-if(FALSE) {
-    fname <- "../inst/extdata/1950006-RAN.asc"
-    e <- readELascii(fname)
-    efix <- fixReport(e)
-}
-
-
 
 ##' @title Generate an ET report, as data.frame.
 ##'
