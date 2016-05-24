@@ -32,6 +32,11 @@ No description yet.
 \details{
 No details yet.
 }
+\examples{
+fname <- system.file("/extdata/1950006-RAN.asc.gz", package="FDBeye")
+e <- readELascii(fname)
+efix <- fixReport(e)
+}
 \author{
 Dave Braze \email{davebraze@gmail.com}
 }

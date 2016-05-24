@@ -20,6 +20,12 @@ Finds the 'background' value in a matrix, defined as the most common value in a 
 
     Not necessarily intended to be called by the end user.
 }
+\examples{
+cnvs <- system.file("extdata/story01.png", package="FDBeye")
+cnvs <- png::readPNG(cnvs)
+fcnvs <- apply(cnvs, c(1,2), sum) # flatten to a single plane for convenience
+getBGcol(fcnvs)
+}
 \author{
 Dave Braze <davebraze@gmail.com>
 }

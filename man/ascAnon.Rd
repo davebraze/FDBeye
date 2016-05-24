@@ -35,9 +35,9 @@ By default, newly created anonymous *ASC file will will use the same name as the
     FROM line, as well as the output file name.
 }
 \examples{
-file <- system.file("extdata/1950168.asc", package="FDBeye")
+file <- system.file("extdata/1950168.asc.gz", package="FDBeye")
 ascAnon(file)
-ascAnon(file, newName="fred")
+ascAnon(file, newName="fred") # TODO: this throws a warning when run on a .gz file. Sort it out.
 }
 \author{
 Dave Braze <davebraze@gmail.com>

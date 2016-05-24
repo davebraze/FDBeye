@@ -5,21 +5,27 @@
 \title{Get events from SR Research ASCII data files.}
 \usage{
 readELascii(file, tStartRE = "TRIALID", tEndRE = "TRIAL_RESULT",
-  msgSet = NA)
+  msgSet = NA, subjID = NULL)
 }
 \arguments{
 \item{file}{A string giving path/fname to input file (ELascii file).}
 
-\item{tStartRE}{A string containing regular expression that uniquely identifies beginnings of trials.}
+\item{tStartRE}{A string containing regular expression that uniquely identifies beginnings of
+trials.}
 
-\item{tEndRE}{A string containing regular expression that uniquely identifies ends of trials.}
+\item{tEndRE}{A string containing regular expression that uniquely identifies ends of trials. If
+an experiment is aborted prematurely, then the *edf file (and so the *asc file) may not have
+a proper trial end event. TODO: test for that case and handle it while throwing a warning.}
 
-\item{msgSet}{A character vector. Each element identifies a MSG event to recover from the data file.}
+\item{msgSet}{A character vector. Each element identifies a MSG event to recover from the data
+file.}
+
+\item{subjID}{If NULL (default), use filename as subject ID. Otherwise use specified string.}
 }
 \value{
 List with two elements, one for session information, and one containing a list of
-trials. Each trial element is itself a list of 6 elements: data.frames enumerating fixations,
-saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
+    trials. Each trial element is itself a list of 6 elements: data.frames enumerating
+    fixations, saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
 }
 \description{
 Convenience function to call SRR utility edf2asc from inside R.

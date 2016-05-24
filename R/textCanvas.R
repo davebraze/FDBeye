@@ -32,15 +32,16 @@ inked <- function(v,
 ##' @return A numeric value corresponding to the the most common value in \code{cnvs}.
 ##' @author Dave Braze <davebraze@@gmail.com>
 ##' @export
+##' @examples
+##' cnvs <- system.file("extdata/story01.png", package="FDBeye")
+##' cnvs <- png::readPNG(cnvs)
+##' fcnvs <- apply(cnvs, c(1,2), sum) # flatten to a single plane for convenience
+##' getBGcol(fcnvs)
 getBGcol <- function(cnvs) {
-    cols <- table(cnvs) # table is inefficient; find something better
+    cols <- table(cnvs) # table is inefficient; switch to FDButils::sampleMode() after transition
+                        # from FDB1 to FDButils.
     bgcol <- as.numeric(names(which.max(cols)))
     bgcol
-
-
-    ## median(cnvs) ## This may work in general, but have to think it through. What happens if the
-    ## background value is found in fewer (or many fewer) than half the elements of cnvs? Maybe
-    ## check to see if bg is a low proportion of values in cnvs and issue a warning() in that case.
 }
 
 ##' @title Estimate locations of text lines within text canvases.
