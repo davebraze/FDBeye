@@ -44,12 +44,17 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
 
 ### *R* packages ###
 
+
+  * ***bdots*** provides techniques for analyzing eyetracking data, as well as other types of highly correlated data
+    that consist of many consecutive tests. We explain how to set the data up in a fashion for the package to use, how
+    to analyze the data using the built in functions, and how to check the t to the data. On github at
+    <https://github.com/MichaelSeedorff/bdots>, and CRAN at <https://cran.rstudio.org/web/packages/bdots/index.html>.
   * ***edfR***: R package for reading SRR *edf files directly. Codebase is both R and C++, and requires SRR's
     edfapi. Source available on github <https://github.com/jashubbard/edfR>. Linux and OSX only (no Windows), as of
     May 2016.  Alternate download at SRR help forum
     <https://www.sr-support.com/showthread.php?1416-Reading-EDF-files-in-GNU-R> (requires login via free account).
   * ***em2***: "package for computing reading time measures for psycholinguistics," i.e. regional reading time
-        measures. R package, underlying code mostly C++. Source available on github <https://github.com/cran/em2>.
+    measures. R package, underlying code mostly C++. Source available on github <https://github.com/cran/em2>.
   * ***emov***: Functions for fixation/saccade detection. On CRAN <https://cran.r-project.org/web/packages/emov/>. Source is
     available on github <https://github.com/schw4b/emov>.
   * ***ETRAN***: Fixation detection, plotting. Available from this web site <https://sites.google.com/site/azhegallo/>, and
@@ -73,6 +78,8 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
   * ***gazetools***: Functions for processing and classifying eye gaze data (into blinks, fixations, etc.). Centered on
     SMI trackers, but includes some generally useful stuff. Available on github <https://github.com/RyanHope/gazetools>.
   * ***itrackR***: Read and analyze data from SRR eyelink systems. On github <https://github.com/jashubbard/itrackR>.
+  * ***lookr*** provides a set of tools for analyzing looking-while-listening eye-tracking experiments performed by the
+    Learning to Talk project. Development is ongoing. On github at <https://github.com/tjmahr/lookr>.
   * ***saccades***: Functions for fixation/saccade detection. On CRAN
     <https://cran.r-project.org/web/packages/saccades/>. Source on github
     <https://github.com/tmalsburg/saccades>. author's website <http://pages.ucsd.edu/~tvondermalsburg/saccades/>.
@@ -96,12 +103,12 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
   * ***EMDAT***: A library for processing eye gaze data exported from Tobii studio software. Available from authors' web
     site <https://www.cs.ubc.ca/~skardan/EMDAT/>. Last update in 2012.
   * ***eventdetect***: on github <https://github.com/gian/eventdetect>. Repository of event detection algorithms. Python
-    codebase. Last update in 2015. Development seems sluggish.
+    codebase. Last update in 2015.
   * ***EyeSimplify***: web site at <http://www.cl.uni-heidelberg.de/seminare/studpro06/eyesimplify/>. Convenience wrapper
     with automation for UMass tools (*EyeDoctor* etc.). Possibly superceded by *RoboDoc.py*. Python codebase. Last
     update in 2007.
   * ***ocupy***: on github <https://github.com/nwilming/ocupy>. Python codebase. "tools for analyzing eye-tracking
-    data". last update in 2015, sluggish development.
+    data". last update in 2015.
   * ***pyarbus***: on github <https://github.com/ivanov/pyarbus>. Python codebase. Major functionality seems to be
     for extracting sample and message info from SRR *asc files. Last update in 2013.
   * ***pyeparse***: on github <https://github.com/pyeparse/pyeparse>. Python codebase. "analyzing eye tracking data from
