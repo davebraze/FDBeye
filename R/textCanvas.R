@@ -38,8 +38,7 @@ inked <- function(v,
 ##' fcnvs <- apply(cnvs, c(1,2), sum) # flatten to a single plane for convenience
 ##' getBGcol(fcnvs)
 getBGcol <- function(cnvs) {
-    cols <- table(cnvs) # table is inefficient; switch to FDButils::sampleMode() after transition
-                        # from FDB1 to FDButils.
+    cols <- FDButils::sampleMode(cnvs)
     bgcol <- as.numeric(names(which.max(cols)))
     bgcol
 }
