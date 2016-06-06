@@ -157,7 +157,9 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
   * ***CARPE***: on google code <https://code.google.com/archive/p/dynamic-images-and-eye-movements/>. visualization and
     collection of gaze patterns over dynamic images. Project home page on wordpress
     <https://thediemproject.wordpress.com/>. Looks fairly polished, but no recent development (since 2010).
-  * ***EyeMap***: on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Last update in 2012.
+  * ***EyeMap***: on sourceforge <http:/openeyemap.sourceforge.net/>. Java codebase. Looks like reasonably good tools
+    for analysis of EM over print. Supports data from both SRR and Tobii systems. It's not clear to me that there are
+    means to specify interest areas other than for single words. Last update in 2012.
   * ***EyePatterns***: on sourceforge <http://sourceforge.net/projects/eyepatterns/>. Looks for patterns/similarities in
     fixation sequences. Java codebase. Last update in 2013.
   * ***eyetracker***: on github <https://github.com/stefan-k/eyetracker>. C++ codebase. Last update in 2012.
