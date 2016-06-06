@@ -38,9 +38,7 @@ inked <- function(v,
 ##' fcnvs <- apply(cnvs, c(1,2), sum) # flatten to a single plane for convenience
 ##' getBGcol(fcnvs)
 getBGcol <- function(cnvs) {
-    cols <- FDButils::sampleMode(cnvs)
-    bgcol <- as.numeric(names(which.max(cols)))
-    bgcol
+    FDButils::sampleMode(cnvs)
 }
 
 ##' @title Estimate locations of text lines within text canvases.
