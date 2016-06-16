@@ -1,10 +1,10 @@
 ---
-title: "Text Canvases part 1: SRR Experiment Builder"
+title: "Text Canvas part 1: Basics & SRR files"
 author: "Dave Braze"
-date: "`r Sys.Date()`"
+date: "June 4, 2016"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{SRR Experiment Builder Text Canvases}
+  %\VignetteIndexEntry{Text Canvases part 1: Basics & SRR files}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
