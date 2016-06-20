@@ -82,9 +82,8 @@ let me know. Better yet, fork this repository, make the changes yourself, and se
     Learning to Talk project. Development is ongoing. On github at <https://github.com/tjmahr/lookr>.
   * ***saccades***: Functions for fixation/saccade detection. On CRAN
     <https://cran.r-project.org/web/packages/saccades/>. Source on github
-    <https://github.com/tmalsburg/saccades>. author's website <http://pages.ucsd.edu/~tvondermalsburg/saccades/>.
-  * ***ScaSim***: author's website <http://pages.ucsd.edu/~tvondermalsburg/scasim/>. Scan path similarity analysis. Last
-    updated 2010.
+    <https://github.com/tmalsburg/saccades>.
+  * ***ScaSim***: Tools for analyzing scanpaths <https://github.com/tmalsburg/scanpath>
   * ***pdata***: Purports to "Process data analysis and visualization for large scale educational assessments" but also
     includes some tools for visualization of gaze data. See heatmapanalysis() and scanpathPlot(). Available on github at
     <https://github.com/garyfeng/pdata>.
