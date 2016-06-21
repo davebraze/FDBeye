@@ -62,7 +62,7 @@ edf2asc <- function(edffiles) {
         stop("You must set option(FDBeye_edf2asc_exec = '/path/to/edf2asc') before calling this function.")
     } else {
         ## First check to be sure the file actually exists and is executable
-        if(!file_test("-f", exe))        # test whether file exists and is executable. Should I use base::file.exists() instead?
+        if(!utils::file_test("-f", exe))        # test whether file exists and is executable. Should I use base::file.exists() instead?
             stop(paste(exe, "... File either does not exist or is not executable.", sep="\n"))
         ## parse the specified path and make sure the fname includes "edf2asc"
         if(!grepl("edf2asc", basename(exe)))

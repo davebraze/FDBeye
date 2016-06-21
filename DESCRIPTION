@@ -18,7 +18,8 @@ Imports:
     stats,
     stringi,
     stringr,
-    tools
+    tools,
+    utils
 Description:
     Functions to ease working with eye-tracker data.
     Currently, most functionality is focussed on, and
