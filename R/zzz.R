@@ -13,16 +13,16 @@
     ## ver <- as.character(ver)
     ## packageStartupMessage(paste("Welcome to",  pkg, ", version ", ver, "."))
 
-    packageStartupMessage("(c) 2014-2016, Dave Braze, and others.")
-    packageStartupMessage("Released under the MIT license.\n")
+    packageStartupMessage("    (c) 2014-2016, Dave Braze, and others.")
+    packageStartupMessage("    Released under the MIT license.\n")
 
     ## check here that path to edf2asc is set. If not, caution user
     ## and point to documentation for FDBeye::edf2asc() for help.
     edf2asc <- getOption("FDBeye_edf2asc_exec")
     if(is.null(edf2asc)){
-        packageStartupMessage(paste("Option 'FDBeye_edf2asc_exec' is not set.",
-                                    "It must be set before calling FDBeye::edf2asc().",
-                                    "See help for that function.",
+        packageStartupMessage(paste("    Option 'FDBeye_edf2asc_exec' is not set.",
+                                    "    It must be set before calling FDBeye::edf2asc().",
+                                    "    See help for that function.",
                                     sep="\n"))
     } else {
         ## First check to be sure the file actually exists and is executable
