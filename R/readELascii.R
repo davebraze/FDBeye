@@ -85,7 +85,7 @@ getEyelinkTrialData <- function(bounds,
         sacc <- data.frame(matrix(unlist(sacc), ncol=length(sacc[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
         toN <- sapply(sacc, function(v) all(FDB1::is.numeral(v)))
         sacc <- data.frame(sapply(sacc[!toN], as.factor, simplify=FALSE), sapply(sacc[toN], as.numeric, simplify=FALSE))
-        names(sacc) <- c('event', 'eye', 'stime', 'etime', 'dur', 'xpos1', 'ypos1', 'xpos2', 'ypos2', 'ampl', 'peakvel')
+        names(sacc) <- c('event', 'eye', 'xpos1', 'ypos1', 'stime', 'etime', 'dur', 'xpos2', 'ypos2', 'ampl', 'peakvel')
         sacc$event <- gsub("^E", "", sacc$event)
     } else {
         sacc <- NULL
