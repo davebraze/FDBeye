@@ -1,8 +1,13 @@
 Package: FDBeye
 Type: Package
 Title: Functions to Ease Work with Eyetracker Data
+<<<<<<< HEAD
 Version: 0.0.12
 Date: 2016-06-04
+=======
+Version: 0.0.13
+Date: 2016-06-21
+>>>>>>> d48d19d67e01dc7a6dd987919d89466615a7099a
 Author: David Braze [aut, cre]
 Maintainer: David Braze <davebraze@gmail.com>
 Depends:
@@ -19,7 +24,8 @@ Imports:
     stats,
     stringi,
     stringr,
-    tools
+    tools,
+    utils
 Description:
     Functions to ease working with eye-tracker data.
     Currently, most functionality is focussed on, and
