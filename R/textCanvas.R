@@ -112,7 +112,7 @@ getLines <- function(canvas){
     ink <- apply(canvas, 1, inked, bg=bgcol)
 
     inkb <- ink>0
-    inki <- FDB1::series(as.integer(inkb), step=0) ## find rows with ink
+    inki <- FDButils::series(as.integer(inkb), step=0) ## find rows with ink
     erun <- apply(inki[,2:3], 1, sum)-1
     lines <- cbind(inki, erun)
     lines <- lines[lines[,1]==1,]

@@ -16,7 +16,7 @@ getEyelinkTrialData <- function(bounds,
                                 lines,
                                 msgSet=NA) {
 
-    requireNamespace("FDB1", quietly = TRUE)
+    requireNamespace("FDButils", quietly = TRUE)
 
 
     ## TODO: For each trial build a header to include
@@ -69,7 +69,7 @@ getEyelinkTrialData <- function(bounds,
     fix <- stringr::str_split(fix, pattern="[ \t]+")
     if (length(fix) > 0) {
         fix <- data.frame(matrix(unlist(fix), ncol=length(fix[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
-        toN <- sapply(fix, function(v) all(FDB1::is.numeral(v)))
+        toN <- sapply(fix, function(v) all(FDButils::is.numeral(v)))
         fix <- data.frame(sapply(fix[!toN], as.factor, simplify=FALSE), sapply(fix[toN], as.numeric, simplify=FALSE))
         ## TODO Catch case where xRes and yRes are included in the output. Set names appropriately.
         names(fix) <- c('event', 'eye', 'stime', 'etime', 'dur', 'xpos', 'ypos', 'pupil')
@@ -83,7 +83,7 @@ getEyelinkTrialData <- function(bounds,
     sacc <- stringr::str_split(sacc, pattern="[ \t]+")
     if (length(sacc) > 0) {
         sacc <- data.frame(matrix(unlist(sacc), ncol=length(sacc[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
-        toN <- sapply(sacc, function(v) all(FDB1::is.numeral(v)))
+        toN <- sapply(sacc, function(v) all(FDButils::is.numeral(v)))
         sacc <- data.frame(sapply(sacc[!toN], as.factor, simplify=FALSE), sapply(sacc[toN], as.numeric, simplify=FALSE))
         names(sacc) <- c('event', 'eye', 'stime', 'etime', 'dur', 'xpos1', 'ypos1', 'xpos2', 'ypos2', 'ampl', 'peakvel')
         sacc$event <- gsub("^E", "", sacc$event)
@@ -96,7 +96,7 @@ getEyelinkTrialData <- function(bounds,
     blink <- stringr::str_split(blink, pattern="[ \t]+")
     if (length(blink) > 0) {
         blink <- data.frame(matrix(unlist(blink), ncol=length(blink[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
-        toN <- sapply(blink, function(v) all(FDB1::is.numeral(v)))
+        toN <- sapply(blink, function(v) all(FDButils::is.numeral(v)))
         blink <- data.frame(sapply(blink[!toN], as.factor, simplify=FALSE), sapply(blink[toN], as.numeric, simplify=FALSE))
         names(blink) <- c('event', 'eye', 'stime', 'etime', 'dur')
         blink$event <- gsub("^E", "", blink$event)
@@ -134,7 +134,7 @@ getEyelinkTrialData <- function(bounds,
         hdr <- trialvar[1,]
         trialvar <- data.frame(rbind(trialvar[2,]), stringsAsFactors=FALSE)
         names(trialvar) <- hdr
-        ## toN <- sapply(trialvar, function(v) all(FDB1::is.numeral(v)))  ## maybe wait to do the conversion to numeric when building reports
+        ## toN <- sapply(trialvar, function(v) all(FDButils::is.numeral(v)))  ## maybe wait to do the conversion to numeric when building reports
         ## trialvar <- data.frame(sapply(trialvar[!toN], as.factor, simplify=FALSE),
         ##                        sapply(trialvar[toN], as.numeric, simplify=FALSE))
     } else {
