@@ -27,7 +27,7 @@ install_github("davebraze/FDBeye")
 ```
 
 On the other hand, if you want a (possibly) more stable
-experience. Download the most current tagged release from here:
+experience. Download the most current release from here:
 <https://github.com/davebraze/FDBeye/releases>. Then install it like
 this
 
