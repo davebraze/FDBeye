@@ -17,14 +17,26 @@ available. See the list of [Other Eye Tracking Tools][] below.
 
 Installing FDBeye
 -----------------
+First you should install <https://github.com/davebraze/FDButils>.
 
-First you should install <https://github.com/davebraze/FDB1>. Then,
-install *FDBeye* via devtools::install_github()
+Then, to get the very latest from *FDBeye*, install it via devtools::install_github()
 ```R
 install.packages("devtools")    ## if you don't already have it
 library(devtools)
 install_github("davebraze/FDBeye")
 ```
+
+On the other hand, if you want a (possibly) more stable
+experience. Download the most current release from here:
+<https://github.com/davebraze/FDBeye/releases>. Then install it like
+this
+
+```R
+install.packages(pathToFile, repos = NULL, type="source")
+```
+
+Where pathToFile is the full path and file name for the file you
+downloaded.
 
 License
 -------

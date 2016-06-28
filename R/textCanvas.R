@@ -38,10 +38,7 @@ inked <- function(v,
 ##' fcnvs <- apply(cnvs, c(1,2), sum) # flatten to a single plane for convenience
 ##' getBGcol(fcnvs)
 getBGcol <- function(cnvs) {
-    cols <- table(cnvs) # table is inefficient; switch to FDButils::sampleMode() after transition
-                        # from FDB1 to FDButils.
-    bgcol <- as.numeric(names(which.max(cols)))
-    bgcol
+    FDButils::sampleMode(cnvs)
 }
 
 ##' @title Estimate locations of text lines within text canvases.
@@ -115,7 +112,7 @@ getLines <- function(canvas){
     ink <- apply(canvas, 1, inked, bg=bgcol)
 
     inkb <- ink>0
-    inki <- FDB1::series(as.integer(inkb), step=0) ## find rows with ink
+    inki <- FDButils::series(as.integer(inkb), step=0) ## find rows with ink
     erun <- apply(inki[,2:3], 1, sum)-1
     lines <- cbind(inki, erun)
     lines <- lines[lines[,1]==1,]

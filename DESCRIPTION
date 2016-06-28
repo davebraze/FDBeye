@@ -1,8 +1,8 @@
 Package: FDBeye
 Type: Package
 Title: Functions to Ease Work with Eyetracker Data
-Version: 0.0.13
-Date: 2016-06-21
+Version: 0.0.14
+Date: 2016-06-28
 Author: David Braze [aut, cre]
 Maintainer: David Braze <davebraze@gmail.com>
 Depends:
@@ -10,7 +10,7 @@ Depends:
 Imports:
     abind,
     dplyr,
-    FDB1,
+    FDButils,
     ggplot2,
     grid,
     plyr,
