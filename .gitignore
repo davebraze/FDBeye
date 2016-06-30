@@ -16,5 +16,5 @@
 vignettes/*.html
 vignettes/*.pdf
 inst/doc
-README.html
+# README.html
 README.docx
