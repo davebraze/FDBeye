@@ -171,6 +171,14 @@ request.
     wrapper with automation for UMass tools (*EyeDoctor*
     etc.). Possibly superceded by *RoboDoc.py*. Python codebase. Last
     update in 2007.
+  * ***GazeParser***: "an open-source library for low-cost eye
+    tracking and data analysis; it includes libraries for data
+    recording and analysis." On sourceforge at
+    <http://gazeparser.sourceforge.net/>. Also written up in *Behav
+    Res* here
+    <http://link.springer.com/article/10.3758/s13428-012-0286-x/fulltext.html>. System
+    designed to record EM with commercially available cameras. Not
+    clear that included analysis tools have more general utility.
   * ***ocupy***: on github <https://github.com/nwilming/ocupy>. Python
     codebase. "tools for analyzing eye-tracking data". last update in
     2015.
