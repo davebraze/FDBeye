@@ -5,7 +5,7 @@
 ##' @details
 ##' No details yet.
 ##'
-##' @param gaze An object of class "ELascii", as created by readELascii().
+##' @param dat An object of class "ELascii", as created by readELascii().
 ##' @return A data.frame containing a fixation report with the following columns:
 ##'
 ##' \enumerate{
@@ -28,26 +28,33 @@
 ##' fname <- system.file("/extdata/1950006-RAN.asc.gz", package="FDBeye")
 ##' e <- readELascii(fname)
 ##' efix <- fixReport(e)
-fixReport <- function(gaze) {
-    if (!("ELascii" %in% class(gaze))) {
-        stop("Argument 'gaze' must have class 'ELascii'.")
+fixReport <- function(dat) {
+    if (!("ELascii" %in% class(dat))) {
+        stop("Argument 'dat' must have class 'ELascii'.")
     }
     ##
     ## time0 is the time stamp on the first SAMPLE in a trial.
     ## x$samp[1,1] is crude, but fixing it requires first fixing contents of 'samp' list as built in readELascii()
-    time0 <-  plyr::ldply(.data = gaze$trials, .fun = function(x) {as.integer(x$samp[1,1])},
+    time0 <-  plyr::ldply(.data = dat$trials, .fun = function(x) {x$samp[1,1]},
                            .id = "trial")
     names(time0) <- c("trial", "time0")
+    time0$time0 <- as.integer(time0$time0)
+
+    ## get trial variables
+    tvs <- plyr::ldply(.data = dat$trials, .fun = function(x) {x$trialvar},
+                       .id = "trialn")
+    browser()
     ##
     ## get subject ID from EDF source filename
     ## FIXME: strsplit() is ugly. Look for better option in stringr:: or stringi::
-    subject <- strsplit(as.character(gaze$session$srcfile), "[.]")[[1]][1]
+    subject <- strsplit(as.character(dat$session$srcfile), "[.]")[[1]][1]
     ##
     ## pull fixation details and merge time0 and subject ID
-    retval <- plyr::ldply(.data = gaze$trials, .fun = function(x) {d <- x$fix},
+    retval <- plyr::ldply(.data = dat$trials, .fun = function(x) {d <- x$fix},
                           .id = "trial")
     ## FIXME: event column is pulled in as type 'character'. It should be 'factor'. Fix this in readELascii().
     retval <- dplyr::right_join(time0, retval)
+    retval <- dplyr::right_join(retval, tvs, by=c("trial" = "trialn"))
     retval <- data.frame(subject, retval)
     retval
 }
