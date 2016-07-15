@@ -258,6 +258,11 @@ request.
     <http://seis.bris.ac.uk/~psidg/ScanMatch/>. Described in *Behav
     Res* <http://seis.bris.ac.uk/~psidg/ScanMatch/CMTG2010.pdf>. Scan
     path analysis. Matlab toolbox. Last update 2009.
+  * ***TimeStudio***: A general purpose workflow system that includes
+    some components for processing gaze data from Tobii ET
+    systems. Project URL is <http://timestudioproject.com/>. Also
+    written up in *Behav Res*
+    <http://link.springer.com/article/10.3758/s13428-015-0616-x>.
 
 ### Other languages ###
 
