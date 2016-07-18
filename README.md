@@ -231,6 +231,11 @@ request.
     <https://github.com/racheldenison/eyetrack-tools>. "Tools for
     interfacing between EyeLink 1000 and Psychtoolbox (Matlab)". No
     updates since April 2014.
+  * ***FieldTrip***: Primarily geared toward EEG/MEG data work, but
+    also includes some functions for working with SRR ET
+    data. Developed at the
+    [Donders Institute in Nijmegen](http://www.ru.nl/donders), it can
+    be downloaded from <http://www.fieldtriptoolbox.org>.
   * ***GazeAlyze***: Purports to handle data from ISCAN, SMI,
     Arrington Research, and Tobii devices. Deals with both static and
     dynamic stimuli. Last release in Dec. 2015. Code available on
