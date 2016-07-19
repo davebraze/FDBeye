@@ -10,10 +10,11 @@ code into this package. FDBeye is about post-acquisition data
 processing. What's here now is focussed on my own workflows involving
 data from SRR Eyelink systems, although some stuff may be more
 generally useful. Functionality is a bit thin at present. Pitch in and
-help if you like (see [Contributing][] [Contributing]() [Contributing](#Contributing)).
+help if you like (see [Contributing](#contributing)).
 
 Before you try FDBeye, you might want to look at what else is
-available. See the list of [Other Eye Tracking Tools][] below.
+available. See the list of
+[Other Eye Tracking Tools](#other-eye-tracking-tools) below.
 
 Installing FDBeye
 -----------------
