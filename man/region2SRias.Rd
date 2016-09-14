@@ -4,21 +4,41 @@
 \alias{region2SRias}
 \title{Convert region file to SR interest area file}
 \usage{
-region2SRias(regfile, iasfile = FALSE, size = c("big", "small"))
+region2SRias(regfile, iasfile = NULL, size = c("big", "small"),
+  yoffsets = NULL, xpad = NULL)
 }
 \arguments{
-\item{regfile}{Region file to read, formatted per Tao Gong's Python code.}
+\item{regfile}{Region file to read, formatted per Tao Gong's
+Python code.}
 
-\item{iasfile}{If not FALSE (default), then this is a string specifying output filename. If
-FALSE then create the output filename by stripping ext from regfile and adding ".ias".}
+\item{iasfile}{If NULL (default) then create the output filename
+by stripping ext from regfile and adding ".ias". If not NULL,
+then this should be a string specifying output filename.}
 
-\item{size}{Extract "big" or "small" interast areas from region file.}
+\item{size}{Extract "big" or "small" interest areas from region
+file.}
+
+\item{yoffsets}{If NULL (default), use y coordinates as read from
+region file for Interest Areas. If not NULL, must be a
+2-vector of integers indicating extent above and below
+baseline for Interest areas (in pixels). Both values should be
+positive. If yoffsets is not NULL, then the 'size' argument is
+ignored.}
+
+\item{xpad}{If NULL (default), use x coordinates for Interest
+Areas as read from region file. If not NULL, must be a
+2-vector of integers indicating extent leftward and rightward
+to expand the Interest Areas for the first and last words on
+each line (in pixels). Both values should be positive.}
 }
 \value{
-Called for its side effect of writing an "*.ias" file.
+Invisibly returns a data.frame containing a set of
+    Interest Areas, but typically called for its side effect of
+    writing an "*.ias" file.
 }
 \description{
-Convert a region file to an SR interest area file.
+Convert a region file to an SR interest area file. We
+    only handle static IAS files.
 }
 \details{
 No details yet.
