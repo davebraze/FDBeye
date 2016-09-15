@@ -307,3 +307,13 @@ request.
     site is here:
     <https://www.cs.uoregon.edu/research/cm-hci/VizFix/>. Last update
     in 2010.
+  * ***Get Reading Measures (GRM)*** is a tool from a commercial
+    vendor, SR Research. It's purpose is to extract conventional
+    regional summary measures from studies of gaze behavior while
+    reading. It is designed to work with Fixation Reports output by
+    their proprietary *Data Viewer* software. But, I believe, the GRM
+    tool itself is freely downloadable, so I've included it on this
+    list. It can be downloaded from the SRR support forum at
+    <https://www.sr-support.com/showthread.php?1289-Reading-Measures-from-Data-Viewer&highlight=Reading+Measures>.
+    Access requires login via free account.
+	
