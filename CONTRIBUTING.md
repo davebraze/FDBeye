@@ -1,20 +1,22 @@
 # Contributing
 
-If you discover problems, have ideas for new features or improvements, or
-want to contribute new functionality (code) yourself, please use the
-[issue tracker][1] for this repository, or submit a pull request with your code. 
+If you find problems, have ideas for new features or improvements, or
+want to contribute new material (code or documentation), you should
+start by using the [issue tracker][1] to share your thoughts.
 
-Please, try to follow these guidelines when you do so.
+Once you have a concrete contribution to code or documentationn, you
+can submit a pull request with your changes.
+
+Please, follow these guidelines when you do so.
 
 ## Issue reporting
 
 * Check that the problem has not already been reported.
 * Check that the problem has not already been fixed in the latest code
   (the `master` branch).
-* Be clear and concise in your description of the problem.
-* Open an issue with a descriptive title and a summary in
-  grammatically correct, complete sentences.
-* Include any relevant code to the issue summary.
+* Open an issue with a descriptive title and a summary in complete
+  sentences. Be clear and concise in your description of the problem.
+* Include links to any relevant code in the issue summary.
 
 ## Pull requests
 
@@ -27,8 +29,8 @@ Please, try to follow these guidelines when you do so.
   place, the FDBeye package builds without errors or warnings (run
   devtools::build).
 * Push your code to your (github) fork of FDBeye.
-* Open a [pull request][4] with a clear title and description in
-  grammatically correct, complete sentences.
+* Open a [pull request][4] with a descriptive title and clear
+  description of your changes in complete sentences.
 
 [1]: https://github.com/bbatsov/prelude/issues
 [2]: http://gun.io/blog/how-to-github-fork-branch-and-pull-request
