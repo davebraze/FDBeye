@@ -30,7 +30,7 @@ Please, follow these guidelines when you do so.
   devtools::build).
 * Push your code to your (github) fork of FDBeye.
 * Open a [pull request][4] with a descriptive title and clear
-  description of your changes in complete sentences.
+  summary of your changes in complete sentences.
 
 [1]: https://github.com/bbatsov/prelude/issues
 [2]: http://gun.io/blog/how-to-github-fork-branch-and-pull-request
