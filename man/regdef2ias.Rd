@@ -17,15 +17,16 @@ A vector of strings containing the region definition. The
     block, the vector will include a pair of lines for each line
     of text in the stimulus. The first element of each pair is the
     text displayed on that line. The second element is a regioning
-    string made up of spaces (" "), and pipe ("|")
-    characters. Pipes indicate the beginnings of regions. By
-    default, the region definition file will specify that each
-    line be exhaustively dividied into space delimited regions
-    (i.e. there will be a pipe character corrponding to each space
-    character in the paired text line.
+    string made up of dots ("."), and pipe ("|") characters. Pipes
+    indicate the beginnings of regions. By default, the region
+    definition file will specify that each line be exhaustively
+    dividied into space delimited regions (i.e. there will be a
+    pipe character corresponding to each space character in the
+    paired text line.
 
-    This vector can be written to file and hand edited to add or correct information in the yaml
-    block, or to re-specify region placements.
+    This vector can be written to file and hand edited to add or
+    correct information in the yaml block, or to re-specify region
+    placements.
 }
 \description{
 Convert a file containing full region description
@@ -64,12 +65,12 @@ We aspire to handle region definitions for multi line
     block. This block contains a pair of lines for each line of
     text in the stimulus. The first element of each pair is the
     text displayed on that line. The second element is a regioning
-    string made up of spaces (" "), and pipe ("|")
-    characters. Pipes indicate the beginnings of regions. By
-    default, the region definition file will specify that each
-    line be exhaustively dividied into space delimited regions
-    (i.e. there will be a pipe character corrponding to each space
-    character in the paired text line.
+    string made up of dots ("."), and pipe ("|") characters. Pipes
+    indicate the beginnings of regions. By default, the region
+    definition file will specify that each text line be
+    exhaustively dividied into space delimited regions (i.e. there
+    will be a pipe character corrponding to each space character
+    in the paired text line.
 
     The region definition file can be hand edited to add or
     correct information in the yaml block, or to re-specify region

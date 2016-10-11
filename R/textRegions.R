@@ -173,22 +173,9 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##' @param fname A string containing the name of a "region definition"
 ##'     file, such as might be created by reg2regdef(). See Details.
 ##'
-##' @return A vector of strings containing the region definition. The
-##'     vector includes a yaml block with values for each of the
-##'     function parameters except for "reg". In addition to the yaml
-##'     block, the vector will include a pair of lines for each line
-##'     of text in the stimulus. The first element of each pair is the
-##'     text displayed on that line. The second element is a regioning
-##'     string made up of dots ("."), and pipe ("|") characters. Pipes
-##'     indicate the beginnings of regions. By default, the region
-##'     definition file will specify that each line be exhaustively
-##'     dividied into space delimited regions (i.e. there will be a
-##'     pipe character corresponding to each space character in the
-##'     paired text line.
-##'
-##'     This vector can be written to file and hand edited to add or
-##'     correct information in the yaml block, or to re-specify region
-##'     placements.
+##' @return A data.frame specifying the content of an SRR interest area file (*.ias).  Use
+##'     readr::write_delim(..., delim="\n", col_names=FALSE) to save the interest area specification
+##'     to file.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
 regdef2ias <- function(fname) {
