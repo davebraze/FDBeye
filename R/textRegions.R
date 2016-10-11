@@ -194,9 +194,18 @@ regdef2ias <- function(fname) {
         tblock <- tblock[tstart:tend]
     }
 
+    ##### from this point on needs to be iterated over text/regdef lines
+
     ## find the (vertical) beginnings and ends of regions, in character units
     txt <- tblock[1]
     mrk <- tblock[2]
+    if(str_length(txt) != str_length(mrk)) {
+       tt <- paste0("\n  [", txt, "]")
+       mm <- paste0("\n  [", mrk, "]")
+       ww <- paste("Warning! region mark line is not same length as text line in" ,
+                   fname, tt, mm)
+       warning(ww)
+    }
     midx <- stringr::str_locate_all(mrk, "[|]")[[1]][,1]
     x1_char <- c(1, midx)-1
     x2_char <- c(midx-1, str_length(txt))
@@ -211,7 +220,7 @@ regdef2ias <- function(fname) {
     y1 <- parms$lines$baseline[1] - parms$regions$maxH
     y2 <- parms$lines$baseline[1] + parms$regions$minH
 
-    ## other columns of ias file
+    ## other columns for current text/mark line
     type <- "RECTANGLE"         ## region type
     regnum <- 1:length(x1)      ## region numbers
     labs <- txt                 ## region labels
