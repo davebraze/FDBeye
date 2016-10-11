@@ -83,9 +83,9 @@ We aspire to handle input files (region files) for multi line texts, but at pres
     regions. Baselines are read directly from the region.csv file and should be accurate. Note
     that baseline positions, in pixels, are measured from the TOP of the screen.
 
-    TODO: Make to work with region files for multi-line text stims.
+    ToDo: Make to work with region files for multi-line text stims.
 
-    TODO: Make to read/parse SRR IAS files and build region defs based on them.
+    ToDo: Make to read/parse SRR IAS files and build region defs based on them.
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}

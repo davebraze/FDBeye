@@ -41,7 +41,26 @@ Convert a region file to an SR interest area file. We
     only handle static IAS files.
 }
 \details{
-No details yet.
+TODO: Need to incorporate some flexibility as to which columns in
+    the 'region' file will be accessed for which bits of
+    information. Right now, column names are hard-coded.
+}
+\examples{
+library(ggplot2)
+reg <- system.file("/extdata/target01A.region.csv", package="FDBeye")
+stim <- system.file("/extdata/target01A.png", package="FDBeye")
+ias <- region2SRias(reg, yoffsets=c(50,30), xpad=c(18,18))
+fp <- fixPlot(data = data.frame(x=-1, y=-1),
+              bgImage = stim, bgAlpha=1,
+              xyMap = ggplot2::aes_string(x='x', y='y'),
+              pointMap=ggplot2::aes_string(alpha=0)
+              )
+
+fp + geom_rect(data=ias, inherit.aes=FALSE,
+               aes(xmin=x1+1, xmax=x2, ymin=y1, ymax=y2,
+               fill=NULL, color=as.factor(WordID\%\%2)), alpha=0) +
+     guides(color=FALSE)
+
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}

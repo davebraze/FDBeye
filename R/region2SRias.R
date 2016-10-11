@@ -34,6 +34,7 @@
 ##' @import stringr
 ##' @export
 ##' @examples
+##' library(ggplot2)
 ##' reg <- system.file("/extdata/target01A.region.csv", package="FDBeye")
 ##' stim <- system.file("/extdata/target01A.png", package="FDBeye")
 ##' ias <- region2SRias(reg, yoffsets=c(50,30), xpad=c(18,18))
@@ -45,8 +46,8 @@
 ##'
 ##' fp + geom_rect(data=ias, inherit.aes=FALSE,
 ##'                aes(xmin=x1+1, xmax=x2, ymin=y1, ymax=y2,
-##'                    fill=NULL, color=as.factor(WordID%%2)), alpha=0) +
-##'     guides(color=FALSE)
+##'                fill=NULL, color=as.factor(WordID%%2)), alpha=0) +
+##'      guides(color=FALSE)
 ##'
 region2SRias <- function(regfile,
                          iasfile=NULL,
