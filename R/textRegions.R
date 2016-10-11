@@ -120,38 +120,46 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 }
 
 
-##' @title Convert region file to region definition file.
+##' @title Convert region definition file to SRR Interest Area file.
 ##'
-##' @description Convert a file containing full region description
-##'     into a region definition file. The latter is suitable for hand
-##'     editing and can be used to generate alternative region
-##'     specifications (e.g., multi word regions) for text stimuli.
+##' @description Convert a region definition file to an SRR Interest
+##'     Area file (*.ias). The latter can be hand edited to specify
+##'     alternative region specifications (e.g., multi word regions)
+##'     for text stimuli.
 ##'
 ##' @details We aspire to handle region definitions for multi line
 ##'     texts, but at present only region files for single line texts
 ##'     are handled.
 ##'
-##'     File parameter values are used to fill in parameters written
-##'     to the yaml block of the region definition file. Note that few
-##'     of these parameters are important when the region definition
-##'     file is used to create a new region file.
+##'     Parameter values are read from the yaml block of the region
+##'     definition file. Note that a few of these parameters are
+##'     important when translating region definitions to interest
+##'     areas.
 ##'
 ##'     A region definition file contains 2 parts. The first is a yaml
 ##'     block with values for each of the function parameters except
-##'     for "reg".  Two parameters in the yaml block are critical to
-##'     proper region definitions.  The chrW parameter is used to
-##'     translate region boundaries in x dimension from letter
-##'     positions (as specified in the region definition file) to
-##'     pixel positions (as required for the region or ias file). chrW
-##'     is estimated from contents of region.csv file, and will
-##'     probably be correct most of the time. Regardless, it should be
-##'     checked and, if necessary, manually edited in the resulting
-##'     region definition file.
+##'     for "reg". Three parameters in the yaml block are critical to
+##'     proper region definitions.
+##'
+##'     The chrW parameter is used to translate region boundaries in x
+##'     dimension from letter positions (as specified in the region
+##'     definition file) to pixel positions (as required for the
+##'     region or ias file). chrW is estimated from contents of
+##'     region.csv file, and will probably be correct most of the
+##'     time. Regardless, it should be checked and, if necessary,
+##'     manually edited in the resulting region definition file.
 ##'
 ##'     Accurate baseline positions are also critical to determining
 ##'     the y positionins of regions. Baselines are read directly from
 ##'     the region.csv file and should be accurate. Note that baseline
 ##'     positions, in pixels, are measured from the TOP of the screen.
+##'
+##'     Finally, left margin specification is important as this gives
+##'     an x offset for region positions.
+##'
+##'     Four additional parameters in the yaml block of the region
+##'     definition file will be used to modify regions. They are:
+##'     regions$maxH, regions$minH, regions$padL, and regions$padR.
 ##'
 ##'     The second part of a region definition file is the region
 ##'     block. This block contains a pair of lines for each line of
