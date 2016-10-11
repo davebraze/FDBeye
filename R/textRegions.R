@@ -205,7 +205,7 @@ regdef2ias <- function(fname) {
     x1 <- (x1_char * 12) + (parms$margins$left - 1) ## translate char to pix
     if (!is.na(parms$regions$padL)) x1[1] <- x1[1] - parms$regions$padL
     x2 <- (x2_char * 12) + (parms$margins$left - 1) ## translate char to pix
-    if (!is.na(parms$regions$padR)) x1[length(x1)] <- x1[length(x1)] - parms$regions$padR
+    if (!is.na(parms$regions$padR)) x2[length(x2)] <- x2[length(x2)] + parms$regions$padR
 
     ## get the upper and lower y coordinates (pixels) of regions
     y1 <- parms$lines$baseline[1] - parms$regions$maxH
