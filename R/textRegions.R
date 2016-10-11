@@ -78,6 +78,7 @@
 ##'     This vector can be written to file and hand edited to add or
 ##'     correct information in the yaml block, or to re-specify region
 ##'     placements.
+##' @seealso regdef2ias
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
 
@@ -173,9 +174,11 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##' @param fname A string containing the name of a "region definition"
 ##'     file, such as might be created by reg2regdef(). See Details.
 ##'
-##' @return A data.frame specifying the content of an SRR interest area file (*.ias).  Use
-##'     readr::write_delim(..., delim="\n", col_names=FALSE) to save the interest area specification
-##'     to file.
+##' @return A data.frame specifying the content of an SRR interest
+##'     area file (*.ias).  Use \code{readr::write_delim(...,
+##'     delim="\n", col_names=FALSE)} to save the interest area
+##'     specification to file.
+##' @seealso reg2regdef
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
 regdef2ias <- function(fname) {
@@ -220,16 +223,18 @@ regdef2ias <- function(fname) {
     ## find the (vertical) beginnings and ends of regions, in pixel units
     x1 <- (x1_char * 12) + (parms$margins$left - 1) ## translate char to pix
     if (!is.na(parms$regions$padL)) x1[1] <- x1[1] - parms$regions$padL
+    x1 <- as.integer(x1)
     x2 <- (x2_char * 12) + (parms$margins$left - 1) ## translate char to pix
     if (!is.na(parms$regions$padR)) x2[length(x2)] <- x2[length(x2)] + parms$regions$padR
+    x2 <- as.integer(x2)
 
     ## get the upper and lower y coordinates (pixels) of regions
-    y1 <- parms$lines$baseline[1] - parms$regions$maxH
-    y2 <- parms$lines$baseline[1] + parms$regions$minH
+    y1 <- as.integer(parms$lines$baseline[1] - parms$regions$maxH)
+    y2 <- as.integer(parms$lines$baseline[1] + parms$regions$minH)
 
     ## other columns for current text/mark line
     type <- "RECTANGLE"         ## region type
-    regnum <- 1:length(x1)      ## region numbers
+    regnum <- as.integer(1:length(x1))      ## region numbers
     labs <- txt                 ## region labels
     labs <- stringr::str_replace_all(labs, " ", "_")
     labs <- stringr::str_replace_all(labs, '"', "'")

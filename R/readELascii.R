@@ -5,12 +5,15 @@
 ##' @details Used by readELascii(). Not intended for end-users. Extract fixations, saccades, blinks
 ##'     and other data from an individual trial.
 ##'
-##' @param bounds A numeric tuple. e1 is index marking beginning of trial. e2 is index indicating
-##' end of trial.
-##' @param lines A vector of strings, each corresponding to 1 line of the EL ASCII file.
-##' @param msgSet A character vector of regular expressions to identify eyelink MSG lines to catch.
-##' @return A list of 6 elements, data.frames enumerating fixations, saccades, blinks, TRIAL_VARs,
-##' samples and messages for the trial.
+##' @param bounds A numeric tuple. e1 is index marking beginning of
+##'     trial. e2 is index indicating end of trial.
+##' @param lines A vector of strings, each corresponding to 1 line of
+##'     the EL ASCII file.
+##' @param msgSet A character vector of regular expressions to
+##'     identify eyelink MSG lines to catch.
+##' @return A list of 6 elements, data.frames enumerating fixations,
+##'     saccades, blinks, TRIAL_VARs, samples and messages for the
+##'     trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 getEyelinkTrialData <- function(bounds,
                                 lines,
@@ -264,25 +267,32 @@ getEyelinkTrialData <- function(bounds,
 
 ##' @title Get events from SR Research ASCII data files.
 ##'
-##' @description Convenience function to call SRR utility edf2asc from inside R.
+##' @description Convenience function to call SRR utility edf2asc from
+##'     inside R.
 ##'
-##' @details
-##' SR Research provides a utility (EDF2ASC.exe) that dumps ASCII renderings of their proprietary
-##' EDF data file format. This function reads those ASCII files and extracts eye-movement events
-##' (fixations, saccades, blinks), specified MSG events, and TRIAL_VARs from them.
+##' @details SR Research provides a utility (EDF2ASC.exe) that dumps
+##'     ASCII renderings of their proprietary EDF data file
+##'     format. This function reads those ASCII files and extracts
+##'     eye-movement events (fixations, saccades, blinks), specified
+##'     MSG events, and TRIAL_VARs from them.
 ##'
-##' @param file A string giving path/fname to input file (ELascii file).
-##' @param tStartRE A string containing regular expression that uniquely identifies beginnings of
-##'     trials.
-##' @param tEndRE A string containing regular expression that uniquely identifies ends of trials. If
-##'     an experiment is aborted prematurely, then the *edf file (and so the *asc file) may not have
-##'     a proper trial end event. TODO: test for that case and handle it while throwing a warning.
-##' @param msgSet A character vector. Each element identifies a MSG event to recover from the data
-##'     file.
-##' @param subjID If NULL (default), use filename as subject ID. Otherwise use specified string.
-##' @return List with two elements, one for session information, and one containing a list of
-##'     trials. Each trial element is itself a list of 6 elements: data.frames enumerating
-##'     fixations, saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
+##' @param file A string giving path/fname to input file (ELascii
+##'     file).
+##' @param tStartRE A string containing regular expression that
+##'     uniquely identifies beginnings of trials.
+##' @param tEndRE A string containing regular expression that uniquely
+##'     identifies ends of trials. If an experiment is aborted
+##'     prematurely, then the *edf file (and so the *asc file) may not
+##'     have a proper trial end event. TODO: test for that case and
+##'     handle it while throwing a warning.
+##' @param msgSet A character vector. Each element identifies a MSG
+##'     event to recover from the data file.
+##' @param subjID If NULL (default), use filename as subject
+##'     ID. Otherwise use specified string.
+##' @return List with two elements, one for session information, and
+##'     one containing a list of trials. Each trial element is itself
+##'     a list of 6 elements: data.frames enumerating fixations,
+##'     saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @export
 readELascii <- function(file,

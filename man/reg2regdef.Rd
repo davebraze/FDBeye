@@ -109,4 +109,7 @@ We aspire to handle input files (region files) for multi
 \author{
 Dave Braze \email{davebraze@gmail.com}
 }
+\seealso{
+regdef2ias
+}
 
