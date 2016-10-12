@@ -115,9 +115,8 @@ We aspire to handle input files (region files) for multi
     Four optional parameters (rgn.minH, rgn.maxH, rgn.padL,
     rgn.padR) can be used to control various aspects of region
     extent.
-}
-\section{To Do}{
 
+\strong{To Do:}
 
     ToDo: This function presently does not work for regioning
     multi-line text stimuli. Fix that.  stims.

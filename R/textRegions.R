@@ -47,7 +47,7 @@
 ##'     rgn.padR) can be used to control various aspects of region
 ##'     extent.
 ##'
-##' @section To Do:
+##' \strong{To Do:}
 ##'
 ##'     ToDo: This function presently does not work for regioning
 ##'     multi-line text stimuli. Fix that.  stims.
@@ -157,7 +157,7 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     A region definition file contains 2 parts. The first is a yaml
 ##'     block, which is followed by a region block.
 ##'
-##' @section Yaml Block:
+##' \strong{Yaml Block:}
 ##'
 ##'     Three parameters in the yaml block are critical to proper
 ##'     region definitions. Four others are also useful, but optional.
@@ -199,7 +199,7 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     \code{reg2regdef} or similar function used to create the
 ##'     region definition file in the first place.
 ##'
-##' @section Region Block:
+##' \strong{Region Block:}
 ##'
 ##'     The second part of a region definition file is the region
 ##'     block. This block contains a pair of lines for each line of
@@ -216,7 +216,7 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     can be hand edited to add or correct information to specify
 ##'     region placements.
 ##'
-##' @section To Do:
+##' \strong{To Do:}
 ##'
 ##'     This function presently does not handle regioning for
 ##'     multi-line stimulus texts. Fix that.

@@ -34,9 +34,8 @@ We aspire to handle region definitions for multi line
 
     A region definition file contains 2 parts. The first is a yaml
     block, which is followed by a region block.
-}
-\section{Yaml Block}{
 
+\strong{Yaml Block:}
 
     Three parameters in the yaml block are critical to proper
     region definitions. Four others are also useful, but optional.
@@ -77,10 +76,8 @@ We aspire to handle region definitions for multi line
     probably be to specify it in the form of parameters to
     \code{reg2regdef} or similar function used to create the
     region definition file in the first place.
-}
 
-\section{Region Block}{
-
+\strong{Region Block:}
 
     The second part of a region definition file is the region
     block. This block contains a pair of lines for each line of
@@ -96,10 +93,8 @@ We aspire to handle region definitions for multi line
     Before running \code{regdef2ias} on a file, its region block
     can be hand edited to add or correct information to specify
     region placements.
-}
 
-\section{To Do}{
-
+\strong{To Do:}
 
     This function presently does not handle regioning for
     multi-line stimulus texts. Fix that.
