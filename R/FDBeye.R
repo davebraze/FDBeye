@@ -6,6 +6,6 @@
 ##'     have some code in README.Rmd that pulls the description from this file and inserts it
 ##'     there.)
 ##'
-##' @docType package
 ##' @name FDBeye
+##' @docType package
 NULL

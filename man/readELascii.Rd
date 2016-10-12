@@ -33,8 +33,8 @@ List with two elements, one for session information, and
     saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
 }
 \description{
-Convenience function to call SRR utility edf2asc from
-    inside R.
+Read data from SR Research ASCII files (samples,
+    fixations, saccades, blinks, etc).
 }
 \details{
 SR Research provides a utility (EDF2ASC.exe) that dumps

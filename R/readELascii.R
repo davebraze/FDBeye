@@ -267,8 +267,8 @@ getEyelinkTrialData <- function(bounds,
 
 ##' @title Get events from SR Research ASCII data files.
 ##'
-##' @description Convenience function to call SRR utility edf2asc from
-##'     inside R.
+##' @description Read data from SR Research ASCII files (samples,
+##'     fixations, saccades, blinks, etc).
 ##'
 ##' @details SR Research provides a utility (EDF2ASC.exe) that dumps
 ##'     ASCII renderings of their proprietary EDF data file
