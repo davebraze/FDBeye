@@ -33,29 +33,54 @@ We aspire to handle region definitions for multi line
     areas.
 
     A region definition file contains 2 parts. The first is a yaml
-    block with values for each of the function parameters except
-    for "reg". Three parameters in the yaml block are critical to
-    proper region definitions.
+    block, which is followed by a region block.
+}
+\section{Yaml Block}{
 
-    The chrW parameter is used to translate region boundaries in x
-    dimension from letter positions (as specified in the region
-    definition file) to pixel positions (as required for the
-    region or ias file). chrW is estimated from contents of
-    region.csv file, and will probably be correct most of the
-    time. Regardless, it should be checked and, if necessary,
-    manually edited in the resulting region definition file.
 
-    Accurate baseline positions are also critical to determining
-    the y positionins of regions. Baselines are read directly from
-    the region.csv file and should be accurate. Note that baseline
-    positions, in pixels, are measured from the TOP of the screen.
+    Three parameters in the yaml block are critical to proper
+    region definitions. Four others are also useful, but optional.
 
-    Finally, left margin specification is important as this gives
-    an x offset for region positions.
+    \describe{
+
+    \item{character$width}{This parameter is used to translate
+    region boundaries in x dimension from letter positions (as
+    specified in the region definition file) to pixel positions
+    (as required for the region or ias file). Character width (in
+    pixels) is not explicitly encoded in a region file, but is
+    typically estimated from contents of region.csv file, and will
+    probably be correct most of the time. Regardless, it should be
+    checked and, if necessary, manually edited in the resulting
+    region definition file.}
+
+    \item{lines$baseline}{Accurate baseline positions are also
+    critical to determining the y positions of regions. Baselines
+    are read directly from the region.csv file and should be
+    accurate. Note that baseline positions, in pixels, are
+    measured from the TOP of the screen.}
+
+    \item{margins$left}{The left margin is an x offset that will be
+    applied to all regions. There is no easy way to read this from
+    a region file, so it will need to be specified in the function
+    call. In most cases, it will be the same for all stimulus
+    items.}
+
+    }
 
     Four additional parameters in the yaml block of the region
     definition file will be used to modify regions. They are:
     regions$maxH, regions$minH, regions$padL, and regions$padR.
+
+    Before running \code{regdef2ias} on a file, its yaml block can
+    be hand edited to add or correct information. However, the
+    easiest way to fill information in the yaml block will
+    probably be to specify it in the form of parameters to
+    \code{reg2regdef} or similar function used to create the
+    region definition file in the first place.
+}
+
+\section{Region Block}{
+
 
     The second part of a region definition file is the region
     block. This block contains a pair of lines for each line of
@@ -64,21 +89,25 @@ We aspire to handle region definitions for multi line
     string made up of dots ("."), and pipe ("|") characters. Pipes
     indicate the beginnings of regions. By default, the region
     definition file will specify that each text line be
-    exhaustively dividied into space delimited regions (i.e. there
+    exhaustively divided into space delimited regions (i.e. there
     will be a pipe character corrponding to each space character
     in the paired text line.
 
-    The region definition file can be hand edited to add or
-    correct information in the yaml block, or to re-specify region
-    placements.
+    Before running \code{regdef2ias} on a file, its region block
+    can be hand edited to add or correct information to specify
+    region placements.
+}
 
-    ToDo: Make to work with region definition files for multi-line
-    text stims.
+\section{To Do}{
+
+
+    This function presently does not handle regioning for
+    multi-line stimulus texts. Fix that.
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}
 }
 \seealso{
-reg2regdef
+\code{\link{reg2regdef}}
 }
 

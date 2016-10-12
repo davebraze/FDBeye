@@ -20,7 +20,7 @@
 ##'
 ##'     \describe{
 ##'
-##'     \item{chrW} {This parameter is used to translate region
+##'     \item{chrW}{This parameter is used to translate region
 ##'     boundaries in x dimension from letter positions (as specified
 ##'     in the region definition file) to pixel positions (as required
 ##'     for the region or ias file). If not specified in the function
@@ -29,13 +29,13 @@
 ##'     should be checked and corrected if necessary (i.e., specified
 ##'     in the function call).}
 ##'
-##'     \item{baseline} {Accurate baseline positions are also critical
+##'     \item{baseline}{Accurate baseline positions are also critical
 ##'     to determining the y positions of regions. Baselines are
 ##'     read directly from the region.csv file and should be
 ##'     accurate. Note that baseline positions, in pixels, are
 ##'     measured from the TOP of the screen.}
 ##'
-##'     \item{mrgn.left} {The left margin is an x offset that will be
+##'     \item{mrgn.left}{The left margin is an x offset that will be
 ##'     applied to all regions. There is no easy way to read this from
 ##'     a region file, so it will need to be specified in the function
 ##'     call. In most cases, it will be the same for all stimulus
@@ -47,7 +47,7 @@
 ##'     rgn.padR) can be used to control various aspects of region
 ##'     extent.
 ##'
-##' @TODO
+##' @section To Do:
 ##'
 ##'     ToDo: This function presently does not work for regioning
 ##'     multi-line text stimuli. Fix that.  stims.
@@ -126,9 +126,9 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
              "---\n")
 
     ## build regdef block
-    txt <- str_c(reg$Word, collapse="")
-    idx <- str_locate_all(txt, " ")[[1]][,1]
-    regmarks <- rep(".", str_length(txt))
+    txt <- stringr::str_c(reg$Word, collapse="")
+    idx <- stringr::str_locate_all(txt, " ")[[1]][,1]
+    regmarks <- rep(".", stringr::str_length(txt))
     regmarks[idx] <- "|"
     regmarks <- paste(regmarks, collapse="")
     ln <- c(paste0("\n", txt, "\n", regmarks, "\n"))
@@ -162,9 +162,9 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     Three parameters in the yaml block are critical to proper
 ##'     region definitions. Four others are also useful, but optional.
 ##'
-##'     \describe {
+##'     \describe{
 ##'
-##'     \item{character$width} {This parameter is used to translate
+##'     \item{character$width}{This parameter is used to translate
 ##'     region boundaries in x dimension from letter positions (as
 ##'     specified in the region definition file) to pixel positions
 ##'     (as required for the region or ias file). Character width (in
@@ -174,13 +174,13 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     checked and, if necessary, manually edited in the resulting
 ##'     region definition file.}
 ##'
-##'     \item{lines$baseline} {Accurate baseline positions are also
+##'     \item{lines$baseline}{Accurate baseline positions are also
 ##'     critical to determining the y positions of regions. Baselines
 ##'     are read directly from the region.csv file and should be
 ##'     accurate. Note that baseline positions, in pixels, are
 ##'     measured from the TOP of the screen.}
 ##'
-##'     \item{margins$left} {The left margin is an x offset that will be
+##'     \item{margins$left}{The left margin is an x offset that will be
 ##'     applied to all regions. There is no easy way to read this from
 ##'     a region file, so it will need to be specified in the function
 ##'     call. In most cases, it will be the same for all stimulus
@@ -216,7 +216,8 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     can be hand edited to add or correct information to specify
 ##'     region placements.
 ##'
-##' @TODO
+##' @section To Do:
+##'
 ##'     This function presently does not handle regioning for
 ##'     multi-line stimulus texts. Fix that.
 ##'
