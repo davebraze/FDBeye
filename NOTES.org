@@ -1,0 +1,111 @@
+* Notes on SRR tools
+** On Get Reading Measures tool
+   + [[https://www.sr-support.com/showthread.php?1289-Reading-Measures-from-Data-Viewer][https://www.sr-support.com/showthread.php?1289-Reading-Measures-from-Data-Viewer]]
+   +
+** On getting reading measures from DataViewer
+*** Thread is on [[https://www.sr-support.com/showthread.php?1289-Reading-Measures-from-Data-Viewer&p=4137#post4137][Reading Measures]].
+
+**** Fixation Duration Measures
+
+   1. Single Fixation Duration – The duration of a fixation on a target region, provided that region is fixated one time
+      only, and that the one fixation does not occur after fixations
+      on words further along in the text.
+
+      Single Fixation Duration = IA_FIRST_FIXATION_DURATION, if
+      IA_FIXATION_COUNT == 1 and IA_FIRST_FIX_PROGRESSIVE ==1
+
+   2. First Fixation Duration – The duration of the first fixation on a target region, provided that the first fixation
+      does not occur after fixations on words further along in the text.
+
+      First Fixation Duration = IA_FIRST_FIXATION_DURATION , if
+      IA_FIRST_FIX_PROGRESSIVE ==1
+
+   3. Gaze Duration – The total duration of all fixations in a target region until the eyes fixate a region of text that
+      is either progressive or regressive to the target region, provided that the first fixation on the target region
+      does not occur after any fixations on words further along in the text.
+
+      Note: This measure is typically referred to as “Gaze Duration” for one-word regions of text and “First-Pass Duration”
+      for multi-word regions of text. For simplicity in this reading guide, this measure will be referred to as “Gaze
+      Duration”, whether the region is one word in length or more than one word in length.
+
+      Gaze Duration (a.k.a. First-Pass Duration) =
+      IA_FIRST_RUN_DWELL_TIME, if IA_FIRST_FIX_PROGRESSIVE == 1
+
+   4. Right-Bounded Duration – The total duration of all fixations in a target region until the eyes fixate a region of
+      text that is progressive to the target region, provided that the first fixation on the target region does not
+      occur after any fixations on words further along in the text.
+
+      Note: This measure, as well as Regression Path Duration below, is sometimes referred to as Go-Past Duration. These
+      two definitions of Go-Past Duration are distinguished here by calling one Right-Bounded Duration and the other
+      Regression Path Duration.
+
+      Right-Bounded Duration (a.k.a Go-Past Duration) =
+      IA_SELECTIVE_REGRESSION_PATH_DURATION, if
+      IA_FIRST_FIX_PROGRESSIVE == 1
+
+   5. Regression Path Duration – The total duration of all fixations that occur from the first fixation on a target
+      region until the target region is exited in a progressive manner (including fixations on the target region and
+      fixations on words regressive to the target region), provided that the first fixation on the target region does
+      not occur after any fixations on words further along in the text.
+
+      Note: This measure, as well as Right-Bounded Duration above, is
+      sometimes referred to as Go-Past Duration. These two definitions
+      of Go-Past Duration are distinguished here by calling one
+      Right-Bounded Duration and the other Regression Path Duration.
+
+      Regression Path Duration (a.k.a. Go-Past Duration) =
+      IA_REGRESSION_PATH_DURATION, if IA_FIRST_FIX_PROGRESSIVE==1
+
+   6. Re-reading Duration – The difference between Regression Path Duration and Gaze Duration. This measure effectively
+      includes only fixations of Regression Path Duration that are not on the target region (i.e., only fixations that
+      are on words that are regressive relative to the target region).
+
+      Re-reading Duration= [IA_REGRESSION_PATH_DURATION, if
+      IA_FIRST_FIX_PROGRESSIVE == 1] – [IA_FIRST_RUN_DWELL_TIME, if
+      IA_FIRST_FIX_PROGRESSIVE == 1]
+
+   7. Total Duration – The total duration of all fixations in a target
+      region.
+
+      Total Duration = IA_DWELL_TIME
+
+**** Fixation Ration Measures
+
+   8. First-Pass Regression Ratio – The proportion of fixations following fixation on the target region that are
+      regressive relative to the target region (and not progressive), provided that 1) words further along in the text
+      have not yet been fixated (i.e., the region was not skipped during first-pass reading) and that 2) the target
+      region has not already been fixated and exited.
+
+      First-Pass Regression Ratio - check the frequency of
+      IA_REGRESSION_OUT, if IA_FIRST_FIX_PROGRESSIVE==1
+
+   9. First-Pass Fixation Ratio – The proportion of times that the target region is fixated before any progressive text
+      is fixated (as opposed to times when the target region is skipped during first-pass reading)
+
+      Note: [1 – (First-Pass Fixation Ratio)] is First-Pass Skipping
+      Ratio.
+
+      First-Pass Fixation Ratio - check the proportion of IA_SKIP and
+      subtract it from 1
+
+   10. First-Pass Multi-Fixation Ratio – The proportion of times that the target region is fixated more than one
+       consecutive time before any other text that is progressive or regressive to the region is fixated, provided that
+       the target region is fixated at least once before any material progressive to the region is fixated (i.e.,
+       provided that the target region is not skipped during first-pass reading).
+
+       First-Pass Multi-Fixation Ratio - check the proportion of
+       IA_FIRST_RUN_FIXATION_COUNT > 1, if IA_FIRST_FIX_PROGRESSIVE
+       ==1
+
+*** Another thread [[https://www.sr-support.com/showthread.php?2267-Phrase-and-Word-Segementation&highlight=interest+area+file][here]]
+    + multiline text reading.
+    + interest area segmentation by word or by phrase
+    + associating interest area files with en-mass with an EDF file
+
+** Other pointers
+   + [[https://www.sr-support.com/showthread.php?5370-Webinar-on-Psycholinguistics-studies-Oct-12-2016-10am-1pm-EST&p=22151#post22151][Webinar]] on design and summarization of Vis World and Reading
+     Exp. using EB and DV.
+   + [[https://www.sr-support.com/showthread.php?3993-Adding-Interest-Areas-in-DataViewer&highlight=Get+Reading][Thread]] by Gordils on importing interest area files into DV.
+   + [[https://www.sr-support.com/showthread.php?3921-Systematic-assignment-of-interest-areas-to-trials&highlight=interest+area+file][Another thread]] on importing interest areas into DV by Shvartsman.
+   + [[https://www.sr-support.com/showthread.php?4752-some-help-in-using-dataviewer-(interest-area)&highlight=interest+area+file][Yet another thread]] on importing interest areas.
+   + [[https://www.sr-support.com/showthread.php?4262-More-than-one-interest-area-set-for-a-trial&highlight=interest+area+file][Thread]] on managing multiple interest area sets per trial.

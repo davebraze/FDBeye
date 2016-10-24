@@ -97,8 +97,6 @@ the Data Source column values that were used on each trial.  So, you
 can recover the name of the original text used on each trial from the
 subject's .dat file.
 
-
-
 ```
 -------- Forwarded Message --------
 Subject: 	Re: Data Viewer
