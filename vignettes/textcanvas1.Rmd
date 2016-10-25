@@ -54,10 +54,10 @@ include numbers that correspond to trial numbers (e.g., `VC\_1.vcl`,
 0 IMGLOAD TOP_LEFT  ../../runtime/images/-6812265288292522003.png 0 0 1024 768
 ```
 
-The name of the PNG file that corresponds to the ***text canvas*** used for the particular trial is
-clearly specified. A simple R script to extract this information will
-not be too hard to construct. (Of course, you could also copy the
-information out by hand....)
+The name of the PNG file that corresponds to the ***text canvas***
+used for the particular trial is clearly specified. A simple R script
+to extract this information will not be too hard to construct. (Of
+course, you could also copy the information out by hand....)
 
 Alternately, you may be able to extract this information from an
 _Experiment Builder_ project using SRR _Data Viewer_ software.
@@ -82,16 +82,18 @@ have a pixel-identical record of the stimulus seen by the subject.***
 A typical _Experiment Builder_ project will use information contained
 in Data Source columns linked to a sequence which handles the trial
 looping of your _EB_ project.  Before deploying a project from _EB_, 
-you should always select all of your Data Source columns and VARIABLE 
+you should always select _all_ of your Data Source columns and VARIABLE 
 nodes as EyeLink _Data Viewer_ variables. 
 
-1. In the _Structure Panel_ select the top most item in the hierarchy (the EB project name).   
-2. Then in the window below select the EyeLink DV Variables property -> Select all the variables -> Click Add  
+1. In the _Structure Panel_ select the top most item in the hierarchy
+   (the EB project name).
+2. Then in the window below select the EyeLink DV Variables property
+   -> Select all the variables -> Click Add
 
-All these values will be written to the EyeLink data file (*edf
-file) every time the system stops recording (i.e., at the end of each
+All these values will be written to the EyeLink data file (*edf file)
+every time the system stops recording (i.e., at the end of each
 trial). These Variables can then be accessed via _Data Viewer_, or
-extracted from an ASCII data file built with the SRR edf2asc utility.  
+extracted from an ASCII data file built with the SRR edf2asc utility.
 
 In case you didn't include the Data Source column name as an EyeLink
 DV Variable, you will still have a record of the values used on each
