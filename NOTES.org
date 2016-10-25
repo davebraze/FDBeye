@@ -1,7 +1,6 @@
 * Notes on SRR tools
 ** On Get Reading Measures tool
    + [[https://www.sr-support.com/showthread.php?1289-Reading-Measures-from-Data-Viewer][https://www.sr-support.com/showthread.php?1289-Reading-Measures-from-Data-Viewer]]
-   +
 ** On getting reading measures from DataViewer
 *** Thread is on [[https://www.sr-support.com/showthread.php?1289-Reading-Measures-from-Data-Viewer&p=4137#post4137][Reading Measures]].
 
@@ -35,7 +34,7 @@
       text that is progressive to the target region, provided that the first fixation on the target region does not
       occur after any fixations on words further along in the text.
 
-      Note: This measure, as well as Regression Path Duration below, is sometimes referred to as Go-Past Duration. These
+          Note: This measure, as well as Regression Path Duration below, is sometimes referred to as Go-Past Duration. These
       two definitions of Go-Past Duration are distinguished here by calling one Right-Bounded Duration and the other
       Regression Path Duration.
 
