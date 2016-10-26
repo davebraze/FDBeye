@@ -200,7 +200,8 @@ of the .edf is different.
 #### Interest Areas for Single .edf Files:
 
 1. **Load the .edf in SRR EyeLink DataViewer:**
-    a) Load EyeLink DataViewer and click File > Import Data... > EyeLink
+
+	a) Load EyeLink DataViewer and click File > Import Data... > EyeLink
       Data File...
 
     b) Navigate to the directory containing the .edf, select the .edf, and
@@ -208,7 +209,8 @@ of the .edf is different.
       Data window.
 
 2. **Import the corresponding interest area files for the trials:**
-    a) Click File > Import Data... > Interest Area Template...
+
+	a) Click File > Import Data... > Interest Area Template...
 
     b) Navigate to directory containing `*.ias` files, choose all the
       `*.ias` files that correspond to the trials in the .edf and and
