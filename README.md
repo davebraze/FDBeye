@@ -20,7 +20,12 @@ Installing FDBeye
 -----------------
 First you should install <https://github.com/davebraze/FDButils>.
 
-Then, to get the very latest from *FDBeye*, install it via devtools::install_github()
+Then, to get the very latest from *FDBeye*, install it via
+devtools::install\_github(). Some people have reported problems with
+the installation due to the vignettes failing to build. If that
+happens to you, you can try again with `build\_vignettes=FALSE`,
+although the vignettes won't be available.
+
 ```R
 install.packages("devtools")    ## if you don't already have it
 library(devtools)
@@ -30,10 +35,10 @@ install_github("davebraze/FDBeye", build_vignettes=TRUE)
 On the other hand, if you want a (possibly) more stable
 experience. Download the most current release from here:
 <https://github.com/davebraze/FDBeye/releases>. Then install it like
-this
+this:
 
 ```R
-install.packages(pathToFile, repos = NULL, type="source")
+install.packages(pathToFile, repos = NULL)
 ```
 
 Where pathToFile is the full path and file name for the file you
