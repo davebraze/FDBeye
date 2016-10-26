@@ -24,7 +24,7 @@ Then, to get the very latest from *FDBeye*, install it via devtools::install_git
 ```R
 install.packages("devtools")    ## if you don't already have it
 library(devtools)
-install_github("davebraze/FDBeye")
+install_github("davebraze/FDBeye", build_vignettes=TRUE)
 ```
 
 On the other hand, if you want a (possibly) more stable
