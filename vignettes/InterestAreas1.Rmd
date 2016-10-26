@@ -1,0 +1,183 @@
+---
+title: "Interest Areas for Text Stimuli"
+author: "Jenna Duclos"
+date: "October 25, 2016"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Interest Areas}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Building DataViewer Compatible Interest Area Files
+
+Eye movement data can be analyzed by using interest area definitions
+to pick out specific screen areas for summarizing local gaze
+behavior. For reading experiments, interest areas may focus on a
+single word or a multi-word unit depending on needs of the
+analysis. Given an interest area specification, SRR DataViewer can
+generate an interest area report to provide information on various
+gaze measures for each area: fixation count, summed fixation duration,
+regressions into an interest area, etc.
+
+### Using R Package FDBeye to Create SRR Interest Area Files
+
+At this point we assume that the user has created paired bitmap (used
+as experimental stimuli in, e.g., SRR Experiment Builder) and comma separated
+**region** files. File names for the latter will typically end with
+"region.csv".  R and the package FDBeye can be used to create Interest Area
+Templates compatible with SRR DataViewer.
+
+The following R packages are required:
+
+* [FDButils](https://github.com/davebraze/FDButils)
+* [FDBeye](https://github.com/davebraze/FDBeye)
+* [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html)
+* [readr](https://cran.r-project.org/web/packages/readr/index.html)
+* [stringr](https://cran.r-project.org/web/packages/stringr/index.html)
+* [yaml](https://cran.r-project.org/web/packages/yaml/index.html)
+  (used internally-do not need to load)
+
+#### Steps to get from a `*.region.csv` file to an SRR `*.ias` file.
+1. Read the `*.region.csv` file into a data.frame.
+2. Use its content to generate a region definition character vector.
+3. Write the region definition vector out to file.
+4. Hand edit the regdef file to specify the desired regions.
+5. Use the regdef file to generate an `*.ias` file suitable for use in
+   DataViewer.
+
+Here are the first three steps in R code:
+
+```{r, eval=FALSE}
+reg <- read_csv("trial1.region.csv", trim_ws=FALSE)
+tmp <- reg2regdef(reg, mrgn.left=86, rgn.maxH=60, rgn.minH=43, rgn.padL=18, rgn.padR=18)
+outf <- "trial1.region.def"
+writeLines(tmp, con=outf)
+```
+
+The region definition file will typically end with
+`*.region.def`. Once the file is saved to the working directory it can
+be hand edited in any text editor. The text document will include a
+block of information text layout on the screen as seen by the study
+participants. This appears in a 'yaml' block at the beginning of the
+file. Some of this information is read directly from the `region.csv`
+file, and some is specified in the function call `reg2regdef()`. It is
+easiest to specify this information when the region definition file is
+created, rather than hand editing it in the `region.def` file.
+
+The text you want to edit to specify interest area locations will be
+at the bottom of the `*.region.def` file and will look something like
+this:
+
+```
+The quick brown fox jumps over the lazy dog.
+...|.....|.....|...|.....|....|...|....|....
+```
+
+Each line of a text stimulus is paired with a 'regioning
+string'. Within a regioning string, each letter and punctuation mark
+in the stimulus sentence is marked with a dot, "**.**", and regions
+are separated with pipe character, "**|**". The pipe character marks
+the first character of a new region. In this example, all regions in
+the stimulus sentence but the first will begin with a "space". (The
+first region of a line always begins with the first character.) To
+edit locations of the interest areas, add or remove "**|**" characters
+from the regioning string. Note that the regioning string must be the
+same length as its paired text line. To maintain the same length
+between text line and regioning string, any removed "**|**" must be
+replaced with a "**.**".
+
+An edited regioning string in the text document will look like this:
+
+```
+The quick brown fox jumps over the lazy dog.
+...................|.....|........|.........
+```
+
+Once you have hand edited the text document to reflect the interest
+area locations you want save the file.
+
+#### Preview the new interest areas:
+1. Use the `*.region.def` file to build a set of regions.
+2. Load the bitmap corresponding to the regions.
+3. Plot the new interest areas over the bitmap.
+
+Here are the steps in R code:
+
+```{r, eval=FALSE}
+ias2 <- regdef2ias("trial1.region2.def")
+write_delim(ias2, "trial1.region2.ias", "\t", col_names=FALSE)
+fp2 <- fixPlot(data = data.frame(x=-1, y=-1),
+              bgImage = "trial1.png", bgAlpha=1,
+              xyMap = ggplot2::aes_string(x='x', y='y'),
+              pointMap=ggplot2::aes_string(alpha=0)
+              )
+fp2 + geom_rect(data=ias2, inherit.aes=FALSE,
+               aes(xmin=x1+1, xmax=x2, ymin=y1, ymax=y2,
+                   fill=NULL, color=as.factor(regnum%%2)), alpha=0) +
+     guides(color=FALSE)
+```
+Note that for our purposes, we renamed the `*region.def` file to
+reflect the changes made (`*region.def` > `*region2.def`). We chose to
+save and document the process and all the steps included in generating
+the new interest areas. Unless specified in your own code to be saved
+with a new name, the original `*region.def` and `*.ias` files will be
+overwritten.
+
+Once the bitmaps and interest area regions have been displayed in R
+Plots you can visualize the regions as they will appear in
+DataViewer. If the text regions are not what you want/expect, then you
+can re-edit your `*region.def` file, and re-run regdef2ias(), and
+reload the plot. If the top and bottom boundaries of the regions are
+not placed appropriately, they can be adjusted by changing argument
+values rgn.maxH, and rgn.minH to `reg2regdef()`. See help page for
+that function.
+
+```
+reg2regdef(reg, mrgn.left=86, rgn.maxH=60, rgn.minH=43, rgn.padL=18, rgn.padR=18)
+```
+
+It is recommended that one `*region.def` file be hand edited and one
+`*.ias` file be generated and checked for accuracy before creating
+multiple files. Then when you are sure the interest areas locations
+are appearing as you would like you can generate a full set of region
+definition files to edit.
+
+#### Create all the `*region.def` and `*.ias` files you need:
+1. Set your working directory to the folder containing all of the
+   `*region.csv`.
+2. Make a vector of all the files located in your working directory
+   and remove all files that are not `*region.csv`.
+3. Using a loop function, create one `*region.def` for each
+   `*region.csv`.
+4. Hand edit the regioning string in each `*region.def`.
+5. Then return to R and make a vector of all the files located in your
+   working directory and remove all files that are not `*region.def`.
+6. Using a loop function, create one `*.ias` for each `*region.def`.
+
+Here are steps 2-3 in R code:
+
+```{r, eval=FALSE}
+flist <- dir()
+flist <- flist[str_detect(flist, "region[.]csv")] ## change the regexp as needed to pick out your files
+for (ff in flist) {
+    reg <- read_csv(ff, trim_ws=FALSE)
+    rdef <- reg2regdef(reg, mrgn.left=86, rgn.maxH=60, rgn.minH=43, rgn.padL=18, rgn.padR=18)
+    outf <- str_replace(ff, "region.csv$", "region2.def")
+    writeLines(rdef, con=outf)
+}
+```
+
+Here are steps 5-6 in R code:
+
+```{r, eval=FALSE}
+flist <- dir()
+flist <- flist[str_detect(flist, "region2[.]def")]
+for (ff in flist) {
+    ias <- regdef2ias(ff)
+    outf <- str_replace(ff, "def$", "ias")
+    write_delim(ias, outf, delim="\t", col_names=FALSE)
+}
+```
+
+Now that your interest area files have been created for each trial you will need to load them into DataViewer. For theses steps refer to **Interest Areas for Data Analysis**.
