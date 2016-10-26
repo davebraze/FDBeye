@@ -1,7 +1,7 @@
 ---
 title: "Text Canvases 1: Basics & SRR"
-author: "Dave Braze"
-date: "June 4, 2016"
+author: "Dave Braze & Jenna Duclos"
+date: "October 25, 2016"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Text Canvases 1: Basics & SRR}
@@ -10,9 +10,10 @@ vignette: >
 ---
 
 In our terminology, a ***text canvas*** is a bitmap image of text,
-formatted as it might appear on a printed page. A ***text canvas*** is the
-kind of stimulus used in an experiment where participants' eye
-movements are recorded while they read from a computer monitor.
+formatted as it might appear on a printed page. See Figure 1. A
+***text canvas*** is the kind of stimulus used in an experiment where
+participants' eye movements are recorded while they read from a
+computer monitor.
 
 We typically generate ***text canvas*** stimuli for an experiment offline,
 and then provide those to whatever experiment control software will be
@@ -23,8 +24,11 @@ us use pixel-identical stimuli on different computers, or with
 different experiment control software (e.g., _Experiment Builder_,
 _E-Prime_, _Presentation_).
 
-An offline approach to building text canvases also let's us use our
-own tools for creating and modifying regions of interest (aka interest
+![**Figure 1: A text canvas.**](`r system.file("extdata/trial87.png",
+ package="FDBeye")`){width=100%}
+
+An offline approach to building text canvases also lets us use our own
+tools for creating and modifying regions of interest (aka interest
 areas). These ROIs are used for the purpose of summarizing gaze
 behavior over a text. The most natural unit for regions of interest is
 that they correspond to the individual words of a text. But it is
@@ -81,9 +85,9 @@ have a pixel-identical record of the stimulus seen by the subject.***
 
 A typical _Experiment Builder_ project will use information contained
 in Data Source columns linked to a sequence which handles the trial
-looping of your _EB_ project.  Before deploying a project from _EB_, 
-you should always select _all_ of your Data Source columns and VARIABLE 
-nodes as EyeLink _Data Viewer_ variables. 
+looping of your _EB_ project.  Before deploying a project from _EB_,
+you should always select _all_ of your Data Source columns and VARIABLE
+nodes as EyeLink _Data Viewer_ variables.
 
 1. In the _Structure Panel_ select the top most item in the hierarchy
    (the EB project name).

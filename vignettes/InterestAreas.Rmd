@@ -1,0 +1,369 @@
+---
+title: "Interest Areas"
+author: "Jenna Duclos"
+date: "October 25, 2016"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Interest Areas}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## EyeLink Data Files & DataViewer
+
+Eye movement data can be analyzed by using interest area definitions
+to pick out specific screen areas for summarizing local gaze
+behavior. For reading experiments, interest areas may focus on a
+single word or a multi-word unit depending on needs of the
+analysis. Given an interest area specification, SRR DataViewer can
+generate an interest area report to provide information on various
+gaze measures for each area: fixation count, summed fixation duration,
+regressions into an interest area, etc.
+
+### I. Using R Package FDBeye to Create SRR Interest Area Files
+
+At this point we assume that the user has created paired bitmap (used
+as experimental stimuli in, e.g., SRR Experiment Builder) and comma separated
+**region** files. File names for the latter will typically end with
+"region.csv".  R and the package FDBeye can be used to create Interest Area
+Templates compatible with SRR DataViewer.
+
+The following R packages are required:
+
+* [FDButils](https://github.com/davebraze/FDButils)
+* [FDBeye](https://github.com/davebraze/FDBeye)
+* [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html)
+* [readr](https://cran.r-project.org/web/packages/readr/index.html)
+* [stringr](https://cran.r-project.org/web/packages/stringr/index.html)
+* [yaml](https://cran.r-project.org/web/packages/yaml/index.html)
+  (used internally-do not need to load)
+
+#### Steps to get from a `*.region.csv` file to an SRR `*.ias` file.
+1. Read the `*.region.csv` file into a data.frame.
+2. Use its content to generate a region definition character vector.
+3. Write the region definition vector out to file.
+4. Hand edit the regdef file to specify the desired regions.
+5. Use the regdef file to generate an `*.ias` file suitable for use in
+   DataViewer.
+
+Here are the first three steps in R code:
+
+```{r, eval=FALSE}
+reg <- read_csv("trial1.region.csv", trim_ws=FALSE)
+tmp <- reg2regdef(reg, mrgn.left=86, rgn.maxH=60, rgn.minH=43, rgn.padL=18, rgn.padR=18)
+outf <- "trial1.region.def"
+writeLines(tmp, con=outf)
+```
+
+The region definition file will typically end with
+`*.region.def`. Once the file is saved to the working directory it can
+be hand edited in any text editor. The text document will include a
+block of information text layout on the screen as seen by the study
+participants. This appears in a 'yaml' block at the beginning of the
+file. Some of this information is read directly from the `region.csv`
+file, and some is specified in the function call `reg2regdef()`. It is
+easiest to specify this information when the region definition file is
+created, rather than hand editing it in the `region.def` file.
+
+The text you want to edit to specify interest area locations will be
+at the bottom of the `*.region.def` file and will look something like
+this:
+
+```
+The quick brown fox jumps over the lazy dog.
+...|.....|.....|...|.....|....|...|....|....
+```
+
+Each line of a text stimulus is paired with a 'regioning
+string'. Within a regioning string, each letter and punctuation mark
+in the stimulus sentence is marked with a dot, "**.**", and regions
+are separated with pipe character, "**|**". The pipe character marks
+the first character of a new region. In this example, all regions in
+the stimulus sentence but the first will begin with a "space". (The
+first region of a line always begins with the first character.) To
+edit locations of the interest areas, add or remove "**|**" characters
+from the regioning string. Note that the regioning string must be the
+same length as its paired text line. To maintain the same length
+between text line and regioning string, any removed "**|**" must be
+replaced with a "**.**".
+
+An edited regioning string in the text document will look like this:
+
+```
+The quick brown fox jumps over the lazy dog.
+...................|.....|........|.........
+```
+
+Once you have hand edited the text document to reflect the interest
+area locations you want save the file.
+
+#### Preview the new interest areas:
+1. Use the `*.region.def` file to build a set of regions.
+2. Load the bitmap corresponding to the regions.
+3. Plot the new interest areas over the bitmap.
+
+Here are the steps in R code:
+
+```{r, eval=FALSE}
+ias2 <- regdef2ias("trial1.region2.def")
+write_delim(ias2, "trial1.region2.ias", "\t", col_names=FALSE)
+fp2 <- fixPlot(data = data.frame(x=-1, y=-1),
+              bgImage = "trial1.png", bgAlpha=1,
+              xyMap = ggplot2::aes_string(x='x', y='y'),
+              pointMap=ggplot2::aes_string(alpha=0)
+              )
+fp2 + geom_rect(data=ias2, inherit.aes=FALSE,
+               aes(xmin=x1+1, xmax=x2, ymin=y1, ymax=y2,
+                   fill=NULL, color=as.factor(regnum%%2)), alpha=0) +
+     guides(color=FALSE)
+```
+Note that for our purposes, we renamed the `*region.def` file to
+reflect the changes made (`*region.def` > `*region2.def`). We chose to
+save and document the process and all the steps included in generating
+the new interest areas. Unless specified in your own code to be saved
+with a new name, the original `*region.def` and `*.ias` files will be
+overwritten.
+
+Once the bitmaps and interest area regions have been displayed in R
+Plots you can visualize the regions as they will appear in
+DataViewer. If the text regions are not what you want/expect, then you
+can re-edit your `*region.def` file, and re-run regdef2ias(), and
+reload the plot. If the top and bottom boundaries of the regions are
+not placed appropriately, they can be adjusted by changing argument
+values rgn.maxH, and rgn.minH to `reg2regdef()`. See help page for
+that function.
+
+```
+reg2regdef(reg, mrgn.left=86, rgn.maxH=60, rgn.minH=43, rgn.padL=18, rgn.padR=18)
+```
+
+It is recommended that one `*region.def` file be hand edited and one
+`*.ias` file be generated and checked for accuracy before creating
+multiple files. Then when you are sure the interest areas locations
+are appearing as you would like you can generate a full set of region
+definition files to edit.
+
+#### Create all the `*region.def` and `*.ias` files you need:
+1. Set your working directory to the folder containing all of the
+   `*region.csv`.
+2. Make a vector of all the files located in your working directory
+   and remove all files that are not `*region.csv`.
+3. Using a loop function, create one `*region.def` for each
+   `*region.csv`.
+4. Hand edit the regioning string in each `*region.def`.
+5. Then return to R and make a vector of all the files located in your
+   working directory and remove all files that are not `*region.def`.
+6. Using a loop function, create one `*.ias` for each `*region.def`.
+
+Here are steps 2-3 in R code:
+
+```{r, eval=FALSE}
+flist <- dir()
+flist <- flist[str_detect(flist, "region[.]csv")] ## change the regexp as needed to pick out your files
+for (ff in flist) {
+    reg <- read_csv(ff, trim_ws=FALSE)
+    rdef <- reg2regdef(reg, mrgn.left=86, rgn.maxH=60, rgn.minH=43, rgn.padL=18, rgn.padR=18)
+    outf <- str_replace(ff, "region.csv$", "region2.def")
+    writeLines(rdef, con=outf)
+}
+```
+
+Here are steps 5-6 in R code:
+
+```{r, eval=FALSE}
+flist <- dir()
+flist <- flist[str_detect(flist, "region2[.]def")]
+for (ff in flist) {
+    ias <- regdef2ias(ff)
+    outf <- str_replace(ff, "def$", "ias")
+    write_delim(ias, outf, delim="\t", col_names=FALSE)
+}
+```
+
+### II. Using Interest Areas in DataViewer
+
+After `*.ias` files have been created they can be loaded into
+DataViewer with eyelink data files (.edf) to help analyze data and
+generate interest area reports. For each trial in an .edf there should
+also be one `*.ias`.  If you will be working with multiple trials in
+an .edf, it is recommended that when you are creating your interest
+area files in R you save them with a name that can be easily
+identified and matched with the corresponding trials in the .edf in
+DataViewer. As seen in our examples above, the interest area template
+for trail 1 was saved as trial1.ias. A cohesive naming scheme across
+the .edf trial names and interest area templates will simplify the
+matching process.  Also, if you have multiple subjects and will be
+viewing many .edf files in DataViewer at once, each .edf loaded in a
+single viewing session must have a different name even if the content
+of the .edf is different.
+
+#### Interest Areas for Single .edf Files:
+
+##### Load the .edf in SRR EyeLink DataViewer:
+1. Load EyeLink DataViewer and click File > Import Data... > EyeLink
+   Data File...
+2. Navigate to the directory containing the .edf, select the .edf, and
+   click Load. The .edf will be loaded in DataViewer in the Inspector
+   Data window.
+
+##### Import the corresponding interest area files for the trials:
+1. Click File > Import Data... > Interest Area Template...
+2. Navigate to directory containing `*.ias` files, choose all the
+   `*.ias` files that correspond to the trials in the .edf and and
+   press Load. The `*.ias` files will be loaded in the Inspector Data
+   window in the Interest Area Templates subfolder.
+
+##### Match the correct `*.ias` to the trials:
+1. In the Inspector Data window view all of the trials by expanding
+   the .edf file by pressing +. Then click on the first trial and look
+   at the fields that become available below.
+2. The field labeled Interest Area Set should have a value of Empty
+   Interest Area Set. Select this value and when the drop down menu
+   appears you will see all the `*.ias`. Select the `*.ias` that
+   corresponds to the trial you are editing.
+3. Repeat steps 1 & 2 until each trial in the .edf has an `*.ias`.
+
+The interest areas should now overlay the eyemovement data in the
+Trial View window.
+
+Note: If eye movement data is binocular, before creating Interest Area Reports, toggle between the left and right eye data by selecting Edit > Preferences > General > and checking/unchecking Use Right Eye if Binocular. This will help you are select the eye with the best data across all trials. You can use the EYE_USED variable on your interest area report to specify which data is used for this subject.
+
+#### Interest Areas for Multiple .edf Files
+
+
+##### Load multiple .edfs in DataViewer:
+1. Load EyeLink DataViewer and click File > Import Data... > Multiple
+    EyeLink Data Files...
+2. In Import EyeLink Data File window check the Include
+   Sub-directories box and navigate to the directory containing all
+   .edfs you want to import, then clikc open.
+3. When the .edfs load check the boxes for the files you want to
+   import and select Import. All files will be loaded in the Inspector
+   Data window and sorted by .edf name.
+
+##### Import the corresponding interest area files for the trials:
+1. Click File > Import Data... > Interest Area Template...
+2. Navigate to directory containing `*.ias` files, choose all the
+   `*.ias` files that correspond to the trials in the .edf and and
+   press Load. The `*.ias` files will be loaded in the Inspector Data
+   window in the Interest Area Templates subfolder.
+
+##### Regroup the Inspector window by trial:
+1. Click Edit > Trial Grouping...
+2. In the Available Variables window select your trial label variable
+   (ex. 'Trial_number') and press >> to move it to the Selected
+   Variables window and then select Regroup. The Inspector Data window
+   will now be grouped by the trials instead of .edf file names. This
+   means like trials for each .edf will be filed together.
+
+Note: Regrouping the .edfs by trial is not mandatory, however if .edfs
+are not grouped by trial, every trial for every .edf loaded will have
+to have the .ias paired separately. With multiple .edfs and trials
+this can be very time consuming and tedious.
+
+##### Match the correct `*.ias` to the trials:
+1. In the Inspector Data window select a trial number and look at the
+   fields that become available below.
+2. The field labeled Default Interest Area Set should have a value of
+   Empty Interest Area Set. Select this value and when the drop down
+   menu appears select the .ias that corresponds to the trial you are
+   editing.
+3. Repeat steps 1 & 2 until each group of trials has an `*.ias`.
+
+Note: If the .edf has not been sorted by trial, refer to the
+instructions for pairing `*.ias` for a single .edf file.
+
+### III. Creating Interest Areas Reports
+
+Once the interest areas have been specified, DataViewer can be used to
+generate interest area reports to provide information on various gaze
+measures for each area. Interest area reports can provide information
+on fixation count, summed fixation duration, regressions into an
+interest area, etc. Many variables are available to generate the
+interest area reports and sets of variables can be exported and
+imported for easier selection. This is a helpful tool if you will be
+creating reports with the same variables for many different subjects
+across many different viewing sessions.
+
+#### Creating Interest Area Reports:
+1. Click Analysis > Reports > Interest Area Report...
+2. In the Available Variables window select the variables you would
+    like in your report and press >> Note: Reference the SRR
+    DataViewer Manual for a complete description of each Interest Area
+    Report Variable.
+3. When all the variables you want are in the Selected Variables
+   window click Next
+4. Navigate to the folder you want to save your Interest Area Report,
+   name the file, and click Save
+5. When Save Viewing Session Changes window appears click OK to save
+   the changes made (the Interest Area Report will not save if you do
+   not select OK).
+
+#### Exporting Interest Area Report Variables:
+1. Click Analysis > Reports > Interest Area Report...
+2. In the Available Variables window select the variables you would
+   like in your report and press >>
+3. When all the variables you want are in the Selected Variables
+   window click the Export Variable Selection icon below the Selected
+   Variable window.
+4. Click Yes when asked Do you want to save the selection list?
+5. Navigate to a folder, name your report variables, and click Save.
+
+#### Importing Interest Area Report Variables:
+1. Click Analysis > Reports > Interest Area Report...
+2. Click the Import Variable Selection icon below the Selected
+   Variable window.
+3. Navigate to the folder containing the exported variables, select
+   the file, click Open.
+4. Proceed with saving the Interest Area Report.
+
+### IV. Interest Periods for Data Analysis
+
+For some eyetracking experiments the recording sequence may include
+more eye movement data than you are actually interested in viewing in
+DataViewer. Interest Periods can be created to modify the portion of
+data you are viewing in DataViewer.
+
+Example: An experiment requires a subject to read a story orally and
+then answer a comprehension question. The recording sequence includes
+the reading of the story and the question, but in Data Viewer we are
+only interested in viewing the oral reading portion. We can use
+message events to create Interest Periods that will remove all eye
+movements that occured before and after the subject was reading
+orally.
+
+#### Identify Message Events for an Interest Period:
+1. Load the .edf into a new DataViewer session and expand the
+   expanding the .edf file by pressing +.
+2. Select a trail and then click Toggle Message Event Visability in
+   the tool bar. In the Inspector window, Message items should be
+   included with the Fixation items.
+3. Identify the message that corresponds to the start of the eye
+   movement data you are interested in viewing. Example: For the
+   experiment above we are looking for the message labeled
+   DISPLAY\_Story because this message indicates when the story was
+   displayed and the subject began reading.
+4. Identify the message that corresponds to the end of the eye
+   movement data you are interested in viewing. Example: For the
+   experiment above we are looking for the message labeled
+   KEYBOARD_End because this message indicates when the experimenter
+   ended the display of the story because the subject finished
+   reading.
+
+#### Creating the Interest Period:
+1. Click Full Trial Period > Edit > New Interest Period
+2. In the Label field enter the name for your interest period
+   (ie. Target Story, Target sentence, etc.) and change the End Event
+   Type field from Button Event to Message Event.
+3. Click the Details tab and fill in the Value field with the message
+   that starts your interest period (ex. DISPLAY\_Story).
+4. Fill in the End Time Message Text field with the message that ends
+   your interest period (ex. KEYBOARD_End). Press OK and your new
+   Interest Period will appear in the Interest Period Manager window.
+5. Select your new interest period and press OK. All fixations that
+   occurred outside the message events entered will be removed.  Note:
+   You can switch back to viewing all the eye movement by switching
+   back to the Full Trial Period in the drop down menu.  Interest
+   Periods, much like Interest Area report variables, can be exported
+   for future use. This will be helpful if you will be using the same
+   interest periods for many subjects.
