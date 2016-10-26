@@ -4,7 +4,7 @@ author: "Jenna Duclos"
 date: "October 25, 2016"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Interest Areas}
+  %\VignetteIndexEntry{Interest Areas for Text Stimuli}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
