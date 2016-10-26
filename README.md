@@ -182,11 +182,15 @@ request.
     clear that included analysis tools have more general utility.
   * ***ocupy***: on github <https://github.com/nwilming/ocupy>. Python
     codebase. "tools for analyzing eye-tracking data". last update in
-    2015.
+    2015. Also see **pyedfread**.
   * ***pyarbus***: on github
     <https://github.com/ivanov/pyarbus>. Python codebase. Major
     functionality seems to be for extracting sample and message info
     from SRR *asc files. Last update in 2013.
+  * ***pyedfread***: on github
+    <https://github.com/nwilming/pyedfread>. "A utility that parses SR
+    research EDF data files into pandas DataFrames." From the author
+    of **ocupy**.
   * ***pyeparse***: on github
     <https://github.com/pyeparse/pyeparse>. Python
     codebase. "analyzing eye tracking data from cogntive sciences
@@ -316,4 +320,4 @@ request.
     list. It can be downloaded from the SRR support forum at
     <https://www.sr-support.com/showthread.php?1289-Reading-Measures-from-Data-Viewer&highlight=Reading+Measures>.
     Access requires login via free account.
-	
+
