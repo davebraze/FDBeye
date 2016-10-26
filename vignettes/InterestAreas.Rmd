@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## EyeLink Data Files & DataViewer
+## Building DataViewer Compatible Interest Area Files
 
 Eye movement data can be analyzed by using interest area definitions
 to pick out specific screen areas for summarizing local gaze
@@ -199,19 +199,21 @@ of the .edf is different.
 
 #### Interest Areas for Single .edf Files:
 
-##### Load the .edf in SRR EyeLink DataViewer:
-1. Load EyeLink DataViewer and click File > Import Data... > EyeLink
-   Data File...
-2. Navigate to the directory containing the .edf, select the .edf, and
-   click Load. The .edf will be loaded in DataViewer in the Inspector
-   Data window.
+1. **Load the .edf in SRR EyeLink DataViewer:**
+    a) Load EyeLink DataViewer and click File > Import Data... > EyeLink
+      Data File...
 
-##### Import the corresponding interest area files for the trials:
-1. Click File > Import Data... > Interest Area Template...
-2. Navigate to directory containing `*.ias` files, choose all the
-   `*.ias` files that correspond to the trials in the .edf and and
-   press Load. The `*.ias` files will be loaded in the Inspector Data
-   window in the Interest Area Templates subfolder.
+    b) Navigate to the directory containing the .edf, select the .edf, and
+      click Load. The .edf will be loaded in DataViewer in the Inspector
+      Data window.
+
+2. **Import the corresponding interest area files for the trials:**
+    a) Click File > Import Data... > Interest Area Template...
+
+    b) Navigate to directory containing `*.ias` files, choose all the
+      `*.ias` files that correspond to the trials in the .edf and and
+      press Load. The `*.ias` files will be loaded in the Inspector
+      Data window in the Interest Area Templates subfolder.
 
 ##### Match the correct `*.ias` to the trials:
 1. In the Inspector Data window view all of the trials by expanding
@@ -226,10 +228,14 @@ of the .edf is different.
 The interest areas should now overlay the eyemovement data in the
 Trial View window.
 
-Note: If eye movement data is binocular, before creating Interest Area Reports, toggle between the left and right eye data by selecting Edit > Preferences > General > and checking/unchecking Use Right Eye if Binocular. This will help you are select the eye with the best data across all trials. You can use the EYE_USED variable on your interest area report to specify which data is used for this subject.
+Note: If eye movement data is binocular, before creating Interest Area
+Reports, toggle between the left and right eye data by selecting Edit
+> Preferences > General > and checking/unchecking Use Right Eye if
+Binocular. This will help you are select the eye with the best data
+across all trials. You can use the EYE_USED variable on your interest
+area report to specify which data is used for this subject.
 
 #### Interest Areas for Multiple .edf Files
-
 
 ##### Load multiple .edfs in DataViewer:
 1. Load EyeLink DataViewer and click File > Import Data... > Multiple
@@ -319,18 +325,18 @@ across many different viewing sessions.
 
 ### IV. Interest Periods for Data Analysis
 
-For some eyetracking experiments the recording sequence may include
-more eye movement data than you are actually interested in viewing in
-DataViewer. Interest Periods can be created to modify the portion of
-data you are viewing in DataViewer.
+For some eyetracking experiments the recording sequences may include
+more eye movement data than you are actually want to include in the
+interest area report. **Interest Periods** can be created to modify
+the portion of data used in a report.
 
 Example: An experiment requires a subject to read a story orally and
 then answer a comprehension question. The recording sequence includes
 the reading of the story and the question, but in Data Viewer we are
 only interested in viewing the oral reading portion. We can use
-message events to create Interest Periods that will remove all eye
-movements that occured before and after the subject was reading
-orally.
+message events to create Interest Periods that will include only eye
+movements that occured during the oral reading portion of the trial
+(excluding those collected during the comprehension question).
 
 #### Identify Message Events for an Interest Period:
 1. Load the .edf into a new DataViewer session and expand the
