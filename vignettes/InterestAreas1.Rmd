@@ -4,7 +4,7 @@ author: "Jenna Duclos"
 date: "October 25, 2016"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Interest Areas for Text Stimuli}
+  %\VignetteIndexEntry{Interest Areas}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -41,9 +41,9 @@ The following R packages are required:
 #### Steps to get from a `*.region.csv` file to an SRR `*.ias` file.
 1. Read the `*.region.csv` file into a data.frame.
 2. Use its content to generate a region definition character vector.
-3. Write the region definition vector out to file.
-4. Hand edit the regdef file to specify the desired regions.
-5. Use the regdef file to generate an `*.ias` file suitable for use in
+3. Write the region definition vector to a region.def file.
+4. Hand edit the region.def file to specify the desired regions.
+5. Use the region.def file to generate an `*.ias` file suitable for use in
    DataViewer.
 
 Here are the first three steps in R code:
@@ -180,4 +180,6 @@ for (ff in flist) {
 }
 ```
 
-Now that your interest area files have been created for each trial you will need to load them into DataViewer. For theses steps refer to **Interest Areas for Data Analysis**.
+Now that your interest area files have been created for each trial you
+will need to load them into DataViewer. For these steps refer to
+**Interest Areas for Data Analysis**.
