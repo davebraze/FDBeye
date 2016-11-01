@@ -1,6 +1,8 @@
 ---
 output: html_document
 ---
+[![DOI](https://zenodo.org/badge/38009047.svg)](https://zenodo.org/badge/latestdoi/38009047)
+
 FDBeye
 ====
 
