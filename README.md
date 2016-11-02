@@ -55,12 +55,13 @@ file for details.
 Contributing
 ------------
 
-Contributions are welcome, but you might want to send me an email
-before wading in too deep (<davebraze@gmail.com>).
+Contributions are welcome, but you might want to review the "issues"
+page and send me an email before wading in too deep
+(<davebraze@gmail.com>).
 
-_IMPORTANT_: In opening a pull request to FDBeye, (a) you affirm that
+_IMPORTANT_: In opening a pull request to FDBeye, you (a) affirm that
 you are the copyright owner for the material contained in the pull
-request, and (b) you agree to apply the
+request, and (b) agree to apply the
 [MIT license](https://opensource.org/licenses/MIT) to the material
 contained in the pull request. Contributors retain copyright to their
 own code.
