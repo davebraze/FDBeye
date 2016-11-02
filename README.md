@@ -1,9 +1,8 @@
 ---
 output: html_document
 ---
-[![DOI](https://zenodo.org/badge/38009047.svg)](https://zenodo.org/badge/latestdoi/38009047)
 
-FDBeye
+FDBeye [![DOI](https://zenodo.org/badge/38009047.svg)](https://zenodo.org/badge/latestdoi/38009047)
 ====
 
 This is a collection of tools to ease working with eyetracker
