@@ -26,8 +26,8 @@ Imports:
     yaml
 Description:
     Functions to ease working with eye-tracker data.
-    Currently, most functionality is focussed on, and
-    limited to, SR Eyelink files.
+    Currently, most functionality is focused on, and
+    limited to, data from SR Research EyeLink systems.
 License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/davebraze/FDBeye
