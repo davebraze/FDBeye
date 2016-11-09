@@ -57,7 +57,9 @@ Contributing
 
 Contributions are welcome, but you might want to review the "issues"
 page and send me an email before wading in too deep
-(<davebraze@gmail.com>).
+(<davebraze@gmail.com>). You might also have look at the file
+"CONTRIBUTING.md" for pointers on the mechanical details of
+contributing to a package on github.
 
 _IMPORTANT_: In opening a pull request to FDBeye, you (a) affirm that
 you are the copyright owner for the material contained in the pull
