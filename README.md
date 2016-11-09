@@ -110,7 +110,7 @@ request.
     <https://github.com/dahtah/eyelinker>. Not clearly open source; no
     license statement at all.
   * ***eyetracking***: Compute pixel-to-pixel and eye-to-screen
-    distances. On CRAN
+    distances. On CRAN.
     <https://cran.r-project.org/web/packages/eyetracking/>.
   * ***eyetrackingR***: Package oriented toward post-acquisition
     workflow, mostly for 'visual world' style studies. On CRAN
@@ -118,6 +118,9 @@ request.
     has its own web site here: <http://www.eyetracking-r.com/>. The
     source is available on github
     <https://github.com/jwdink/eyetrackingR>.
+  * ***eyeTrackR***: on github at
+    <https://github.com/hjgodwin/eyeTrackR>. Focussed on SRR systems,
+    and particularly reports output by DataViewer. Last updated in 2012.
   * ***fix_align.R***: automatically adjusts y coordinate of fixations
     in multi-line reading paradigm so that each falls on a specific
     line of text. As written, code is specific to SRR systems
