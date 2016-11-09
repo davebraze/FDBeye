@@ -234,6 +234,9 @@ request.
   * ***ETML***: on github <https://github.com/jwdink/ETML>. Matlab
     codebase. "Framework for running eyetracking experiments in
     MATLAB," with SRR eyelink systems. Seems active.
+  * ***EYE-EEG***: <http://www2.hu-berlin.de/eyetracking-eeg/> is an
+    EEGLAB/Matlab plugin for working with time-locked EEG and gaze
+    signals.
   * ***EyeMMV***: on github
     <https://github.com/krasvas/EyeMMV>. Matlab
     toolbox. post-collection eye movement analysis. Last update
