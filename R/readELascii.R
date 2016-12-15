@@ -278,13 +278,37 @@ getEyelinkTrialData <- function(bounds,
 ##'
 ##' @param file A string giving path/fname to input file (ELascii
 ##'     file).
-##' @param tStartRE A string containing regular expression that
-##'     uniquely identifies beginnings of trials.
+##' @param tStartRE A string containing a regular expression that
+##'     uniquely identifies beginnings of trials.  It will be the
+##'     first line for each trial that will be passed to
+##'     \code{link{getEyelinkTrialData}} for processing.
+##'
+##'     The default value, "TRIALID", occurs immediately before an ET
+##'     recording block. So, it may not capture information recorded
+##'     during a trial before that point. A case in point is where a
+##'     DRIFTCORRECT event is present right before the recording
+##'     block. TRIALID will occur after the drift correct event
+##'     meaning that the offset values captured during the event will
+##'     not be available. We do not use DRIFTCORRECT as the default
+##'     value to tStartRE, because it is not guaranteed to be
+##'     present. Other reasonable choices for this argument may be
+##'     the EB generated "PREPARE_SEQUENCE" MSG, or a user generated
+##'     MSG event.
 ##' @param tEndRE A string containing regular expression that uniquely
-##'     identifies ends of trials. If an experiment is aborted
-##'     prematurely, then the *edf file (and so the *asc file) may not
-##'     have a proper trial end event. TODO: test for that case and
-##'     handle it while throwing a warning.
+##'     identifies ends of trials. It will be the last line for each
+##'     trial that will be passed to
+##'     \code{\link{getEyelinkTrialData}}.
+##'
+##'     The default value, "TRIAL_RESULT", is always the last line to
+##'     occur in a well-formed trial; the block of "TRIAL_VAR" lines
+##'     appears right before it. But, if an experiment is aborted
+##'     prematurely, then the the last trial in the *edf file (and so
+##'     the *asc file) may not have a proper trial end event for the
+##'     last trial.
+##'
+##'     TODO: Test for the case where tStarteRE and TEndRE are
+##'     mismatched and handle it more gracefully, while throwing a
+##'     warning.
 ##' @param msgSet A character vector. Each element identifies a MSG
 ##'     event to recover from the data file.
 ##' @param subjID If NULL (default), use filename as subject
