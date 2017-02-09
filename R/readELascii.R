@@ -283,17 +283,20 @@ getEyelinkTrialData <- function(bounds,
 ##'     first line for each trial that will be passed to
 ##'     \code{link{getEyelinkTrialData}} for processing.
 ##'
-##'     The default value, "TRIALID", occurs immediately before an ET
-##'     recording block. So, it may not capture information recorded
-##'     during a trial before that point. A case in point is where a
-##'     DRIFTCORRECT event is present right before the recording
-##'     block. TRIALID will occur after the drift correct event
-##'     meaning that the offset values captured during the event will
-##'     not be available. We do not use DRIFTCORRECT as the default
-##'     value to tStartRE, because it is not guaranteed to be
-##'     present. Other reasonable choices for this argument may be
-##'     the EB generated "PREPARE_SEQUENCE" MSG, or a user generated
-##'     MSG event.
+##'     The default value, "TRIALID", is a MSG that occurs immediately
+##'     before an ET recording block. We use this as the default
+##'     because it is guaranteed to be present.  But, it may not
+##'     capture information recorded during a trial before that
+##'     point. A case in point is where a DRIFTCORRECT (drift check)
+##'     event is present right before the recording block. TRIALID
+##'     will occur \strong{\emph{after}} the drift correct event,
+##'     meaning that the drift correct offset values captured during
+##'     the event will not be available. We do not use DRIFTCORRECT as
+##'     the default value to tStartRE, because it is not guaranteed to
+##'     be present; not every experimentor chooses to include this
+##'     event in each trial. Other reasonable choices for this
+##'     argument may target the EB generated "PREPARE_SEQUENCE" MSG,
+##'     or even a user generated MSG.
 ##' @param tEndRE A string containing regular expression that uniquely
 ##'     identifies ends of trials. It will be the last line for each
 ##'     trial that will be passed to
