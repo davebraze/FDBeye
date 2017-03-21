@@ -18,17 +18,17 @@ help if you like (see [Contributing](#contributing)).
 
 Before you try FDBeye, you might want to look at what else is
 available. See the list of
-[other eye tracking tools](https://github.com/davebraze/FDBeye/wiki)
-on the project wiki.
+[eye tracking tools](https://github.com/davebraze/FDBeye/wiki/Researcher-Contributed-Eye-Tracking-Tools)
+on the [project wiki](https://github.com/davebraze/FDBeye/wiki).
 
 Installing FDBeye
 -----------------
 First you should install <https://github.com/davebraze/FDButils>.
 
 Then, to get the very latest from *FDBeye*, install it via
-devtools::install\_github(). Some people have reported problems with
+`devtools::install_github()`. Some people have reported problems with
 the installation due to the vignettes failing to build. If that
-happens to you, you can try again with `build\_vignettes=FALSE`,
+happens to you, you can try again with `build_vignettes=FALSE`,
 although the vignettes won't be available.
 
 ```R
@@ -38,9 +38,9 @@ install_github("davebraze/FDBeye", build_vignettes=TRUE)
 ```
 
 On the other hand, if you want a (possibly) more stable
-experience. Download the most current release from here:
-<https://github.com/davebraze/FDBeye/releases>. Then install it like
-this:
+experience. Download the most
+[current release](https://github.com/davebraze/FDBeye/releases). Then
+install it like this:
 
 ```R
 install.packages(pathToFile, repos = NULL)
@@ -49,20 +49,13 @@ install.packages(pathToFile, repos = NULL)
 Where pathToFile is the full path and file name for the file you
 downloaded.
 
-License
--------
-
-FDBeye is released under the MIT open source license. See the
-[LICENSE](https://github.com/davebraze/FDBeye/blob/master/LICENSE)
-file for details.
-
 Contributing
 ------------
 
 Contributions are welcome, but you might want to review the "issues"
 page and send me an email before wading in too deep
 (<davebraze@gmail.com>). You might also have look at the file
-"CONTRIBUTING.md" for pointers on the mechanical details of
+[CONTRIBUTING.md](CONTRIBUTING.md) for pointers on the mechanical details of
 contributing to a package on github.
 
 _IMPORTANT_: In opening a pull request to FDBeye, you (a) affirm that
