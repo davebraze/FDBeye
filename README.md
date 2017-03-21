@@ -2,11 +2,11 @@
 output: html_document
 ---
 
-FDBeye [![DOI](https://zenodo.org/badge/38009047.svg)](https://zenodo.org/badge/latestdoi/38009047)
+FDBeye
 ====
+[![DOI](https://zenodo.org/badge/38009047.svg)](https://zenodo.org/badge/latestdoi/38009047)
 [![github release](https://img.shields.io/github/release/davebraze/FDBeye.svg?label=current+release)](https://github.com/davebraze/FDBeye/releases)
 [![license](https://img.shields.io/badge/license-MIT-lightgray.svg)](LICENSE)
-
 
 This is a collection of tools to ease working with eyetracker
 data. I'm slowly migrating stuff from my junkpile of project specific
