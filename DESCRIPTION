@@ -25,6 +25,8 @@ Imports:
     tools,
     utils,
     yaml
+Remotes:
+    github::davebraze/FDButils
 Description:
     Functions to ease working with eye-tracker data.
     Currently, most functionality is focused on, and
