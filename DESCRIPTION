@@ -20,7 +20,6 @@ Imports:
     plyr,
     png,
     stats,
-    stringi,
     stringr,
     tools,
     utils,
