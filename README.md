@@ -19,9 +19,7 @@ on the [project wiki](https://github.com/davebraze/FDBeye/wiki).
 
 Installing FDBeye
 -----------------
-First you should install <https://github.com/davebraze/FDButils>.
-
-Then, to get the very latest from *FDBeye*, install it via
+To get the very latest from *FDBeye*, install it via
 `devtools::install_github()`. Some people have reported problems with
 the installation due to the vignettes failing to build. If that
 happens to you, you can try again with `build_vignettes=FALSE`,
