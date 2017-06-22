@@ -30,7 +30,7 @@
 ##'
 ##'     \enumerate{
 ##'          \item The best way to get the edf2asc utility is to install the Eyelink Developers Kit:
-##'             https://www.sr-support.com/showthread.php?6-EyeLink-Developers-Kit-for-Windows-%28Windows-Display-Software%29.
+##'             \url{https://www.sr-support.com/forum/downloads/eyelink-display-software/39-eyelink-developers-kit-for-windows-windows-display-software?6-EyeLink-Developers-Kit-for-Windows-=}
 ##'          \item Documentation is in the EL1000+ manual, section 4.8 "Using ASC files".
 ##'          \item Make sure edfapi library (e.g., edfapi.dll) is somewhere on the PATH.
 ##'     }
