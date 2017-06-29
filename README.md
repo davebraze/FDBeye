@@ -44,6 +44,15 @@ install.packages(pathToFile, repos = NULL)
 Where pathToFile is the full path and file name for the file you
 downloaded.
 
+Keeping up with Changes
+-----------------------
+
+FDBeye is in a state of, more or less, constant development. If you
+want to be notified of any updates, then you can "watch" the github
+repository. If you already have a github account, this is as easy as
+clicking a button. If you don't have a github account, well, it's easy
+enough to sign up for one.
+
 Contributing
 ------------
 
@@ -63,5 +72,5 @@ own code.
 Other Eye Tracking Tools
 ------------------------
 
-The list of (mostly FOSS) tools has been moved to the
-[FDBeye Wiki](https://github.com/davebraze/FDBeye/wiki).
+The list of (mostly FOSS) tools that used to be here has been moved to
+the [FDBeye Wiki](https://github.com/davebraze/FDBeye/wiki).
