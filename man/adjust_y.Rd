@@ -39,4 +39,3 @@ The function first uses optim() to optimize the parameters for FUN (classify_lin
 \author{
 Tao Gong \email{gtojty@gmail.com}
 }
-

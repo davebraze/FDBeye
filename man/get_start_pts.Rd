@@ -30,4 +30,3 @@ This function reads region_file and gets (x_pos, y_pos) of first word in each te
 \author{
 Tao Gong \email{gtojty@gmail.com}
 }
-

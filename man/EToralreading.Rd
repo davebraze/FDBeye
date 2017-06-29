@@ -38,4 +38,3 @@ Data were collected using an SR Research Eyelink 1000+ eye tracker with remote c
     "fixation reports" using the SRR Data Viewer software.
 }
 \keyword{datasets}
-
