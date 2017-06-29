@@ -8,7 +8,7 @@ FDBeye
 This is a collection of tools to ease working with eyetracker
 data. I'm slowly migrating stuff from my junkpile of project specific
 code into this package. FDBeye is about post-acquisition data
-processing. What's here now is focussed on my own workflows involving
+processing. What's here now is focused on my own workflows involving
 data from SRR Eyelink systems, although some stuff may be more
 generally useful. Functionality is a bit thin at present. Pitch in and
 help if you like (see [Contributing](#contributing)).
@@ -47,7 +47,7 @@ downloaded.
 Keeping up with Changes
 -----------------------
 
-FDBeye is in a state of, more or less, constant development. If you
+FDBeye development proceeds sporadically. If you
 want to be notified of any updates, then you can "watch" the github
 repository. If you already have a github account, this is as easy as
 clicking a button. If you don't have a github account, well, it's easy
