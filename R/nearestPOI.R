@@ -25,7 +25,7 @@
 ##' @author Dave Braze <davebraze@@gmail.com>
 ##' @export
 nearestPOI <- function (fixReport, poiList, supplement=TRUE) {
-    f <- function(fix=fix, poiList=poiList) {
+    f <- function(fix, poiList) {
         ## Find nearest poi for one fixation.
         tmp <- rbind(fix[c("xpos", "ypos")], poi) ## should merge rather than rbind
         dst <- as.matrix(dist(tmp))[-1,1]
@@ -34,7 +34,7 @@ nearestPOI <- function (fixReport, poiList, supplement=TRUE) {
         .dist2poi <- min(dst)
         retval <- data.frame(nearestpoi=.nearestpoi, dist2poi=.dist2poi)
     }
-    retval <- purrr::by_row(fixReport, f, poi=poi, .collate="row",
+    retval <- purrr::by_row(fixReport, f, poiList=poiList, .collate="row",
                             .labels=supplement)
     select(retval, -matches("^.row$"))
 }
