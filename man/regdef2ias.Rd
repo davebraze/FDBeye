@@ -99,10 +99,9 @@ We aspire to handle region definitions for multi line
     This function presently does not handle regioning for
     multi-line stimulus texts. Fix that.
 }
-\author{
-Dave Braze \email{davebraze@gmail.com}
-}
 \seealso{
 \code{\link{reg2regdef}}
 }
-
+\author{
+Dave Braze \email{davebraze@gmail.com}
+}

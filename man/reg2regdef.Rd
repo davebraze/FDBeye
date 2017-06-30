@@ -124,10 +124,9 @@ We aspire to handle input files (region files) for multi
     ToDo: Make a simuliar function to read/parse SRR IAS files and
     build region defs based on them.
 }
-\author{
-Dave Braze \email{davebraze@gmail.com}
-}
 \seealso{
 \code{\link{regdef2ias}}
 }
-
+\author{
+Dave Braze \email{davebraze@gmail.com}
+}

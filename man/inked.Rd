@@ -28,4 +28,3 @@ Counts number of values in a vector that are different from the 'background'. In
 \author{
 Dave Braze <davebraze@gmail.com>
 }
-

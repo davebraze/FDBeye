@@ -30,4 +30,3 @@ None yet
 \author{
 Dave Braze <davebraze@gmail.com>
 }
-

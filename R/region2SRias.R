@@ -54,7 +54,7 @@ region2SRias <- function(regfile,
                          size=c("big", "small"),
                          yoffsets=NULL,
                          xpad=NULL) {
-
+    size <- match.arg(size, c("big", "small"))
     type="RECTANGLE" # region shape; always RECTANGLE for print stimuli
     reg <- read.csv(regfile, as.is=T)
 

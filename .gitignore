@@ -3,7 +3,6 @@
 *~
 ^#.+#$
 *.bak
-.*
 !/.gitignore
 
 ## R/RStudio files
