@@ -79,4 +79,3 @@ TODO: Work on getting top and bottom bounds for each line, as well as estimated 
 \author{
 Dave Braze <davebraze@gmail.com>
 }
-

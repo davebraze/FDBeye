@@ -42,4 +42,3 @@ ascAnon(file, newName="fred") # TODO: this throws a warning when run on a .gz fi
 \author{
 Dave Braze <davebraze@gmail.com>
 }
-

@@ -45,4 +45,3 @@ This function first draws the background text file, and then, draws different ty
 \author{
 Tao Gong \email{gtojty@gmail.com}
 }
-

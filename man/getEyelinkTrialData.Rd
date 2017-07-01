@@ -31,4 +31,3 @@ Used by readELascii(). Not intended for end-users. Extract fixations, saccades, 
 \author{
 Dave Braze \email{davebraze@gmail.com}
 }
-

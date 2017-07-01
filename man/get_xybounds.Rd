@@ -36,4 +36,3 @@ This function reads region_file and gets (x_min, x_max, y_min, y_max) of all tex
 \author{
 Tao Gong \email{gtojty@gmail.com}
 }
-

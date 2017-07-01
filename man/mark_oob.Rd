@@ -37,4 +37,3 @@ This function marks fixations outside boundary as 'oob'
 \author{
 Tao Gong \email{gtojty@gmail.com}
 }
-
