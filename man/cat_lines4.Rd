@@ -65,4 +65,3 @@ This function uses many slopes, ver_offsets, sds for every lines, and use sum(mi
 \author{
 Tao Gong \email{gtojty@gmail.com}
 }
-

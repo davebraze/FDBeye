@@ -64,4 +64,3 @@ This function uses many slopes, ver_offsets, sds to fit every lines, and use -su
 \author{
 Tao Gong \email{gtojty@gmail.com}
 }
-

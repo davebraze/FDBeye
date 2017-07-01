@@ -12,4 +12,3 @@ Tools to ease working with eyetracker data. Currently focussed on my own work fl
     have some code in README.Rmd that pulls the description from this file and inserts it
     there.)
 }
-

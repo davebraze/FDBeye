@@ -46,4 +46,3 @@ efix <- fixReport(e)
 \author{
 Dave Braze \email{davebraze@gmail.com}
 }
-

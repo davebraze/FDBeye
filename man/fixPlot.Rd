@@ -67,4 +67,3 @@ fixPlot(data=subset(D, subset=(subj=="s0149")&(story=="1")&(label \%in\% as.char
 \author{
 Dave Braze \email{davebraze@gmail.com}
 }
-

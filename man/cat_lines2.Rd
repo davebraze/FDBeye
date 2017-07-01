@@ -65,4 +65,3 @@ This function optimizes the slope, offset and sd for all lines of fixations. It 
 \author{
 Tao Gong \email{gtojty@gmail.com}
 }
-

@@ -23,4 +23,3 @@ No details yet.
 \author{
 Dave Braze \email{davebraze@gmail.com}
 }
-

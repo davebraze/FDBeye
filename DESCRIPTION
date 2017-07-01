@@ -1,8 +1,8 @@
 Package: FDBeye
 Type: Package
 Title: Functions to Ease Work with Eyetracker Data
-Version: 0.0.19
-Date: 2016-10-25
+Version: 0.0.20
+Date: 2017-06-28
 Authors@R: c(
     person("David", "Braze", email="davebraze@gmail.com", role=c("aut", "cre")),
     person("Tao", "Gong", role="aut"),
@@ -20,6 +20,7 @@ Imports:
     grid,
     plyr,
     png,
+    purrr,
     stats,
     stringr,
     tools,
@@ -35,7 +36,7 @@ License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/davebraze/FDBeye
 BugReports: https://github.com/davebraze/FDBeye/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests:
     knitr,
     rmarkdown

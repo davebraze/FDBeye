@@ -9,7 +9,7 @@
 ##'
 ##'     This function expects to find the fully qualified path to the edf2asc executable via
 ##'     getOption("FDBeye_edf2asc_exec"). The user can set the option by calling
-##'     option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"). If done in the script itself, the
+##'     options(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"). If done in the script itself, the
 ##'     setting will be in effect for the duration of the R session. If done in the user's .Rprofile
 ##'     file, the setting will persist across R sessions.
 ##'
@@ -30,7 +30,7 @@
 ##'
 ##'     \enumerate{
 ##'          \item The best way to get the edf2asc utility is to install the Eyelink Developers Kit:
-##'             https://www.sr-support.com/showthread.php?6-EyeLink-Developers-Kit-for-Windows-%28Windows-Display-Software%29.
+##'             \url{https://www.sr-support.com/forum/downloads/eyelink-display-software/39-eyelink-developers-kit-for-windows-windows-display-software?6-EyeLink-Developers-Kit-for-Windows-=}
 ##'          \item Documentation is in the EL1000+ manual, section 4.8 "Using ASC files".
 ##'          \item Make sure edfapi library (e.g., edfapi.dll) is somewhere on the PATH.
 ##'     }
