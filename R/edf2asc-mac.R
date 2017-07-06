@@ -54,6 +54,7 @@ edf2asc <- function(edffiles) {
 
     exe <- getOption("FDBeye_edf2asc_exec")
     opts <-  getOption("FDBeye_edf2asc_opts")
+    
     if(is.null(opts)) {
         warning("FDBeye_edf2asc_opts not set. Using factory defaults.")
         opts <- ""
@@ -71,11 +72,20 @@ edf2asc <- function(edffiles) {
                        "... File does not appear to be an edf2asc executable file (based on its file name).",
                        sep="\n"))
     }
-
+    
+    # detect operating system
+    info <- sessionInfo()
+    
     for (ff in edffiles) {
-        ## see R function shQuote() for help building the command line string.
-        log <- system(paste(exe, opts, "-y", ff),               ## should update this to use
-                      intern=TRUE)                              ## system2() instead of system().
+        if (grepl('mac', info$running, ignore.case = TRUE)) {
+          log <- system(paste(exe, opts, ff), intern=TRUE) # should update this to system2()
+        } else if (grepl('windows', info$running, ignore.case = TRUE)) {
+          ## see R function shQuote() for help building the command line string.
+          log <- system(paste(shQuote(exe), opts, shQuote(ff)), intern=TRUE) # should update this to system2()
+        } else {
+          stop("Only Mac OSX and Windows are supported currently.")
+        }
+
         if(exists("logfile")) logfile <- c(logfile, log)
         else logfile <- log
     }
