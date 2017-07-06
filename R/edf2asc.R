@@ -43,49 +43,59 @@
 ##' @export
 ##' @examples
 ##' \dontrun{
-##' option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe") ## this only needs to  be done once.
+##' options(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe") ## this only needs to  be done once.
 ##'
 ##' fin <- list.files(".", pattern="edf$", recursive=TRUE)
 ##' fout <- edf2asc(fin)
 ##' fout
 ##' }
+
 edf2asc <- function(edffiles) {
-
-    exe <- getOption("FDBeye_edf2asc_exec")
-    opts <-  getOption("FDBeye_edf2asc_opts")
-    if(is.null(opts)) {
-        warning("FDBeye_edf2asc_opts not set. Using factory defaults.")
-        opts <- ""
-    }
-
-    if(is.null(exe)){
-        stop("You must set option(FDBeye_edf2asc_exec = '/path/to/edf2asc') before calling this function.")
+  
+  exe <- getOption("FDBeye_edf2asc_exec")
+  opts <-  getOption("FDBeye_edf2asc_opts")
+  
+  if(is.null(opts)) {
+    warning("FDBeye_edf2asc_opts not set. Using factory defaults.")
+    opts <- ""
+  }
+  
+  if(is.null(exe)){
+    stop("You must set options(FDBeye_edf2asc_exec = '/path/to/edf2asc') before calling this function.")
+  } else {
+    ## First check to be sure the file actually exists and is executable
+    if(!utils::file_test("-f", exe))        # test whether file exists and is executable. Should I use base::file.exists() instead?
+      stop(paste(exe, "... File either does not exist or is not executable.", sep="\n"))
+    ## parse the specified path and make sure the fname includes "edf2asc"
+    if(!grepl("edf2asc", basename(exe)))
+      stop(paste(exe,
+                 "... File does not appear to be an edf2asc executable file (based on its file name).",
+                 sep="\n"))
+  }
+  
+  # detect operating system
+  info <- sessionInfo()
+  
+  for (ff in edffiles) {
+    if (grepl('mac', info$running, ignore.case = TRUE)) {
+      log <- system(paste(exe, opts, ff), intern=TRUE) # should update this to system2()
+    } else if (grepl('windows', info$running, ignore.case = TRUE)) {
+      ## see R function shQuote() for help building the command line string.
+      log <- system(paste(shQuote(exe), opts, shQuote(ff)), intern=TRUE) # should update this to system2()
     } else {
-        ## First check to be sure the file actually exists and is executable
-        if(!utils::file_test("-f", exe))        # test whether file exists and is executable. Should I use base::file.exists() instead?
-            stop(paste(exe, "... File either does not exist or is not executable.", sep="\n"))
-        ## parse the specified path and make sure the fname includes "edf2asc"
-        if(!grepl("edf2asc", basename(exe)))
-            stop(paste(exe,
-                       "... File does not appear to be an edf2asc executable file (based on its file name).",
-                       sep="\n"))
+      stop("Only Mac OSX and Windows are supported currently.")
     }
-
-    for (ff in edffiles) {
-        ## see R function shQuote() for help building the command line string.
-        log <- system(paste(shQuote(exe), opts, shQuote(ff)),   ## should update this to use
-                                                                ## system2() instead of system().
-                      intern=TRUE)
-        if(exists("logfile")) logfile <- c(logfile, log)
-        else logfile <- log
-    }
-
-    ## should wrap this in a 'try' block.
-    logfile <- logfile[-grep("^Processed", logfile)]
-    h <- file("./edf2asc.log", "wb")
-    cat(logfile, file=h, sep="\n")
-    close(h)
-
-    retval <- gsub("\\.edf$", ".asc", edffiles)
-    retval
+    
+    if(exists("logfile")) logfile <- c(logfile, log)
+    else logfile <- log
+  }
+  
+  ## should wrap this in a 'try' block.
+  logfile <- logfile[-grep("^Processed", logfile)]
+  h <- file("./edf2asc.log", "wb")
+  cat(logfile, file=h, sep="\n")
+  close(h)
+  
+  retval <- gsub("\\.edf$", ".asc", edffiles)
+  retval
 }
