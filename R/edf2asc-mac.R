@@ -78,7 +78,7 @@ edf2asc <- function(edffiles) {
 
     for (ff in edffiles) {
         ## see R function shQuote() for help building the command line string.
-        log <- system(paste(shQuote(exe), opts, shQuote(ff)),   ## should update this to use
+        log <- system(paste(exe, opts, "-y", ff),   ## should update this to use
                                                                 ## system2() instead of system().
                       intern=TRUE)
         if(exists("logfile")) logfile <- c(logfile, log)
