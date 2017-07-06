@@ -50,10 +50,6 @@
 ##' fout
 ##' }
 
-# THIS NEEDS TO BE REMOVED EVENTUALLY!!! FOR TESTING PURPOSE ONLY
-options(FDBeye_edf2asc_exec = "/Applications/Eyelink/EDF_Access_API/Example/edf2asc")
-edffiles <- "~/Downloads/2331.edf"
-
 edf2asc <- function(edffiles) {
 
     exe <- getOption("FDBeye_edf2asc_exec")
