@@ -43,7 +43,7 @@
 ##' @export
 ##' @examples
 ##' \dontrun{
-##' option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe") ## this only needs to  be done once.
+##' options(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe") ## this only needs to  be done once.
 ##'
 ##' fin <- list.files(".", pattern="edf$", recursive=TRUE)
 ##' fout <- edf2asc(fin)
@@ -59,7 +59,7 @@ edf2asc <- function(edffiles) {
     }
 
     if(is.null(exe)){
-        stop("You must set option(FDBeye_edf2asc_exec = '/path/to/edf2asc') before calling this function.")
+        stop("You must set options(FDBeye_edf2asc_exec = '/path/to/edf2asc') before calling this function.")
     } else {
         ## First check to be sure the file actually exists and is executable
         if(!utils::file_test("-f", exe))        # test whether file exists and is executable. Should I use base::file.exists() instead?
