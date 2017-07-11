@@ -82,10 +82,10 @@ edf2asc <- function(edffiles) {
   
   for (ff in edffiles) {
     if (grepl('mac', info$running, ignore.case = TRUE)) {
-      log <- system(paste(exe, opts, ff), intern=TRUE) # should update this to system2()
+      log <- system2(exe, args = paste(opts,ff), stdout = TRUE)
     } else if (grepl('windows', info$running, ignore.case = TRUE)) {
       ## see R function shQuote() for help building the command line string.
-      log <- system(paste(shQuote(exe), opts, shQuote(ff)), intern=TRUE) # should update this to system2()
+      log <- system2(shQuote(exe), args = shQuote(paste(opts,ff)), stdout = TRUE)
     } else {
       stop("Only Mac OSX and Windows are supported currently.")
     }
