@@ -48,7 +48,7 @@
 ##' @return Called for the side effect of converting SRR *edf files to *asc files. Returns a
 ##'     character vector listing output files (*asc files).
 ##' @author Dave Braze \email{davebraze@@gmail.com}
-##' @author Monica Li \email {monica.yc.li@gmail.com}
+##' @author Monica Li \email{monica.yc.li@gmail.com}
 ##' @export
 ##' @examples
 ##' \dontrun{

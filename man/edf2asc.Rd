@@ -71,5 +71,5 @@ fout
 \author{
 Dave Braze \email{davebraze@gmail.com}
 
-Monica Li \email {monica.yc.li@gmail.com}
+Monica Li \email{monica.yc.li@gmail.com}
 }
