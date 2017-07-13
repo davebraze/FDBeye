@@ -25,9 +25,11 @@ Call SR Research "edf2asc" command line utility to convert *edf files to *asc
 
     This function expects to find the fully qualified path to the edf2asc executable via
     getOption("FDBeye_edf2asc_exec"). The user can set the option by calling
-    options(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"). If done in the script itself, the
-    setting will be in effect for the duration of the R session. If done in the user's .Rprofile
-    file, the setting will persist across R sessions.
+    options(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"). Note that, for Mac users, the path to
+    the adf2asc command line utility will be something like 
+    "/Applications/Eyelink/EDF_Access_API/Example/edf2asc" (without .exe extension). If done in
+    the script itself, the setting will be in effect for the duration of the R session. If done
+    in the user's .Rprofile file, the setting will persist across R sessions.
 
     Before calling the utility, this function will check to see that the specified file exists
     and is executable. As a meager security check, we also ensure that the basename of the file
@@ -38,7 +40,8 @@ Call SR Research "edf2asc" command line utility to convert *edf files to *asc
 
     The function edf2asc() also checks getOption("FDBeye_edf2asc_opts"). If this option
     exists, it should be a valid string of command line options to pass to the SRR edf2asc
-    utility (e.g., "-y -ns"). See the SRR documentation for details.
+    utility (e.g., "-y -ns"). See the SRR documentation for details. We recommend to use the
+    "-y" option to overwrite existing *asc files; otherwise, edf2asc() may not work properly.
 
     In addition to creating the requested *asc files, this function will write a log file
     ('edf2asc.log') of messages captured from the stdout of SRR edf2asc utility and place it in
@@ -46,14 +49,19 @@ Call SR Research "edf2asc" command line utility to convert *edf files to *asc
 
     \enumerate{
          \item The best way to get the edf2asc utility is to install the Eyelink Developers Kit:
-            \url{https://www.sr-support.com/forum/downloads/eyelink-display-software/39-eyelink-developers-kit-for-windows-windows-display-software?6-EyeLink-Developers-Kit-for-Windows-=}
+         \itemize{
+             \item For Windows OS:
+                 \url{https://www.sr-support.com/forum/downloads/eyelink-display-software/39-eyelink-developers-kit-for-windows-windows-display-software?6-EyeLink-Developers-Kit-for-Windows-=}
+             \item For MacOS:
+                 \url{https://www.sr-support.com/forum/downloads/eyelink-display-software/45-eyelink-developers-kit-for-mac-os-x-mac-os-x-display-software?15-EyeLink-Developers-Kit-for-Mac-OS-X=}
+                 }
          \item Documentation is in the EL1000+ manual, section 4.8 "Using ASC files".
          \item Make sure edfapi library (e.g., edfapi.dll) is somewhere on the PATH.
     }
 }
 \examples{
 \dontrun{
-option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe") ## this only needs to  be done once.
+options(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe") ## this only needs to  be done once.
 
 fin <- list.files(".", pattern="edf$", recursive=TRUE)
 fout <- edf2asc(fin)
@@ -62,4 +70,6 @@ fout
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}
+
+Monica Li \email {monica.yc.li@gmail.com}
 }
