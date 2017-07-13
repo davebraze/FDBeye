@@ -51,15 +51,15 @@
 ##' }
 
 edf2asc <- function(edffiles) {
-  
+
   exe <- getOption("FDBeye_edf2asc_exec")
   opts <-  getOption("FDBeye_edf2asc_opts")
-  
+
   if(is.null(opts)) {
     warning("FDBeye_edf2asc_opts not set. Using factory defaults.")
     opts <- ""
   }
-  
+
   if(is.null(exe)){
     stop("You must set options(FDBeye_edf2asc_exec = '/path/to/edf2asc') before calling this function.")
   } else {
@@ -72,34 +72,34 @@ edf2asc <- function(edffiles) {
                  "... File does not appear to be an edf2asc executable file (based on its file name).",
                  sep="\n"))
   }
-  
+
   if(!grepl("-y", opts)) {
     warning("Including option -y in FDBeye_edf2asc_opts is recommended to overwrite existing file with the same name.\nOtherwise, program might not run properly.")
   }
-  
+
   # detect operating system
   info <- sessionInfo()
-  
+
   for (ff in edffiles) {
     if (grepl('mac|win', info$running, ignore.case = TRUE)) {
       ## see R function shQuote() for help building the command line string.
-      log <- system2(shQuote(exe, type = "cmd2"), 
-                     args = shQuote(paste(opts,ff), type = "cmd2"), 
+      log <- system2(exe,
+                     args = shQuote(paste(opts,ff), type = "cmd2"),
                      stdout = TRUE)
     } else {
       stop("Only Mac OSX and Windows are supported currently.")
     }
-    
+
     if(exists("logfile")) logfile <- c(logfile, log)
     else logfile <- log
   }
-  
+
   ## should wrap this in a 'try' block.
   logfile <- logfile[-grep("^Processed", logfile)]
   h <- file("./edf2asc.log", "wb")
   cat(logfile, file=h, sep="\n")
   close(h)
-  
+
   retval <- gsub("\\.edf$", ".asc", edffiles)
   retval
 }
