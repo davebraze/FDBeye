@@ -10,7 +10,7 @@
 ##'     This function expects to find the fully qualified path to the edf2asc executable via
 ##'     getOption("FDBeye_edf2asc_exec"). The user can set the option by calling
 ##'     options(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"). Note that, for Mac users, the path to
-##'     the adf2asc command line utility will be something like 
+##'     the adf2asc command line utility will be something like
 ##'     "/Applications/Eyelink/EDF_Access_API/Example/edf2asc" (without .exe extension). If done in
 ##'     the script itself, the setting will be in effect for the duration of the R session. If done
 ##'     in the user's .Rprofile file, the setting will persist across R sessions.
@@ -48,7 +48,7 @@
 ##' @return Called for the side effect of converting SRR *edf files to *asc files. Returns a
 ##'     character vector listing output files (*asc files).
 ##' @author Dave Braze \email{davebraze@@gmail.com}
-##' @author Monica Li \email{monica.yc.li@gmail.com}
+##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
 ##' @examples
 ##' \dontrun{
