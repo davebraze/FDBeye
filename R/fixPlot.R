@@ -67,15 +67,14 @@ fixPlot <- function(data,
         bg <- grid::rasterGrob(bg)
     } else {
         xsize <- ysize <- zsize <- 0
+        mar <- c(NA, NA, NA, NA)
     }
 
     p <- ggplot(data=data, mapping=xyMap) + geom_blank()
     p <- p + coord_equal()
-    p <- p + scale_x_continuous(limits=c(0+mar[4],xsize-mar[2]), ## need to make better choices for tic positions when margins are in place.
-                                expand=c(0,0))
+    p <- p + scale_x_continuous(limits=c(0+mar[4],xsize-mar[2])) ## need to make better choices for tic positions when margins are in place.
     p <- p + scale_y_continuous(limits=c(ysize-mar[3], 0+mar[1]),
-                                trans="reverse",
-                                expand=c(0,0))
+                                trans="reverse")
     if (!is.null(bgImage)) {
         p <- p + annotation_custom(bg,
                                    xmin=0, ymin=-ysize,
@@ -91,16 +90,15 @@ fixPlot <- function(data,
 
 }
 
-
 if(FALSE) {
 
     data <- data.frame(x=seq(10, 1270, length.out=10),
                   y=seq(10, 1014, length.out=10))
 
     fixPlot(data = data,
-            bgImage = "./../inst/extdata/story01.png",
-            xyMap = ggplot2::aes_string(x='x', y='y'),
-            pointMap =ggplot2::aes_string())
+            bgImage = "../inst/extdata/story01.png",
+            xyMap = aes_string(x='x', y='y'),
+            pointMap = aes_string())
 
 }
 
