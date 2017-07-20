@@ -60,7 +60,9 @@
 ##' }
 
 edf2asc <- function(edffiles) {
-
+  # detect operating system
+  info <- sessionInfo()
+  
   exe <- getOption("FDBeye_edf2asc_exec")
   opts <-  getOption("FDBeye_edf2asc_opts")
 
@@ -93,9 +95,6 @@ edf2asc <- function(edffiles) {
       edffiles <- edffiles[edffiles != ff]
     }
   }
-  
-  # detect operating system
-  info <- sessionInfo()
 
   for (ff in edffiles) {
     if (grepl('mac|win', info$running, ignore.case = TRUE)) {
