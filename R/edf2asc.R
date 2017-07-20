@@ -63,6 +63,17 @@ edf2asc <- function(edffiles) {
   # detect operating system
   info <- sessionInfo()
   
+  # retrieve the path to the edf2asc utility
+  if (grepl('mac', info$running, ignore.case = TRUE)) {
+    edf2asc_dir <- system2("which", "edf2asc", stdout = TRUE)
+    exe <- edf2asc_dir[1]
+  } else if (grepl('win', info$running, ignore.case = TRUE)) {
+    edf2asc_dir <- system2("where", "edf2asc", stdout = TRUE)
+    exe <- edf2asc_dir[1]
+  } else {
+    stop("Only Mac OSX and Windows are supported currently.")
+  }
+  
   exe <- getOption("FDBeye_edf2asc_exec")
   opts <-  getOption("FDBeye_edf2asc_opts")
 
