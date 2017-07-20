@@ -86,6 +86,14 @@ edf2asc <- function(edffiles) {
     warning("Including option -y in FDBeye_edf2asc_opts is recommended to overwrite existing files.\nOtherwise, program might not run properly.")
   }
 
+  # check if any file in edffiles is missing
+  for (ff in edffiles) {
+    if(!file.exists(ff)) {
+      warning(paste("The following file does not exist: ", ff))
+      edffiles <- edffiles[edffiles != ff]
+    }
+  }
+  
   # detect operating system
   info <- sessionInfo()
 
