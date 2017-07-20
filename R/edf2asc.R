@@ -83,7 +83,7 @@ edf2asc <- function(edffiles) {
   }
 
   if(!grepl("-y", opts)) {
-    warning("Including option -y in FDBeye_edf2asc_opts is recommended to overwrite existing file with the same name.\nOtherwise, program might not run properly.")
+    warning("Including option -y in FDBeye_edf2asc_opts is recommended to overwrite existing files.\nOtherwise, program might not run properly.")
   }
 
   # detect operating system
