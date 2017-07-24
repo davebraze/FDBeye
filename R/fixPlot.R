@@ -65,16 +65,20 @@ fixPlot <- function(data,
             bg <- abind::abind(bg[,,1:3], bgAlpha)
         }
         bg <- grid::rasterGrob(bg)
+        expand <- c(0,0)
     } else {
         xsize <- ysize <- zsize <- 0
         mar <- c(NA, NA, NA, NA)
+        expand <- c(0.05, 0) # default for continuous variables
     }
 
     p <- ggplot(data=data, mapping=xyMap) + geom_blank()
     p <- p + coord_equal()
-    p <- p + scale_x_continuous(limits=c(0+mar[4],xsize-mar[2])) ## need to make better choices for tic positions when margins are in place.
+    p <- p + scale_x_continuous(limits=c(0+mar[4],xsize-mar[2]), ## need to make better choices for tic positions when margins are in place.
+                                expand=expand)
     p <- p + scale_y_continuous(limits=c(ysize-mar[3], 0+mar[1]),
-                                trans="reverse")
+                                trans="reverse",
+                                expand=expand)
     if (!is.null(bgImage)) {
         p <- p + annotation_custom(bg,
                                    xmin=0, ymin=-ysize,
