@@ -20,7 +20,7 @@
     ## and point to documentation for FDBeye::edf2asc() for help.
     
     # detect operating system
-    info <- sessionInfo()
+    info <- utils::sessionInfo()
     
     # retrieve the path to the edf2asc utility
     if (grepl('mac', info$running, ignore.case = TRUE)) {

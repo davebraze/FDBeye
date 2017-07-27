@@ -86,7 +86,7 @@
 
 edf2asc <- function(edffiles) {
   # detect operating system
-  info <- sessionInfo()
+  info <- utils::sessionInfo()
   
   # retrieve the path to the edf2asc utility
   if (grepl('mac', info$running, ignore.case = TRUE)) {
