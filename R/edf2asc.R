@@ -82,7 +82,7 @@ edf2asc <- function(edffiles) {
   }
 
   if(is.null(exe)){
-    stop("You must set options(FDBeye_edf2asc_exec = '/path/to/edf2asc') before calling this function.")
+    stop("You must add the edf2asc utility to PATH before calling this function.")
   } else {
     # Check if the file exists and is executable
     # base::file.access() returns values 0 for success and -1 for failure
