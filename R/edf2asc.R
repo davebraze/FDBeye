@@ -99,7 +99,7 @@ edf2asc <- function(edffiles) {
     stop("Only Mac OSX and Windows are supported currently.")
   }
   
-  if(is.null(exe)){
+  if(is.na(exe)){
     stop("You must add the edf2asc utility to PATH before calling this function.")
   } else {
     # Check if the file exists and is executable
