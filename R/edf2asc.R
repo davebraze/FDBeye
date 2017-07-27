@@ -68,7 +68,7 @@ edf2asc <- function(edffiles) {
     edf2asc_dir <- system2("which", "edf2asc", stdout = TRUE)
     exe <- edf2asc_dir[1]
   } else if (grepl('win', info$running, ignore.case = TRUE)) {
-    edf2asc_dir <- system2("where", "edf2asc", stdout = TRUE)
+    edf2asc_dir <- system2("where", "edf2asc.exe", stdout = TRUE)
     exe <- edf2asc_dir[1]
   } else {
     stop("Only Mac OSX and Windows are supported currently.")
