@@ -117,7 +117,8 @@ edf2asc <- function(edffiles) {
   }
   
   if(!grepl("-y", opts)) {
-    warning("Including option -y in FDBeye_edf2asc_opts is recommended to overwrite existing files.\nOtherwise, program might not run properly.")
+    warning(paste("Including option -y in FDBeye_edf2asc_opts is recommended to overwrite existing files.",
+                  "Otherwise, program might not run properly.", sep="\n"))
   }
 
   # check if any file in edffiles is missing
