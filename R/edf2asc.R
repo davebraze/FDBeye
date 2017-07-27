@@ -74,7 +74,6 @@ edf2asc <- function(edffiles) {
     stop("Only Mac OSX and Windows are supported currently.")
   }
   
-  exe <- getOption("FDBeye_edf2asc_exec")
   opts <-  getOption("FDBeye_edf2asc_opts")
 
   if(is.null(opts)) {
@@ -85,14 +84,10 @@ edf2asc <- function(edffiles) {
   if(is.null(exe)){
     stop("You must set options(FDBeye_edf2asc_exec = '/path/to/edf2asc') before calling this function.")
   } else {
-    ## First check to be sure the file actually exists and is executable
-    if(!utils::file_test("-f", exe))        # test whether file exists and is executable. Should I use base::file.exists() instead?
-      stop(paste(exe, "... File either does not exist or is not executable.", sep="\n"))
-    ## parse the specified path and make sure the fname includes "edf2asc"
-    if(!grepl("edf2asc", basename(exe)))
-      stop(paste(exe,
-                 "... File does not appear to be an edf2asc executable file (based on its file name).",
-                 sep="\n"))
+    # Check if the file exists and is executable
+    # base::file.access() returns values 0 for success and -1 for failure
+    if(unname(base::file.access(exe, mode=0))!=0){stop(paste(exe, "... File does not exist.", sep="\n"))}
+    if(unname(base::file.access(exe, mode=1))!=0){stop(paste(exe, "... File is not executable.", sep="\n"))}
   }
 
   if(!grepl("-y", opts)) {
