@@ -74,13 +74,6 @@ edf2asc <- function(edffiles) {
     stop("Only Mac OSX and Windows are supported currently.")
   }
   
-  opts <-  getOption("FDBeye_edf2asc_opts")
-
-  if(is.null(opts)) {
-    warning("FDBeye_edf2asc_opts not set. Using factory defaults.")
-    opts <- ""
-  }
-
   if(is.null(exe)){
     stop("You must add the edf2asc utility to PATH before calling this function.")
   } else {
@@ -90,6 +83,14 @@ edf2asc <- function(edffiles) {
     if(unname(base::file.access(exe, mode=1))!=0){stop(paste(exe, "... File is not executable.", sep="\n"))}
   }
 
+  # retrieve options
+  opts <-  getOption("FDBeye_edf2asc_opts")
+  
+  if(is.null(opts)) {
+    warning("FDBeye_edf2asc_opts not set. Using factory defaults.")
+    opts <- ""
+  }
+  
   if(!grepl("-y", opts)) {
     warning("Including option -y in FDBeye_edf2asc_opts is recommended to overwrite existing files.\nOtherwise, program might not run properly.")
   }
