@@ -56,7 +56,7 @@ Call SR Research "edf2asc" command line utility to convert *edf files to *asc
                 \item Identify the path to the edf2asc utility; something like "C:/Program Files
                 (x86)/SR Research/Eyelink/EDF_Access_API/Example"
                 \item Make sure "edfapi.dll" and "edfapi.lib" are somewhere on the path, for
-                example "C:\Windows\System32" (see /path/to/EDF_Access_API/readme.txt for more
+                example "C:\\Windows\\System32" (see /path/to/EDF_Access_API/readme.txt for more
                 detail)
                 \item In R, check if the path to the edf2asc utility is in the R environment by 
                 running Sys.getenv("PATH"). If yes, you may skip the following steps. If not, do
