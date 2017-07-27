@@ -29,9 +29,9 @@
     } else if (grepl('win', info$running, ignore.case = TRUE)) {
       edf2asc_dir <- system2("where", "edf2asc.exe", stdout = TRUE)
       edf2asc_exe <- edf2asc_dir[1]
-    }
+    } else {edf2asc_exe <- NA}
     
-    if(is.na(edf2asc_exe)){
+    if(!grepl("edf2asc", edf2asc_exe)){
       packageStartupMessage(paste("    SR Research's edf2asc utility is not on PATH.",
                                   "    It must be set before calling FDBeye::edf2asc().",
                                   "    See help for that function.",
