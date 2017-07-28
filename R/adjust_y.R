@@ -1,4 +1,9 @@
-# helper functions
+##' @importFrom stats dist dnorm fivenum optim pnorm sd
+##' @importFrom grDevices dev.off png
+##' @importFrom graphics legend lines par plot points rasterImage
+##' @importFrom utils read.csv sessionInfo write.table
+##'
+## helper functions
 if (FALSE) {
   require(png)
 

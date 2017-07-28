@@ -21,11 +21,10 @@ Imports:
     grid,
     plyr,
     png,
-    purrr,
+    purrrlyr,
     stats,
     stringr,
     tools,
-    utils,
     yaml
 Remotes:
     github::davebraze/FDButils
