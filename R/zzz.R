@@ -13,15 +13,15 @@
     ## ver <- as.character(ver)
     ## packageStartupMessage(paste("Welcome to",  pkg, ", version ", ver, "."))
 
-    packageStartupMessage("    (c) 2014-2016, Dave Braze, and others.")
+    packageStartupMessage("    (c) 2014-2017, Dave Braze, and others.")
     packageStartupMessage("    Released under the MIT license.\n")
 
     ## check here that path to edf2asc is set. If not, caution user
     ## and point to documentation for FDBeye::edf2asc() for help.
-    
+
     # detect operating system
     info <- utils::sessionInfo()
-    
+
     # retrieve the path to the edf2asc utility
     if (grepl('mac', info$running, ignore.case = TRUE)) {
       edf2asc_dir <- system2("which", "edf2asc", stdout = TRUE)
@@ -30,7 +30,7 @@
       edf2asc_dir <- system2("where", "edf2asc.exe", stdout = TRUE)
       edf2asc_exe <- edf2asc_dir[1]
     } else {edf2asc_exe <- NA}
-    
+
     if(!grepl("edf2asc", edf2asc_exe)){
       packageStartupMessage(paste("    SR Research's edf2asc utility is not on PATH.",
                                   "    It must be set before calling FDBeye::edf2asc().",
@@ -40,14 +40,14 @@
       # Check if the edf2asc utility exists and is executable
       # base::file.access() returns values 0 for success and -1 for failure
       if(unname(base::file.access(edf2asc_exe, mode=0))!=0){
-        packageStartupMessage(paste(edf2asc_exe, 
-                                    "... File does not exist.", 
+        packageStartupMessage(paste(edf2asc_exe,
+                                    "... File does not exist.",
                                     "See help for FDBeye::edf2asc().",
                                     sep="\n"))
         }
       if(unname(base::file.access(edf2asc_exe, mode=1))!=0){
-        packageStartupMessage(paste(edf2asc_exe, 
-                                    "... File is not executable.", 
+        packageStartupMessage(paste(edf2asc_exe,
+                                    "... File is not executable.",
                                     "See help for FDBeye::edf2asc().",
                                     sep="\n"))
         }
