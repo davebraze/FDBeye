@@ -39,13 +39,13 @@
     } else {
       # Check if the edf2asc utility exists and is executable
       # base::file.access() returns values 0 for success and -1 for failure
-      if(unname(base::file.access(edf2asc_exe, mode=0))!=0){
+      if(unname(file.access(edf2asc_exe, mode=0))!=0){
         packageStartupMessage(paste(edf2asc_exe,
                                     "... File does not exist.",
                                     "See help for FDBeye::edf2asc().",
                                     sep="\n"))
         }
-      if(unname(base::file.access(edf2asc_exe, mode=1))!=0){
+      if(unname(file.access(edf2asc_exe, mode=1))!=0){
         packageStartupMessage(paste(edf2asc_exe,
                                     "... File is not executable.",
                                     "See help for FDBeye::edf2asc().",
