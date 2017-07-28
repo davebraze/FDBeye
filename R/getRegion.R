@@ -51,7 +51,7 @@ getRegion <- function(fixReport, regionList, noRegnum=NA, noReglabel="", supplem
         }
         return(retval)
     }
-    retval <- purrr::by_row(fixReport, f, regionList=regionList, noRegnum=noRegnum, noReglabel=noReglabel,
+    retval <- purrrlyr::by_row(fixReport, f, regionList=regionList, noRegnum=noRegnum, noReglabel=noReglabel,
                             .collate="row", .labels=supplement)
     select(retval, -matches("^.row$"))
 }
