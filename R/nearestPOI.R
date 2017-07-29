@@ -34,7 +34,7 @@ nearestPOI <- function (fixReport, poiList, supplement=TRUE) {
         .dist2poi <- min(dst)
         retval <- data.frame(nearestpoi=.nearestpoi, dist2poi=.dist2poi)
     }
-    retval <- purrr::by_row(fixReport, f, poiList=poiList, .collate="row",
+    retval <- purrrlyr::by_row(fixReport, f, poiList=poiList, .collate="row",
                             .labels=supplement)
     select(retval, -matches("^.row$"))
 }
