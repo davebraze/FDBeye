@@ -23,38 +23,71 @@ Call SR Research "edf2asc" command line utility to convert *edf files to *asc
     from. Existing *asc files will NOT be over-written by default, because that is the default
     for the SRR edf2asc utility.
 
-    This function expects to find the fully qualified path to the edf2asc executable via
-    getOption("FDBeye_edf2asc_exec"). The user can set the option by calling
-    options(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe"). If done in the script itself, the
-    setting will be in effect for the duration of the R session. If done in the user's .Rprofile
-    file, the setting will persist across R sessions.
+    To prepare edf2asc() to work with the edf2asc command line utility provided by SR Research,
+    follow these steps:
+    \itemize{
+        \item{Mac OS X
+            \enumerate{
+                \item{Download and install the Eyelink Developers Kit from SR Research:
+                    \url{https://www.sr-support.com/forum/downloads/eyelink-display-software/45-eyelink-developers-kit-for-mac-os-x-mac-os-x-display-software?15-EyeLink-Developers-Kit-for-Mac-OS-X=}
+                    \item Documentation for using edf2asc utility is in the EyeLink 1000 User
+                    Manual, section 4.8 "Using ASC files".
+                }
+                \item Identify the path to the edf2asc utility; something like
+                "/Applications/Eyelink/EDF_Access_API/Example"
+                \item In R, check if the path to the edf2asc utility is in the R environment by
+                running Sys.getenv("PATH"). If yes, you may skip the following steps. If not,
+                do the following.
+                \item Open (or create) a file called ".Renviron" in the home directory (applied
+                system-wise) or current directory (applied project-wise)
+                \item Add the path to the edf2asc utility to PATH in ".Renviron", followed by
+                the output from Sys.getenv("PATH"); for example,
+                PATH="/Applications/Eyelink/EDF_Access_API/Example:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+                \item You may need to restart R for the changes to apply.
+            }
+        }
+        \item{Windows
+            \enumerate{
+                \item{Download and install the Eyelink Developers Kit from SR Research:
+                    \url{https://www.sr-support.com/forum/downloads/eyelink-display-software/39-eyelink-developers-kit-for-windows-windows-display-software?6-EyeLink-Developers-Kit-for-Windows-=}
+                    \item Documentation for using edf2asc utility is in the EyeLink 1000 User
+                    Manual, section 4.8 "Using ASC files".
+                }
+                \item Identify the path to the edf2asc utility; something like "C:/Program Files
+                (x86)/SR Research/Eyelink/EDF_Access_API/Example"
+                \item Make sure "edfapi.dll" and "edfapi.lib" are somewhere on the path, for
+                example "C:\\Windows\\System32" (see /path/to/EDF_Access_API/readme.txt for more
+                detail)
+                \item In R, check if the path to the edf2asc utility is in the R environment by
+                running Sys.getenv("PATH"). If yes, you may skip the following steps. If not, do
+                the following.
+                \item Go to Control Panel > System and Security > Advanced System Settings >
+                Environmental Variables...
+                \item{Under System Variables, choose Path, click Edit..., add the path to the
+                edf2asc utility to the list, and click OK (For more detail, see
+                    \url{https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/})}
+                \item You may need to restart R for the changes to apply.
+            }
+        }
+    }
 
     Before calling the utility, this function will check to see that the specified file exists
-    and is executable. As a meager security check, we also ensure that the basename of the file
-    includes the string "edf2asc". However, if the selected version of the edf2asc executable is
-    in some way incompatible with your platform, then this function will fail with a cryptic
-    error. The best way to guard against this is to check that your edf2asc executable file
-    works as expected from the command line before attempting to use it from within FDBeye.
+    and is executable. However, if the selected version of the edf2asc executable is in some way
+    incompatible with your platform, then this function will fail with a cryptic error. The best
+    way to guard against this is to check that your edf2asc executable file works as expected
+    from the command line before attempting to use it from within FDBeye.
 
-    The function edf2asc() also checks getOption("FDBeye_edf2asc_opts"). If this option
-    exists, it should be a valid string of command line options to pass to the SRR edf2asc
-    utility (e.g., "-y -ns"). See the SRR documentation for details.
+    The function edf2asc() also checks getOption("FDBeye_edf2asc_opts"). If this option exists,
+    it should be a valid string of command line options to pass to the SRR edf2asc utility
+    (e.g., "-y -ns"). See the SRR documentation for details. We recommend to use the "-y" option
+    to overwrite existing *asc files; otherwise, edf2asc() may not work properly.
 
     In addition to creating the requested *asc files, this function will write a log file
     ('edf2asc.log') of messages captured from the stdout of SRR edf2asc utility and place it in
     the current working directory.
-
-    \enumerate{
-         \item The best way to get the edf2asc utility is to install the Eyelink Developers Kit:
-            \url{https://www.sr-support.com/forum/downloads/eyelink-display-software/39-eyelink-developers-kit-for-windows-windows-display-software?6-EyeLink-Developers-Kit-for-Windows-=}
-         \item Documentation is in the EL1000+ manual, section 4.8 "Using ASC files".
-         \item Make sure edfapi library (e.g., edfapi.dll) is somewhere on the PATH.
-    }
 }
 \examples{
 \dontrun{
-option(FDBeye_edf2asc_exec = "/path/to/edf2asc.exe") ## this only needs to  be done once.
-
 fin <- list.files(".", pattern="edf$", recursive=TRUE)
 fout <- edf2asc(fin)
 fout
@@ -62,4 +95,6 @@ fout
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}
+
+Monica Li \email{monica.yc.li@gmail.com}
 }

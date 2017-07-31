@@ -2,10 +2,11 @@ Package: FDBeye
 Type: Package
 Title: Functions to Ease Work with Eyetracker Data
 Version: 0.0.20
-Date: 2017-06-28
+Date: 2017-07-14
 Authors@R: c(
     person("David", "Braze", email="davebraze@gmail.com", role=c("aut", "cre")),
     person("Tao", "Gong", role="aut"),
+    person("Monica", "Li", role="aut"),
     person("Jenna", "Duclos", role="aut"),
     person("Titus", "von der Malsburg", role="ctb")
     )
@@ -20,11 +21,10 @@ Imports:
     grid,
     plyr,
     png,
-    purrr,
+    purrrlyr,
     stats,
     stringr,
     tools,
-    utils,
     yaml
 Remotes:
     github::davebraze/FDButils

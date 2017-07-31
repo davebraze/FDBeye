@@ -13,7 +13,7 @@
 ##'     the region values within an enriched version of \code{fixReport},
 ##'     or as a simple two column data.frame.
 ##'
-##' @param fixReport A data.frame containin a fixation Report as may
+##' @param fixReport A data.frame containing a fixation Report as may
 ##'     be created by fixReport(). Must contain columns \code{xpos}
 ##'     and \code{ypos}.
 ##' @param regionList A data.frame containing regions of
@@ -22,8 +22,8 @@
 ##'     rectangular.
 ##' @param noRegnum A region number to assign fixations not contained
 ##'     within any of the regions defined in \code{regions}
-##'     argument. Defaults to \code{NA}.  Specified value should be
-##'     \code{%in% regions$regnum}.
+##'     argument. Defaults to \code{NA}. Specified value should be
+##'     \code{\%in\% regions$regnum}.
 ##' @param noReglabel The label assigned to fixations outside of any
 ##'     region defined in \code{regions} argument.
 ##' @param supplement If TRUE, getRegion() will return a data.frame
@@ -31,7 +31,7 @@
 ##'     reglabel. If FALSE, return a 2 column data.frame with just
 ##'     those two columns.
 ##'
-##' ##' @return A data.frame including columns regnum and reglabel.
+##' @return A data.frame including columns regnum and reglabel.
 ##' @author Dave Braze <davebraze@@gmail.com>
 ##' @export
 getRegion <- function(fixReport, regionList, noRegnum=NA, noReglabel="", supplement=TRUE) {
@@ -51,7 +51,7 @@ getRegion <- function(fixReport, regionList, noRegnum=NA, noReglabel="", supplem
         }
         return(retval)
     }
-    retval <- purrr::by_row(fixReport, f, regionList=regionList, noRegnum=noRegnum, noReglabel=noReglabel,
+    retval <- purrrlyr::by_row(fixReport, f, regionList=regionList, noRegnum=noRegnum, noReglabel=noReglabel,
                             .collate="row", .labels=supplement)
     select(retval, -matches("^.row$"))
 }
