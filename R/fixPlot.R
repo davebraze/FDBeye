@@ -101,8 +101,8 @@ if(FALSE) {
 
     fixPlot(data = data,
             bgImage = "../inst/extdata/story01.png",
-            xyMap = aes_string(x='x', y='y'),
-            pointMap = aes_string())
+            xyMap = ggplot2::aes_string(x='x', y='y'),
+            pointMap = ggplot2::aes_string())
 
 }
 
