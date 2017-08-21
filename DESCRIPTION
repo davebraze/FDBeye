@@ -8,6 +8,7 @@ Authors@R: c(
     person("Tao", "Gong", role="aut"),
     person("Monica", "Li", role="aut"),
     person("Jenna", "Duclos", role="aut"),
+    person("Ruy", "Valle-Mena", role="ctb"),
     person("Titus", "von der Malsburg", role="ctb")
     )
 Maintainer: David Braze <davebraze@gmail.com>
