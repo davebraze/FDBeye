@@ -37,7 +37,7 @@
 getRegion <- function(fixReport, regionList, noRegnum=NA, noReglabel="", supplement=TRUE) {
     f <- function(fix, regionList, noRegnum=noRegnum, noReglabel=noReglabel) {
         ## Find containing Region for a single fixation.
-        regs <- 1:dim(regions)[1]
+        regs <- 1:nrow(regions)
         for (ii in regs) {
             if (fix$xpos >= regions[[ii,"left"]] && fix$xpos <= regions[[ii,"right"]] &&
                 fix$ypos >= regions[[ii,"top"]] && fix$ypos <= regions[[ii,"bottom"]])
