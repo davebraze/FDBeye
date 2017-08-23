@@ -244,22 +244,29 @@ regdef2ias <- function(fname) {
     tstart <- max(yidx)+1
     tend <- length(l)
     tblock <- l[tstart:tend]
+
+    ## drop leading and ending blank lines from regdef block
+    tblock <- c("",tblock,"") # pad blank lines to regdef block 
     tidx <- stringr::str_detect(tblock, "^ *$") ## find blank lines
+    tmp <- FDButils::series(which(tidx), minseries=1)
+    tstart <- tmp[1,1] + tmp[1,3]
+    tend <- tmp[nrow(tmp)]-1
+    tblock <- tblock[tstart:tend]
 
-    ## drop leading blank lines from regdef block
-    if (min(which(tidx))==1) {
-        tmp <- FDButils::series(which(tidx), minseries=1)
-        tstart <- tmp[1,1] + tmp[1,3]
-        tend <- length(tblock)
-        tblock <- tblock[tstart:tend]
-    }
-
-    ##### from this point on needs to be iterated over text/regdef lines
-
+    ## find line numbers for text
+    tidx <- stringr::str_detect(tblock, "^ *$") ## find blank lines    
+    sep <- FDButils::series(which(tidx), minseries=1)
+    text_line <- c(1, sep[,1]+sep[,3])
+    
+    ## set up ias data.frame to store regdef info
+    ias <- data.frame()
+    
+    ## iterate over text lines
+    for (i in seq(length(text_line))) {
     ## find the (vertical) beginnings and ends of regions, in character units
-    txt <- tblock[1]
-    mrk <- tblock[2]
-    if(str_length(txt) != str_length(mrk)) {
+    txt <- tblock[text_line[i]]
+    mrk <- tblock[text_line[i]+1]
+    if(stringr::str_length(txt) != stringr::str_length(mrk)) {
        tt <- paste0("\n  [", txt, "]")
        mm <- paste0("\n  [", mrk, "]")
        ww <- paste("Warning! region mark line is not same length as text line in" ,
@@ -268,8 +275,8 @@ regdef2ias <- function(fname) {
     }
     midx <- stringr::str_locate_all(mrk, "[|]")[[1]][,1]
     x1_char <- c(1, midx)-1
-    x2_char <- c(midx-1, str_length(txt))
-
+    x2_char <- c(midx-1, stringr::str_length(txt))
+    
     ## find the (vertical) beginnings and ends of regions, in pixel units
     x1 <- (x1_char * 12) + (parms$margins$left - 1) ## translate char to pix
     if (!is.na(parms$regions$padL)) x1[1] <- x1[1] - parms$regions$padL
@@ -279,17 +286,19 @@ regdef2ias <- function(fname) {
     x2 <- as.integer(x2)
 
     ## get the upper and lower y coordinates (pixels) of regions
-    y1 <- as.integer(parms$lines$baseline[1] - parms$regions$maxH)
-    y2 <- as.integer(parms$lines$baseline[1] + parms$regions$minH)
+    y1 <- as.integer(parms$lines$baseline[i] - parms$regions$maxH)
+    y2 <- as.integer(parms$lines$baseline[i] + parms$regions$minH)
 
     ## other columns for current text/mark line
     type <- "RECTANGLE"         ## region type
-    regnum <- as.integer(1:length(x1))      ## region numbers
+    regnum <- as.integer(1:length(x1))+nrow(ias)      ## region numbers
     labs <- txt                 ## region labels
     labs <- stringr::str_replace_all(labs, " ", "_")
     labs <- stringr::str_replace_all(labs, '"', "'")
     labs <- stringr::str_sub(labs, x1_char+1, x2_char)
-
-    ias <- data.frame(type, regnum, x1, y1, x2, y2, labs)
+    
+    ## append data to ias data.frame 
+    ias <- rbind(ias, data.frame(type, regnum, x1, y1, x2, y2, labs))
+    }
     ias
 }
