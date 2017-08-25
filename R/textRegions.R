@@ -145,9 +145,8 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     alternative region specifications (e.g., multi word regions)
 ##'     for text stimuli.
 ##'
-##' @details We aspire to handle region definitions for multi line
-##'     texts, but at present only region files for single line texts
-##'     are handled.
+##' @details \code{regdef2ias} can handle region definitions for 
+##'     either single-line or multi-line texts.
 ##'
 ##'     Parameter values are read from the yaml block of the region
 ##'     definition file. Note that a few of these parameters are
@@ -205,21 +204,21 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     block. This block contains a pair of lines for each line of
 ##'     text in the stimulus. The first element of each pair is the
 ##'     text displayed on that line. The second element is a regioning
-##'     string made up of dots ("."), and pipe ("|") characters. Pipes
-##'     indicate the beginnings of regions. By default, the region
-##'     definition file will specify that each text line be
-##'     exhaustively divided into space delimited regions (i.e. there
-##'     will be a pipe character corrponding to each space character
-##'     in the paired text line.
+##'     string made up of square brackets ("[", "]"), and pipe ("|") 
+##'     characters. An opening bracket ("[") indicates the start of a
+##'     line and a closing bracket ("]) indicates the end of a line. 
+##'     Pipes ("|") indicate region boundaries within a line. By 
+##'     default, the region definition file will specify that each 
+##'     text line be exhaustively divided into space delimited regions 
+##'     (i.e. there will be a pipe character corrponding to each space
+##'     character in the paired text line.)
+##'     
+##'     Pairs of lines are required to be separated by at least one
+##'     blank line for \code{regdef2ias} to parse multi-line texts.
 ##'
 ##'     Before running \code{regdef2ias} on a file, its region block
 ##'     can be hand edited to add or correct information to specify
 ##'     region placements.
-##'
-##' \strong{To Do:}
-##'
-##'     This function presently does not handle regioning for
-##'     multi-line stimulus texts. Fix that.
 ##'
 ##' @param fname A string containing the name of a "region definition"
 ##'     file, such as might be created by reg2regdef(). See Details.
@@ -230,6 +229,7 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     specification to file.
 ##' @seealso \code{\link{reg2regdef}}
 ##' @author Dave Braze \email{davebraze@@gmail.com}
+##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
 regdef2ias <- function(fname) {
     l <- readLines(fname)
