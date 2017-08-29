@@ -23,7 +23,7 @@ Convert a region definition file to an SRR Interest
     for text stimuli.
 }
 \details{
-\code{regdef2ias} can handle region definitions for 
+\code{regdef2ias} can handle region definitions for
     either single-line or multi-line texts.
 
     Parameter values are read from the yaml block of the region
@@ -82,21 +82,30 @@ Convert a region definition file to an SRR Interest
     block. This block contains a pair of lines for each line of
     text in the stimulus. The first element of each pair is the
     text displayed on that line. The second element is a regioning
-    string made up of square brackets ("[", "]"), and pipe ("|") 
+    string made up of square brackets ("[", "]"), and pipe ("|")
     characters. An opening bracket ("[") indicates the start of a
-    line and a closing bracket ("]) indicates the end of a line. 
-    Pipes ("|") indicate region boundaries within a line. By 
-    default, the region definition file will specify that each 
-    text line be exhaustively divided into space delimited regions 
+    line and a closing bracket ("]) indicates the end of a line.
+    Pipes ("|") indicate region boundaries within a line. By
+    default, the region definition file will specify that each
+    text line be exhaustively divided into space delimited regions
     (i.e. there will be a pipe character corrponding to each space
     character in the paired text line.)
-    
+
     Pairs of lines are required to be separated by at least one
     blank line for \code{regdef2ias} to parse multi-line texts.
 
     Before running \code{regdef2ias} on a file, its region block
     can be hand edited to add or correct information to specify
     region placements.
+}
+\examples{
+regdef_story1 <- system.file("extdata/story01-regdef.txt", package="FDBeye")
+
+## Peek at regdef file.
+peek <- readLines(regdef_story1)
+
+## Generate an SRR DV compatible IAS file from the regdef file.
+ias_story1 <- regdef2ias(regdef_story1)
 }
 \seealso{
 \code{\link{reg2regdef}}
