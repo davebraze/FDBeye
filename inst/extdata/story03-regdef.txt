@@ -25,7 +25,6 @@ lines:
   - 777
   - 838
   - 899
-  - 960
 margins:
   top: 72 		# distance from top of screen to top of 1st line of text in pixels
   left: 215		# distance from left edge of screen to left edge of 1st character in line of text, in pixels.

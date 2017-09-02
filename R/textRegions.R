@@ -250,6 +250,17 @@ regdef2ias <- function(fname) {
     yml <- paste(l[yml], collapse="\n")
     parms <- yaml::yaml.load(yml)
 
+    ## check if crucial parameters are in the yaml block
+    parms_check <- list(parms$margins$left,
+                        parms$regions$maxH,
+                        parms$regions$minH,
+                        parms$lines$baseline)
+    if (sum(sapply(parms_check, is.null, simplify = TRUE)) > 0) {
+      stop(paste("At least one of the following parameters are missing in the yaml block:",
+                 "margins: left, regions: maxH, regions: minH, lines: baselines",
+                 sep = "\n"))
+    }
+    
     ## get regdef block
     tstart <- max(yidx)+1
     tend <- length(l)
@@ -268,6 +279,11 @@ regdef2ias <- function(fname) {
     sep <- FDButils::series(which(tidx), minseries=1)
     text_line <- c(1, sep[,1]+sep[,3])
 
+    ## check if number of lines matches between yaml-block defined baselines and regdef-block text
+    if (length(parms$lines$baselines)!=length(text_line)) {
+      stop("The number of baselines (defined in the yaml block) and the number of lines in text do not match.")
+    }
+    
     ## set up ias data.frame to store regdef info
     ias <- data.frame()
 
