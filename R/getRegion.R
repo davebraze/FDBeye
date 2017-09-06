@@ -38,18 +38,22 @@ getRegion <- function(fixReport, regionList, noRegnum=NA, noReglabel="", supplem
     f <- function(fix, regionList, noRegnum=noRegnum, noReglabel=noReglabel) {
         ## Find containing Region for a single fixation.
         regs <- 1:nrow(regions)
+        if(is.na(fix$xpos) | is.na(fix$ypos)) {
+            rv <- data.frame(regnum=as.integer(noRegnum), reglabel=noReglabel)
+            return(rv)
+        }
         for (ii in regs) {
             if (fix$xpos >= regions[[ii,"left"]] && fix$xpos <= regions[[ii,"right"]] &&
                 fix$ypos >= regions[[ii,"top"]] && fix$ypos <= regions[[ii,"bottom"]])
             {
-                retval <- data.frame(regnum=as.integer(regions[[ii,"regnum"]]),
+                rv <- data.frame(regnum=as.integer(regions[[ii,"regnum"]]),
                                      reglabel=regions[[ii,"reglabel"]])
             } else {
-                retval <- data.frame(regnum=as.integer(noRegnum), reglabel=noReglabel)
+                rv <- data.frame(regnum=as.integer(noRegnum), reglabel=noReglabel)
             }
-            if (retval$regnum %in% regions$regnum) return(retval)
+            if (rv$regnum %in% regions$regnum) return(rv)
         }
-        return(retval)
+        return(rv)
     }
     retval <- purrrlyr::by_row(fixReport, f, regionList=regionList, noRegnum=noRegnum, noReglabel=noReglabel,
                             .collate="row", .labels=supplement)
