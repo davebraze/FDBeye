@@ -1,3 +1,7 @@
+## TODO: It will be worth looking at other tools with similar goals to
+## these functions, listed here:
+## https://github.com/davebraze/FDBeye/issues/45
+
 ##' @title Called by readELascii()
 ##'
 ##' @description Used by readELascii(). Not intended for end-users.
