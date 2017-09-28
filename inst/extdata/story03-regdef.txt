@@ -12,19 +12,19 @@ lines:
   spacing: 61		# nominal baseline to baseline distance between lines on screen (pixels)
   baselines:		# locations of baselines on screen, on for each line of text (pixels)
   - 86
-  - 147
-  - 208
+  - 149
+  - 212
   - 273
-  - 336
-  - 401
-  - 462
-  - 525
-  - 586
-  - 651
-  - 716
-  - 777
-  - 838
-  - 899
+  - 334
+  - 397
+  - 458
+  - 519
+  - 582
+  - 645
+  - 706
+  - 767
+  - 828
+  - 889
 margins:
   top: 72 		# distance from top of screen to top of 1st line of text in pixels
   left: 215		# distance from left edge of screen to left edge of 1st character in line of text, in pixels.
@@ -37,44 +37,44 @@ regions:
   padR: 0		# extent to pad last region on line to right of last character, in pixels.
 ---
 
-Cowboy was without a doubt the ugliest horse in the world. Even so, I loved
-[     |   |       | |     |   |       |     |  |   |      |    |   | |    ]
+Cowboy was without a doubt the ugliest horse in the world. Even so, I
+[     |   |       | |     |   |       |     |  |   |      |    |   |]
 
-him beyond all reason. I realized that my only chance to compete at the
-[  |      |   |       | |        |    |  |    |      |  |       |  |  ]
+loved him beyond all reason. I realized that my only chance to compete
+[    |   |      |   |       | |        |    |  |    |      |  |      ]
 
-Western Days Festival would be in the speed events, since events based on
-[      |    |        |     |  |  |   |     |       |     |      |     | ]
+would be in the speed events, since events based on appearance were out of
+[    |  |  |   |     |       |     |      |     |  |          |    |   | ]
 
-appearance were out of the question. I chose barrel racing and came in
-[         |    |   |  |   |         | |     |      |      |   |    | ]
+the question. I chose barrel racing and came in next to last, while Becky,
+[  |         | |     |      |      |   |    |  |    |  |     |     |     ]
 
-next to last, while Becky, who rode a big brown thoroughbred mare, won every
-[   |  |     |     |      |   |    | |   |     |            |     |   |    ]
+who rode a big brown thoroughbred mare, won every time. For the whole next
+[  |    | |   |     |            |     |   |     |     |   |   |     |   ]
 
-time. For the whole next month I woke up early every day and rode Cowboy
-[    |   |   |     |    |     | |    |  |     |     |   |   |    |     ]
+month I woke up early every day and rode Cowboy five miles to the arena and
+[    | |    |  |     |     |   |   |    |      |    |     |  |   |     |  ]
 
-five miles to the arena and trained. On the way home from the arena, I would
-[   |     |  |   |     |   |        |  |   |   |    |    |   |      | |    ]
+trained. On the way home from the arena, I would be so tired; those five
+[       |  |   |   |    |    |   |      | |     |  |  |      |     |   ]
 
-be so tired; those five miles seemed twice as long. In the following
-[ |  |      |     |    |     |      |     |  |     |  |   |        ]
+miles seemed twice as long. In the following competition, I sat at the gate
+[    |      |     |  |     |  |   |         |            | |   |  |   |   ]
 
-competition, I sat at the gate while I watched Becky and her horse race
-[           | |   |  |   |    |     | |       |     |   |   |     |   ]
+while I watched Becky and her horse race through the course with ease. My
+[    | |       |     |   |   |     |    |       |   |      |    |     | ]
 
-through the course with ease. My turn finally came. At the signal, we dashed
-[      |   |      |    |     |  |    |       |     |  |   |       |  |     ]
+turn finally came. At the signal, we dashed toward the first barrel,
+[   |       |     |  |   |       |  |      |     |   |     |       ]
 
-toward the first barrel, whipped around it and with perfect precision rounded
-[     |   |     |       |       |      |  |   |    |       |         |      ]
+whipped around it and with perfect precision rounded the second and the
+[      |      |  |   |    |       |         |       |   |      |   |  ]
 
-the second and the third. When we passed the finish line, the crowd was silent.
-[  |      |   |   |      |    |  |      |   |      |     |   |     |   |      ]
+third. When we passed the finish line, the crowd was silent. We had beaten
+[     |    |  |      |   |      |     |   |     |   |       |   |  |     ]
 
-We had beaten Becky and her thoroughbred! I realized then that no matter what
-[  |  |      |     |   |   |             | |        |    |    |  |      |   ]
+Becky and her thoroughbred! I realized then that no matter what the odds,
+[    |   |   |             | |        |    |    |  |      |    |   |    ]
 
-the odds, I'd always come out a winner if I worked hard for it.
-[  |     |   |      |    |   | |      |  | |      |    |   |  ]
+I'd always come out a winner if I worked hard for it.
+[  |      |    |   | |      |  | |      |    |   |  ]

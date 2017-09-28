@@ -16,12 +16,14 @@ lines:
   - 208
   - 269
   - 332
-  - 393
-  - 454
-  - 515
-  - 576
-  - 637
-  - 698
+  - 397
+  - 458
+  - 519
+  - 580
+  - 641
+  - 702
+  - 767
+  - 828
 margins:
   top: 72		# distance from top of screen to top of 1st line of text in pixels
   left: 215		# distance from left edge of screen to left edge of 1st character in line of text, in pixels.
@@ -37,32 +39,38 @@ regions:
 Alex and Tim are lost. Alex's wife had recently passed away and he couldn't
 [   |   |   |   |     |      |    |   |        |      |    |   |  |       ]
 
-find the motivation to live a normal life. Tim has been charged with embezzlement
-[   |   |          |  |    | |      |     |   |   |    |       |    |           ]
+find the motivation to live a normal life. Tim has been charged with
+[   |   |          |  |    | |      |     |   |   |    |       |   ]
 
-and is going to prison soon. The thought of that terrified him. So they decided
-[  |  |     |  |      |     |   |       |  |    |         |    |  |    |      ]
+embezzlementand is going to prison soon. The thought of that terrified
+[              |  |     |  |      |     |   |       |  |    |        ]
 
-to take a ride down the river rapids at Cataract Canyon. A river only goes one
-[ |    | |    |    |   |     |      |  |        |       | |     |    |    |  ]
+him. So they decided to take a ride down the river rapids at Cataract Canyon.
+[   |  |    |       |  |    | |    |    |   |     |      |  |        |      ]
 
-way. If you are lost, that is good. Alex has never rafted down this river before,
-[   |  |   |   |     |    |  |     |    |   |     |      |    |    |     |      ]
+A river only goes one way. If you are lost, that is good. Alex has never
+[      |    |    |   |    |  |   |   |     |    |  |     |    |   |    ]
 
-but Tim has many times. Tim tells Alex that the rapids can be a dangerous place.
-[  |   |   |    |      |   |     |    |    |   |      |   |  | |         |     ]
+rafted down this river before, but Tim has many times. Tim tells Alex that
+[     |    |    |     |       |   |   |   |    |      |   |     |    |   ]
 
-Boats can overturn and people fall in. Concerned, Alex asks a river guide for
-[    |   |        |   |      |    |   |          |    |    | |     |     |  ]
+the rapids can be a dangerous place. Boats can overturn and people fall
+[  |      |   |  | |         |      |     |   |        |   |      |   ]
 
-advice. The guide tells him "sometimes things don't go as planned on the river,
-[      |   |     |     |   |          |      |     |  |  |       |  |   |     ]
+in. Concerned, Alex asks a river guide for advice. The guide tells him
+[  |          |    |    | |     |     |   |       |   |     |     |  ]
 
-and they turn for the worst. You might find yourself struggling, fighting against
-[  |    |    |   |   |      |   |     |    |        |           |        |      ]
+"sometimes things don't go as planned on the river, and they turn for the
+[         |      |     |  |  |       |  |   |      |   |    |    |   |  ]
 
-the force of the river. When that happens in nature, it's best to surrender. You'd
-[  |     |  |   |      |    |    |       |  |       |    |    |  |          |    ]
+worst. You might find yourself struggling, fighting against the force of the
+[     |   |     |    |        |           |        |       |   |     |  |  ]
 
-never hear a football coach tell you that, to surrender, but on the river its okay."
-[    |    | |        |     |    |   |     |  |          |   |  |   |     |   |     ]
+river. When that happens in nature, it's best to surrender. You'd never
+[     |    |    |       |  |       |    |    |  |          |     |    ]
+
+hear a football coach tell you that, to surrender, but on the river its
+[   | |        |     |    |   |     |  |          |   |  |   |     |  ]
+
+okay."
+[    ]
