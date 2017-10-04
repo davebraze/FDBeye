@@ -332,8 +332,15 @@ regdef2ias <- function(fname) {
 
 ##' @title Convert SR Research IAS (Interest Area Set) file to region
 ##'   definition file.
+##' @param ias.file A SR Research IAS ("*.ias") containing region
+##'   specifications. Columns in file from left to right must be:
+##'   Interest Area Type (Rectangular), Region Number, x1 (left
+##'   boundary), y1 (top boundary), x2 (right boundary), y2 (bottom
+##'   boundary), Region Label.
 ##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
 
-ias2regdef <- function(ias) {
+ias2regdef <- function(ias.file) {
+  ias <- read.table(ias.file, header = FALSE, sep = "\t", comment.char = "#",
+                    col.names = c("type","regnum","x1","y1","x2","y2","labs"))
 }
