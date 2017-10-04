@@ -328,3 +328,12 @@ regdef2ias <- function(fname) {
     }
     ias
 }
+
+
+##' @title Convert SR Research IAS (Interest Area Set) file to region
+##'   definition file.
+##' @author Monica Li \email{monica.yc.li@@gmail.com}
+##' @export
+
+ias2regdef <- function(ias) {
+}
