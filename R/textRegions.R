@@ -348,4 +348,23 @@ ias2regdef <- function(ias.file, scrnW=NA, scrnH=NA,
                        rgn.maxH=NA, rgn.minH=NA, rgn.padL=NA, rgn.padR=NA) {
     ias <- read.table(ias.file, header = FALSE, sep = "\t", comment.char = "#",
                     col.names = c("type","regnum","x1","y1","x2","y2","labs"))
+    
+    ##### build yaml block #####
+    if (is.na(baseline)) baseline <- unique(ias$y2)
+    if (is.na(chrH)) chrH <- mean(ias$y2-ias$y1)
+    if (is.na(chrW)) {
+      chrW <- diff(ias$x1)
+      chrW <- FDButils::gcd(chrW)
+    }
+    scrn <- list(screen=list(width=as.integer(scrnW), height=as.integer(scrnH))) # likely defaults
+    fnt <- list(font=list(name=fnt.name, size=fnt.size)) # no default; not important to region definitions
+    chr <- list(character=list(width=as.integer(chrW), height=as.integer(chrH)))
+    lns <- list(lines=list(spacing=ln.space, baseline=as.integer(baseline)))
+    mrg <- list(margins=list(top=as.integer(mrgn.top), left=as.integer(mrgn.left),
+                             bottom=as.integer(mrgn.bottom), right=as.integer(mrgn.right)))
+    rgns <- list(regions=list(maxH=as.integer(rgn.maxH), minH=as.integer(rgn.minH),
+                              padL=as.integer(rgn.padL), padR=as.integer(rgn.padR)))
+    hdr <- c("---\n",
+             sapply(list(scrn, fnt, chr, lns, mrg, rgns), yaml::as.yaml),
+             "---\n")
 }
