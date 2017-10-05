@@ -355,7 +355,7 @@ ias2regdef <- function(ias.file, reg.sep=NA,
     if (is.na(baseline)) baseline <- unique(ias$y2)
     if (is.na(chrH)) chrH <- mean(ias$y2-ias$y1)
     if (is.na(chrW)) {
-      chrW <- diff(ias$x1)
+      chrW <- diff(ias$x1[ias$y1==min(ias$y1)])
       chrW <- FDButils::gcd(chrW)
     }
     scrn <- list(screen=list(width=as.integer(scrnW), height=as.integer(scrnH))) # likely defaults
