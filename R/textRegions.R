@@ -386,8 +386,9 @@ ias2regdef <- function(ias.file, reg.sep=NA,
           txt <- gsub("\t", " ", txt)
         } else {
           txt <- stringr::str_c(ias_line$labs, collapse="")
-          idx <- stringr::str_locate_all(txt, reg.sep)[[1]][,1]
-          txt <- gsub(reg.sep, " ", txt)
+          txt <- gsub(reg.sep, "\t", txt)
+          idx <- stringr::str_locate_all(txt, "\t")[[1]][,1]
+          txt <- gsub("\t", " ", txt)
         }
         
         # create corresponding region marks for each line of text
