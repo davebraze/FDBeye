@@ -369,4 +369,25 @@ ias2regdef <- function(ias.file, reg.sep=NA,
     hdr <- c("---\n",
              sapply(list(scrn, fnt, chr, lns, mrg, rgns), yaml::as.yaml),
              "---\n")
+
+    ##### build regdef block #####
+    if (is.na(reg.sep)){
+      txt <- stringr::str_c(ias$labs, collapse="\t")
+      idx <- stringr::str_locate_all(txt, "\t")[[1]][,1]
+      txt <- gsub("\t", " ", txt)
+    } else {
+      txt <- stringr::str_c(ias$labs, collapse="")
+      idx <- stringr::str_locate_all(txt, reg.sep)[[1]][,1]
+      txt <- gsub(reg.sep, " ", txt)
+    }
+    
+    regmarks <- rep(" ", stringr::str_length(txt))
+    regmarks[idx] <- "|"
+    regmarks[1] <- "["
+    regmarks[length(regmarks)] <- "]"
+    regmarks <- paste(regmarks, collapse="")
+    ln <- c(paste0("\n", txt, "\n", regmarks, "\n"))
+    
+    retval <- c(hdr, ln)
+    retval
 }
