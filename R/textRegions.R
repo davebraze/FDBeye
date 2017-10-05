@@ -371,22 +371,35 @@ ias2regdef <- function(ias.file, reg.sep=NA,
              "---\n")
 
     ##### build regdef block #####
-    if (is.na(reg.sep)){
-      txt <- stringr::str_c(ias$labs, collapse="\t")
-      idx <- stringr::str_locate_all(txt, "\t")[[1]][,1]
-      txt <- gsub("\t", " ", txt)
-    } else {
-      txt <- stringr::str_c(ias$labs, collapse="")
-      idx <- stringr::str_locate_all(txt, reg.sep)[[1]][,1]
-      txt <- gsub(reg.sep, " ", txt)
+    # create an empty vector to store text and region definition lines
+    ln <- c()
+    # loop over each line of text
+    for (y in unique(ias$y2)){
+        # use y2 to identify text on the same line
+        ias_line <- subset(ias, y2==y)
+        
+        # read in text and determine where the separators are
+        # replace separators with spaces
+        if (is.na(reg.sep)){
+          txt <- stringr::str_c(ias_line$labs, collapse="\t")
+          idx <- stringr::str_locate_all(txt, "\t")[[1]][,1]
+          txt <- gsub("\t", " ", txt)
+        } else {
+          txt <- stringr::str_c(ias_line$labs, collapse="")
+          idx <- stringr::str_locate_all(txt, reg.sep)[[1]][,1]
+          txt <- gsub(reg.sep, " ", txt)
+        }
+        
+        # create corresponding region marks for each line of text
+        regmarks <- rep(" ", stringr::str_length(txt))
+        regmarks[idx] <- "|"
+        regmarks[1] <- "["
+        regmarks[length(regmarks)] <- "]"
+        regmarks <- paste(regmarks, collapse="")
+        
+        # stack text and region definition lines
+        ln <- c(paste0(ln, "\n", txt, "\n", regmarks, "\n"))
     }
-    
-    regmarks <- rep(" ", stringr::str_length(txt))
-    regmarks[idx] <- "|"
-    regmarks[1] <- "["
-    regmarks[length(regmarks)] <- "]"
-    regmarks <- paste(regmarks, collapse="")
-    ln <- c(paste0("\n", txt, "\n", regmarks, "\n"))
     
     retval <- c(hdr, ln)
     retval
