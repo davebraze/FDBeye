@@ -353,7 +353,7 @@ ias2regdef <- function(fname, reg.sep=NA,
     
     ##### build yaml block #####
     if (is.na(baseline)) baseline <- unique(ias$y2)
-    if (is.na(chrH)) chrH <- mean(ias$y2-ias$y1)
+    if (is.na(chrH)) chrH <- mean(ias$y2-ias$y1)/2
     if (is.na(chrW)) {
       chrW <- diff(ias$x1[ias$y1==min(ias$y1)])
       chrW <- FDButils::gcd(chrW)
