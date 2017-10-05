@@ -340,7 +340,8 @@ regdef2ias <- function(fname) {
 ##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
 
-ias2regdef <- function(ias.file, scrnW=NA, scrnH=NA,
+ias2regdef <- function(ias.file, reg.sep=NA,
+                       scrnW=NA, scrnH=NA,
                        fnt.name=NA, fnt.size=NA,
                        chrW=NA, chrH=NA,
                        ln.space=NA, baseline=NA,
