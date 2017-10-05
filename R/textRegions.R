@@ -340,7 +340,7 @@ regdef2ias <- function(fname) {
 ##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
 
-ias2regdef <- function(fname, reg.sep=NA,
+ias2regdef <- function(fname, reg.sep=NA, baseline.offset=0,
                        scrnW=NA, scrnH=NA,
                        fnt.name=NA, fnt.size=NA,
                        chrW=NA, chrH=NA,
@@ -352,7 +352,7 @@ ias2regdef <- function(fname, reg.sep=NA,
                     col.names = c("type","regnum","x1","y1","x2","y2","labs"))
     
     ##### build yaml block #####
-    if (is.na(baseline)) baseline <- unique(ias$y2)
+    if (is.na(baseline)) baseline <- unique(ias$y2)-baseline.offset
     if (is.na(chrH)) chrH <- mean(ias$y2-ias$y1)/2
     if (is.na(chrW)) {
       chrW <- diff(ias$x1[ias$y1==min(ias$y1)])
