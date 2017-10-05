@@ -354,10 +354,7 @@ ias2regdef <- function(fname, reg.sep=NA, baseline.offset=0,
     ##### build yaml block #####
     if (is.na(baseline)) baseline <- unique(ias$y2)-baseline.offset
     if (is.na(chrH)) chrH <- mean(ias$y2-ias$y1)/2
-    if (is.na(chrW)) {
-      chrW <- diff(ias$x1[ias$y1==min(ias$y1)])
-      chrW <- FDButils::gcd(chrW)
-    }
+    if (is.na(chrW)) chrW <- min(diff(sort(unique(ias$x2-ias$x1))))
     scrn <- list(screen=list(width=as.integer(scrnW), height=as.integer(scrnH))) # likely defaults
     fnt <- list(font=list(name=fnt.name, size=fnt.size)) # no default; not important to region definitions
     chr <- list(character=list(width=as.integer(chrW), height=as.integer(chrH)))
