@@ -346,6 +346,7 @@ ias2regdef <- function(ias.file, scrnW=NA, scrnH=NA,
                        ln.space=NA, baseline=NA,
                        mrgn.top=NA, mrgn.left=NA, mrgn.bottom=NA, mrgn.right=NA,
                        rgn.maxH=NA, rgn.minH=NA, rgn.padL=NA, rgn.padR=NA) {
+    ##### read in ias file #####
     ias <- read.table(ias.file, header = FALSE, sep = "\t", comment.char = "#",
                     col.names = c("type","regnum","x1","y1","x2","y2","labs"))
     
