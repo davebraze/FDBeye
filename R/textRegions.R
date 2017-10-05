@@ -332,15 +332,15 @@ regdef2ias <- function(fname) {
 
 ##' @title Convert SR Research IAS (Interest Area Set) file to region
 ##'   definition file.
-##' @param ias.file A SR Research IAS ("*.ias") containing region
-##'   specifications. Columns in file from left to right must be:
-##'   Interest Area Type (Rectangular), Region Number, x1 (left
-##'   boundary), y1 (top boundary), x2 (right boundary), y2 (bottom
+##' @param fname A string containing the name of a SR Research IAS
+##'   file ("*.ias"). Columns in file from left to right must be: 
+##'   Interest Area Type (Rectangular), Region Number, x1 (left 
+##'   boundary), y1 (top boundary), x2 (right boundary), y2 (bottom 
 ##'   boundary), Region Label.
 ##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
 
-ias2regdef <- function(ias.file, reg.sep=NA,
+ias2regdef <- function(fname, reg.sep=NA,
                        scrnW=NA, scrnH=NA,
                        fnt.name=NA, fnt.size=NA,
                        chrW=NA, chrH=NA,
@@ -348,7 +348,7 @@ ias2regdef <- function(ias.file, reg.sep=NA,
                        mrgn.top=NA, mrgn.left=NA, mrgn.bottom=NA, mrgn.right=NA,
                        rgn.maxH=NA, rgn.minH=NA, rgn.padL=NA, rgn.padR=NA) {
     ##### read in ias file #####
-    ias <- read.table(ias.file, header = FALSE, sep = "\t", comment.char = "#", quote = "",
+    ias <- read.table(fname, header = FALSE, sep = "\t", comment.char = "#", quote = "",
                     col.names = c("type","regnum","x1","y1","x2","y2","labs"))
     
     ##### build yaml block #####
