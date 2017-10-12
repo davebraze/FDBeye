@@ -351,6 +351,9 @@ ias2regdef <- function(fname, write.regdef=TRUE, reg.sep=NA, baseline.offset=0,
     ias <- read.table(fname, header = FALSE, sep = "\t", comment.char = "#", quote = "",
                     col.names = c("type","regnum","x1","y1","x2","y2","labs"))
     
+    # check input file and show error or warning messages
+    if (!all(ias$type=="RECTANGLE")) {stop("interest area type has to be RECTANGLE")}
+
     ##### build yaml block #####
     if (is.na(baseline)) baseline <- unique(ias$y2)-baseline.offset
     if (is.na(chrH)) chrH <- mean(ias$y2-ias$y1)/2
