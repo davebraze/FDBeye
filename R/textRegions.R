@@ -340,7 +340,7 @@ regdef2ias <- function(fname) {
 ##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
 
-ias2regdef <- function(fname, reg.sep=NA, baseline.offset=0,
+ias2regdef <- function(fname, write.regdef=TRUE, reg.sep=NA, baseline.offset=0,
                        scrnW=NA, scrnH=NA,
                        fnt.name=NA, fnt.size=NA,
                        chrW=NA, chrH=NA,
@@ -400,5 +400,15 @@ ias2regdef <- function(fname, reg.sep=NA, baseline.offset=0,
     }
     
     retval <- c(hdr, ln)
-    retval
+    
+    if (write.regdef==TRUE){ 
+      write(retval, gsub(".ias", "_regdef.txt", fname))
+      invisible(retval)
+    } else {
+      if (write.regdef!=FALSE) {
+        warning("argument write.regdef must be a boolean")
+      }
+      return(retval)
+    } 
+
 }
