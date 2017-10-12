@@ -353,7 +353,14 @@ ias2regdef <- function(fname, write.regdef=TRUE, reg.sep=NA, baseline.offset=0,
     
     # check input file and show error or warning messages
     if (!all(ias$type=="RECTANGLE")) {stop("interest area type has to be RECTANGLE")}
-
+    if (is.unsorted(ias$regnum)) {warning("interest area number is out of order")}
+    if (is.unsorted(ias$x1)|is.unsorted(ias$x2)) {
+      warning("interest area vertical boundaries (x1, x2) are out of order")
+    }
+    if (is.unsorted(ias$y1)|is.unsorted(ias$y2)) {
+      warning("interest area horizontal boundaries (y1, y2) are out of order")
+    }
+    
     ##### build yaml block #####
     if (is.na(baseline)) baseline <- unique(ias$y2)-baseline.offset
     if (is.na(chrH)) chrH <- mean(ias$y2-ias$y1)/2
