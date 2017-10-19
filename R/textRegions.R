@@ -206,7 +206,7 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     text displayed on that line. The second element is a regioning
 ##'     string made up of square brackets ("[", "]"), and pipe ("|")
 ##'     characters. An opening bracket ("[") indicates the start of a
-##'     line and a closing bracket ("]) indicates the end of a line.
+##'     line and a closing bracket ("]") indicates the end of a line.
 ##'     Pipes ("|") indicate region boundaries within a line. By
 ##'     default, the region definition file will specify that each
 ##'     text line be exhaustively divided into space delimited regions
