@@ -441,6 +441,7 @@ ias2regdef <- function(fname, write.regdef=TRUE, reg.sep=NA, baseline.offset=0,
     
     # check input file and show error or warning messages
     if (!all(ias$type=="RECTANGLE")) {stop("interest area type has to be RECTANGLE")}
+    if (!is.logical(write.regdef)) {stop("argument write.regdef must be a boolean")}
     if (is.unsorted(ias$regnum)) {warning("interest area number is out of order")}
     if (is.unsorted(ias$x1)|is.unsorted(ias$x2)) {
       warning("interest area vertical boundaries (x1, x2) are out of order")
@@ -503,9 +504,6 @@ ias2regdef <- function(fname, write.regdef=TRUE, reg.sep=NA, baseline.offset=0,
       write(retval, gsub(".ias", "_regdef.txt", fname))
       invisible(retval)
     } else {
-      if (write.regdef!=FALSE) {
-        warning("argument write.regdef must be a boolean")
-      }
       return(retval)
     } 
 
