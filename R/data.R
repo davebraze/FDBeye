@@ -1,11 +1,11 @@
-##' @title Eye movement data (fixations) over text.
+##' @title Data: Eye movements (fixations) over text.
 ##'
-##' @description Nine different readers reading the same three stories. Much of the included data is
-##'     poor quality (by choice).
+##' @description Nine different readers reading the same three stories. Some included data is
+##'     poor quality.
 ##'
 ##' @details Data were collected using an SR Research Eyelink 1000+ eye tracker with remote camera
 ##'     configuration and head stabilization. Data were extracted from EDF files as
-##'     "fixation reports".
+##'     "fixation reports" using the SRR Data Viewer software.
 ##'
 ##' @format A data.frame with 6676 rows and 8 variables:
 ##' \describe{

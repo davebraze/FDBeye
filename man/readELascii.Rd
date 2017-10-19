@@ -8,34 +8,68 @@ readELascii(file, tStartRE = "TRIALID", tEndRE = "TRIAL_RESULT",
   msgSet = NA, subjID = NULL)
 }
 \arguments{
-\item{file}{A string giving path/fname to input file (ELascii file).}
+\item{file}{A string giving path/fname to input file (ELascii
+file).}
 
-\item{tStartRE}{A string containing regular expression that uniquely identifies beginnings of
-trials.}
+\item{tStartRE}{A string containing a regular expression that
+    uniquely identifies beginnings of trials.  It will be the
+    first line for each trial that will be passed to
+    \code{link{getEyelinkTrialData}} for processing.
 
-\item{tEndRE}{A string containing regular expression that uniquely identifies ends of trials. If
-an experiment is aborted prematurely, then the *edf file (and so the *asc file) may not have
-a proper trial end event. TODO: test for that case and handle it while throwing a warning.}
+    The default value, "TRIALID", is a MSG that occurs immediately
+    before an ET recording block. We use this as the default
+    because it is guaranteed to be present.  But, it may not
+    capture information recorded during a trial before that
+    point. A case in point is where a DRIFTCORRECT (drift check)
+    event is present right before the recording block. TRIALID
+    will occur \strong{\emph{after}} the drift correct event,
+    meaning that the drift correct offset values captured during
+    the event will not be available. We do not use DRIFTCORRECT as
+    the default value to tStartRE, because it is not guaranteed to
+    be present; not every experimentor chooses to include this
+    event in each trial. Other reasonable choices for this
+    argument may target the EB generated "PREPARE_SEQUENCE" MSG,
+    or even a user generated MSG.}
 
-\item{msgSet}{A character vector. Each element identifies a MSG event to recover from the data
-file.}
+\item{tEndRE}{A string containing regular expression that uniquely
+    identifies ends of trials. It will be the last line for each
+    trial that will be passed to
+    \code{\link{getEyelinkTrialData}}.
 
-\item{subjID}{If NULL (default), use filename as subject ID. Otherwise use specified string.}
+    The default value, "TRIAL_RESULT", is always the last line to
+    occur in a well-formed trial; the block of "TRIAL_VAR" lines
+    appears right before it. But, if an experiment is aborted
+    prematurely, then the the last trial in the *edf file (and so
+    the *asc file) may not have a proper trial end event for the
+    last trial.
+
+    TODO: Test for the case where tStarteRE and TEndRE are
+    mismatched and handle it more gracefully, while throwing a
+    warning.}
+
+\item{msgSet}{A character vector. Each element identifies a MSG
+event to recover from the data file.}
+
+\item{subjID}{If NULL (default), use filename as subject
+ID. Otherwise use specified string.}
 }
 \value{
-List with two elements, one for session information, and one containing a list of
-    trials. Each trial element is itself a list of 6 elements: data.frames enumerating
-    fixations, saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
+List with two elements, one for session information, and
+    one containing a list of trials. Each trial element is itself
+    a list of 6 elements: data.frames enumerating fixations,
+    saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
 }
 \description{
-Convenience function to call SRR utility edf2asc from inside R.
+Read data from SR Research ASCII files (samples,
+    fixations, saccades, blinks, etc).
 }
 \details{
-SR Research provides a utility (EDF2ASC.exe) that dumps ASCII renderings of their proprietary
-EDF data file format. This function reads those ASCII files and extracts eye-movement events
-(fixations, saccades, blinks), specified MSG events, and TRIAL_VARs from them.
+SR Research provides a utility (EDF2ASC.exe) that dumps
+    ASCII renderings of their proprietary EDF data file
+    format. This function reads those ASCII files and extracts
+    eye-movement events (fixations, saccades, blinks), specified
+    MSG events, and TRIAL_VARs from them.
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}
 }
-

@@ -1,0 +1,252 @@
+---
+title: "Interest Areas for Data Analysis"
+author: "Jenna Duclos"
+date: "October 25, 2016"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Interest Areas}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Applying Interest Areas in DataViewer
+
+After `*.ias` files have been created they can be loaded into
+DataViewer with EyeLink data files (.edf) to help analyze data and
+generate interest area reports. For each trial in an .edf there should
+also be one `*.ias`.  If you will be working with multiple trials in
+an .edf, it is recommended that when you are creating your interest
+area files in R you save them with a name that can be easily
+identified and matched with the corresponding trials in the .edf in
+DataViewer. As seen in our examples above, the interest area template
+for trial 1 was saved as trial1.ias. A cohesive naming scheme across
+the .edf trial names and interest area templates will simplify the
+matching process.  Also, if you have multiple subjects and will be
+viewing many .edf files in DataViewer at once, each .edf loaded in a
+single viewing session must have a different name even if the content
+of the .edf is different.
+
+### I. Interest Areas for Single .edf Files:
+
+1. **Load the .edf in SRR EyeLink DataViewer:**
+
+    a) Load EyeLink DataViewer and click File > Import Data... > EyeLink
+      Data File...
+
+    b) Navigate to the directory containing the .edf, select the .edf, and
+      click Load. The .edf will be loaded in DataViewer in the Inspector
+      Data window.
+
+2. **Import the corresponding interest area files for the trials:**
+
+    a) Click File > Import Data... > Interest Area Template...
+
+    b) Navigate to directory containing `*.ias` files, choose all the
+      `*.ias` files that correspond to the trials in the .edf and and
+      press Load. The `*.ias` files will be loaded in the Inspector
+      Data window in the Interest Area Templates subfolder.
+
+3. **Match the correct `*.ias` to the trials:**
+
+    a) In the Inspector Data window view all of the trials by
+       expanding the .edf file by pressing +. Then click on the first
+       trial and look at the fields that become available below.
+
+    b) The field labeled Interest Area Set should have a value of
+       Empty Interest Area Set. Select this value and when the drop
+       down menu appears you will see all the `*.ias`. Select the
+       `*.ias` that corresponds to the trial you are editing.
+
+    c) Repeat steps 1 & 2 until each trial in the .edf has an `*.ias`.
+
+    The interest areas should now overlay the eyemovement data in the
+    Trial View window.
+
+    Note: If eye movement data is binocular, before creating Interest
+    Area Reports, toggle between the left and right eye data by
+    selecting Edit > Preferences > General > and checking/unchecking
+    Use Right Eye if Binocular. This will help you are select the eye
+    with the best data across all trials. You can use the EYE_USED
+    variable on your interest area report to specify which eye is used
+    for this subject's data.
+
+### II.  Interest Areas for Multiple .edf Files
+
+1. **Load multiple .edfs in DataViewer:**
+
+    a) Load EyeLink DataViewer and click File > Import Data... >
+    Multiple EyeLink Data Files...
+
+    b) In Import EyeLink Data File window check the Include
+    Sub-directories box and navigate to the directory containing all
+    .edfs you want to import, then click open.
+
+    c) When the .edfs load check the boxes for the files you want to
+    import and select Import. All files will be loaded in the
+    Inspector Data window and sorted by .edf name.
+
+2. **Import the corresponding interest area files for the trials:**
+
+    a) Click File > Import Data... > Interest Area Template...
+
+    b) Navigate to directory containing `*.ias` files, choose all the
+    `*.ias` files that correspond to the trials in the .edf and and
+    press Load. The `*.ias` files will be loaded in the Inspector Data
+    window in the Interest Area Templates subfolder.
+
+3. **Regroup the Inspector window by trial:**
+
+    a) Click Edit > Trial Grouping...
+
+    b) In the Available Variables window select your trial label
+    variable (ex. 'Trial_number') and press >> to move it to the
+    Selected Variables window and then select Regroup. The Inspector
+    Data window will now be grouped by the trials instead of .edf file
+    names. This means like trials for each .edf will be filed
+    together.
+
+    Note: Regrouping the .edfs by trial is not mandatory, however if
+    .edfs are not grouped by trial, every trial for every .edf loaded
+    will have to have the .ias paired separately. With multiple .edfs
+    and trials this can be very time consuming and tedious.
+
+4. **Match the correct `*.ias` to the trials:**
+
+    a) In the Inspector Data window select a trial number and look at
+    the fields that become available below.
+
+    b) The field labeled Default Interest Area Set should have a value
+    of Empty Interest Area Set. Select this value and when the drop
+    down menu appears select the .ias that corresponds to the trial
+    you are editing.
+
+    c) Repeat steps 1 & 2 until each group of trials has an `*.ias`.
+
+    Note: If the .edf has not been sorted by trial, refer to the
+    instructions for matching the correct `*.ias` to the trials for a
+    single .edf file.
+
+## Creating Interest Area Reports
+
+Once the interest areas have been specified, DataViewer can be used to
+generate interest area reports to provide information on various gaze
+measures for each area. Interest area reports can provide information
+on fixation count, summed fixation duration, regressions into an
+interest area, etc. Many variables are available to generate the
+interest area reports and sets of variables can be exported and
+imported for easier selection. This is a helpful tool if you will be
+creating reports with the same variables for many different subjects
+across many different viewing sessions.
+
+1. **Creating Interest Area Reports:**
+
+    a) Click Analysis > Reports > Interest Area Report...
+
+    b) In the Available Variables window select the variables you
+    would like in your report and press >>
+
+       Note: Reference the SRR DataViewer Manual for a complete
+       description of each Interest Area Report Variable.
+
+    c) When all the variables you want are in the Selected Variables
+    window click Next.
+
+    d) Navigate to the folder you want to save your Interest Area
+    Report, name the file, and click Save.
+
+    e) When Save Viewing Session Changes window appears click OK to
+    save the changes made (the Interest Area Report will not save if
+    you do not select OK).
+
+2. **Exporting Interest Area Report Variables:**
+
+    a) Click Analysis > Reports > Interest Area Report....
+
+    b) In the Available Variables window select the variables you
+    would like in your report and press >>.
+
+    c) When all the variables you want are in the Selected Variables
+    window click the Export Variable Selection icon below the Selected
+    Variable window.
+
+    d) Click Yes when asked Do you want to save the selection list?
+
+    e) Navigate to a folder, name your report variables, and click
+    Save.
+
+3. **Importing Interest Area Report Variables:**
+
+    a) Click Analysis > Reports > Interest Area Report....
+
+    b) Click the Import Variable Selection icon below the Selected
+    Variable window.
+
+    c) Navigate to the folder that contains the interest area report
+    variables that were previously exported (see **Exporting Interest
+    Area Report Variables**), select the file, click Open.
+
+    d) Proceed with saving the Interest Area Report.
+
+## Interest Periods for Data Analysis
+
+For some eye tracking experiments the recording sequences may include
+more eye movement data than you are actually want to include in the
+interest area report. **Interest Periods** can be created to modify
+the portion of data used in a report.
+
+Example: An experiment requires a subject to read a story orally and
+then answer a comprehension question. The recording sequence includes
+the reading of the story and the question, but in Data Viewer we are
+only interested in viewing the oral reading portion. We can use
+message events to create Interest Periods that will include only eye
+movements that occurred during the oral reading portion of the trial
+(excluding those collected during the comprehension question).
+
+1. **Identify Message Events for an Interest Period:**
+
+    a) Load the .edf into a new DataViewer session and expand the
+    expanding the .edf file by pressing +.
+
+    b) Select a trial and then click Toggle Message Event Visibility
+    in the tool bar. In the Inspector window, Message items should be
+    included with the Fixation items.
+
+    c) Identify the message that corresponds to the start of the eye
+    movement data you are interested in viewing.
+
+    Example: For the experiment above we are looking for the message
+    labeled DISPLAY\_Story because this message indicates when the
+    story was displayed and the subject began reading.
+
+    d) Identify the message that corresponds to the end of the eye
+    movement data you are interested in viewing.
+
+    Example: For the experiment above we are looking for the message
+    labeled KEYBOARD_End because this message indicates when the
+    experimenter ended the display of the story because the subject
+    finished reading.
+
+2. **Creating the Interest Period:**
+
+    a) Click Full Trial Period > Edit > New Interest Period.
+
+    b) In the Label field enter the name for your interest period
+    (ex. Target Story, Target sentence, etc.) and change the End Event
+    Type field from Button Event to Message Event.
+
+    c) Click the Details tab and fill in the Value field with the
+    message that starts your interest period (ex. DISPLAY\_Story).
+
+    d) Fill in the End Time Message Text field with the message that
+    ends your interest period (ex. KEYBOARD_End). Press OK and your
+    new Interest Period will appear in the Interest Period Manager
+    window.
+
+    e) Select your new interest period and press OK. All fixations
+    that occurred outside the message events entered will be removed.
+
+    Note: You can switch back to viewing all the eye movement by
+    switching back to the Full Trial Period in the drop down
+    menu. Interest Periods, much like Interest Area report variables,
+    can be exported for future use. This will be helpful if you will
+    be using the same interest periods for many subjects.

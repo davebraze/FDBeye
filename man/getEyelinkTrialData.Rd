@@ -7,16 +7,19 @@
 getEyelinkTrialData(bounds, lines, msgSet = NA)
 }
 \arguments{
-\item{bounds}{A numeric tuple. e1 is index marking beginning of trial. e2 is index indicating
-end of trial.}
+\item{bounds}{A numeric tuple. e1 is index marking beginning of
+trial. e2 is index indicating end of trial.}
 
-\item{lines}{A vector of strings, each corresponding to 1 line of the EL ASCII file.}
+\item{lines}{A vector of strings, each corresponding to 1 line of
+the EL ASCII file.}
 
-\item{msgSet}{A character vector of regular expressions to identify eyelink MSG lines to catch.}
+\item{msgSet}{A character vector of regular expressions to
+identify eyelink MSG lines to catch.}
 }
 \value{
-A list of 6 elements, data.frames enumerating fixations, saccades, blinks, TRIAL_VARs,
-samples and messages for the trial.
+A list of 6 elements, data.frames enumerating fixations,
+    saccades, blinks, TRIAL_VARs, samples and messages for the
+    trial.
 }
 \description{
 Used by readELascii(). Not intended for end-users.
@@ -28,4 +31,3 @@ Used by readELascii(). Not intended for end-users. Extract fixations, saccades, 
 \author{
 Dave Braze \email{davebraze@gmail.com}
 }
-

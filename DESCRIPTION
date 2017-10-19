@@ -1,34 +1,43 @@
 Package: FDBeye
 Type: Package
 Title: Functions to Ease Work with Eyetracker Data
-Version: 0.0.15
-Date: 2016-07-15
-Author: David Braze [aut, cre]
+Version: 0.0.21
+Date: 2017-09-06
+Authors@R: c(
+    person("David", "Braze", email="davebraze@gmail.com", role=c("aut", "cre")),
+    person("Tao", "Gong", role="aut"),
+    person("Monica", "Li", role="aut"),
+    person("Jenna", "Duclos", role="aut"),
+    person("Ruy", "Valle-Mena", role="ctb"),
+    person("Titus", "von der Malsburg", role="ctb")
+    )
 Maintainer: David Braze <davebraze@gmail.com>
 Depends:
     R (>= 3.1.1)
 Imports:
     abind,
     dplyr,
-    FDButils,
+    FDButils (>= 0.0.5),
     ggplot2,
     grid,
     plyr,
     png,
+    purrrlyr,
     stats,
-    stringi,
     stringr,
     tools,
-    utils
+    yaml
+Remotes:
+    github::davebraze/FDButils
 Description:
     Functions to ease working with eye-tracker data.
-    Currently, most functionality is focussed on, and
-    limited to, SR Eyelink files.
+    Currently, most functionality is focused on, and
+    limited to, data from SR Research EyeLink systems.
 License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/davebraze/FDBeye
 BugReports: https://github.com/davebraze/FDBeye/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests:
     knitr,
     rmarkdown

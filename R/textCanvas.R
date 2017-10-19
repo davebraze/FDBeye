@@ -118,7 +118,7 @@ getLines <- function(canvas){
     lines <- lines[lines[,1]==1,]
     colnames(lines) <- c("line", "top", "baseline", "bottom")
     lines[,'baseline'] <- NA
-    lines[,'line'] <- 1:dim(lines)[1]
+    lines[,'line'] <- 1:nrow(lines)
     lines
 }
 

@@ -13,27 +13,44 @@
     ## ver <- as.character(ver)
     ## packageStartupMessage(paste("Welcome to",  pkg, ", version ", ver, "."))
 
-    packageStartupMessage("    (c) 2014-2016, Dave Braze, and others.")
+    packageStartupMessage("    (c) 2014-2017, Dave Braze, and others.")
     packageStartupMessage("    Released under the MIT license.\n")
 
     ## check here that path to edf2asc is set. If not, caution user
     ## and point to documentation for FDBeye::edf2asc() for help.
-    edf2asc <- getOption("FDBeye_edf2asc_exec")
-    if(is.null(edf2asc)){
-        packageStartupMessage(paste("    Option 'FDBeye_edf2asc_exec' is not set.",
-                                    "    It must be set before calling FDBeye::edf2asc().",
-                                    "    See help for that function.",
-                                    sep="\n"))
+
+    # detect operating system
+    info <- utils::sessionInfo()
+
+    # retrieve the path to the edf2asc utility
+    if (grepl('mac', info$running, ignore.case = TRUE)) {
+      edf2asc_dir <- system2("which", "edf2asc", stdout = TRUE)
+      edf2asc_exe <- edf2asc_dir[1]
+    } else if (grepl('win', info$running, ignore.case = TRUE)) {
+      edf2asc_dir <- system2("where", "edf2asc.exe", stdout = TRUE)
+      edf2asc_exe <- edf2asc_dir[1]
+    } else {edf2asc_exe <- NA}
+
+    if(!grepl("edf2asc", edf2asc_exe)){
+      packageStartupMessage(paste("    SR Research's edf2asc utility is not on PATH.",
+                                  "    It must be set before calling FDBeye::edf2asc().",
+                                  "    See help for that function.",
+                                  sep="\n"))
     } else {
-        ## First check to be sure the file actually exists and is executable
-        if(!utils::file_test("-f", edf2asc)){        # test whether file exists and is executable. Should I use base::file.exists() instead?
-            packageStartupMessage(paste(edf2asc,
-                                        "... File either does not exist or is not executable.",
-                                        sep="\n"))
-            packageStartupMessage(paste("Option 'FDBeye_edf2asc_exec' must point to an executable file.",
-                                        "See help for FDBeye::edf2asc().",
-                                        sep="\n"))
-            }
+      # Check if the edf2asc utility exists and is executable
+      # base::file.access() returns values 0 for success and -1 for failure
+      if(unname(file.access(edf2asc_exe, mode=0))!=0){
+        packageStartupMessage(paste(edf2asc_exe,
+                                    "... File does not exist.",
+                                    "See help for FDBeye::edf2asc().",
+                                    sep="\n"))
+        }
+      if(unname(file.access(edf2asc_exe, mode=1))!=0){
+        packageStartupMessage(paste(edf2asc_exe,
+                                    "... File is not executable.",
+                                    "See help for FDBeye::edf2asc().",
+                                    sep="\n"))
+        }
     }
 
     ## maybe call citation("FDBeye")

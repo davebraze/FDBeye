@@ -1,0 +1,108 @@
+---
+title: "Text Canvases 1: Basics & SRR"
+author: "Dave Braze & Jenna Duclos"
+date: "October 25, 2016"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Text Canvases 1: Basics & SRR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+In our terminology, a ***text canvas*** is a bitmap image of text,
+formatted as it might appear on a printed page. See Figure 1. A
+***text canvas*** is the kind of stimulus used in an experiment where
+participants' eye movements are recorded while they read from a
+computer monitor.
+
+We typically generate ***text canvas*** stimuli for an experiment offline,
+and then provide those to whatever experiment control software will be
+used for data acquisition. For us, most often that's SRR _Experiment
+Builder_. This offline approach to stimulus construction gives us
+complete control over the appearance of the visual stimuli, and lets
+us use pixel-identical stimuli on different computers, or with
+different experiment control software (e.g., _Experiment Builder_,
+_E-Prime_, _Presentation_).
+
+![**Figure 1: A text canvas.**](`r system.file("extdata/trial87.png",
+ package="FDBeye")`){width=100%}
+
+An offline approach to building text canvases also lets us use our own
+tools for creating and modifying regions of interest (aka interest
+areas). These ROIs are used for the purpose of summarizing gaze
+behavior over a text. The most natural unit for regions of interest is
+that they correspond to the individual words of a text. But it is
+often the case that mapping gaze data onto multi-word regions that
+correspond to larger syntactic or semantic constituents is also
+useful. The tools provided by, e.g., _Experiment Builder_ for
+redefining ROIs are tedious to use and not very intuitive. Ours are
+better.
+
+_Experiment Builder_ (and presumably other experiment control
+software) can also create ***text canvases*** internally, from plain text
+(ascii or unicode) provided to them. _Experiment Builder_ will do so
+only if the IMAGE\_RESOURCE used to display the text in an _EB_ project
+has its _Prebuild to Image_ property checked. In that case, the text
+canvases will be saved to the `/runtime/images/` subfolder within the
+project as PNG bitmaps. Unfortunately, these are given rather cryptic
+file names, like `-6812265288292522003.png`.
+
+You can determine which of these PNG files was used in which trial, by
+looking at a set of _EB_ generated text files located in the
+`/runtime/dataviewer/[EDF filename]/graphics/` subfolder of the
+project. These files will have a vcl extension and the filenames
+include numbers that correspond to trial numbers (e.g., `VC\_1.vcl`,
+`VC\_2.vcl`). The content of a file will look something like this:
+
+```
+0 IMGLOAD TOP_LEFT  ../../runtime/images/-6812265288292522003.png 0 0 1024 768
+```
+
+The name of the PNG file that corresponds to the ***text canvas***
+used for the particular trial is clearly specified. A simple R script
+to extract this information will not be too hard to construct. (Of
+course, you could also copy the information out by hand....)
+
+Alternately, you may be able to extract this information from an
+_Experiment Builder_ project using SRR _Data Viewer_ software.
+
+1. First go to Edit -> Preferences -> Data Filters and make sure that
+"Include Display Command Messages" is checked.
+1. Then go to Analysis -> Reports -> Message Report and generate a
+Message Report.  Include the variables RECORDING\_SESSION\_LABEL and
+TRIAL\_INDEX to identify the trial number.  Also include the variable
+CURRENT\_MSG\_TEXT -- this will contain the IMGLOAD messages that
+point to the image file names.
+
+Note, if an IMAGE\_RESOURCE in an _Experiment Builder_ project did not
+have its _Prebuild to Image_ property checked then it will not create
+these types of image files. So, it is good practice to always check
+the Prebuild property for the critical Image screen in sentence or
+passage reading experiments (or any type of experiment, for that
+matter). Then, when _EB_ builds a bitmap from text provided in a Data
+Source, the bitmap will be saved to a PNG file. ***That way you will
+have a pixel-identical record of the stimulus seen by the subject.***
+
+A typical _Experiment Builder_ project will use information contained
+in Data Source columns linked to a sequence which handles the trial
+looping of your _EB_ project.  Before deploying a project from _EB_,
+you should always select _all_ of your Data Source columns and VARIABLE
+nodes as EyeLink _Data Viewer_ variables.
+
+1. In the _Structure Panel_ select the top most item in the hierarchy
+   (the EB project name).
+2. Then in the window below select the EyeLink DV Variables property
+   -> Select all the variables -> Click Add
+
+All these values will be written to the EyeLink data file (*edf file)
+every time the system stops recording (i.e., at the end of each
+trial). These Variables can then be accessed via _Data Viewer_, or
+extracted from an ASCII data file built with the SRR edf2asc utility.
+
+In case you didn't include the Data Source column name as an EyeLink
+DV Variable, you will still have a record of the values used on each
+trial for each subject. Each subject's results folder will contain a
+.dat file.  This is a tab-delimited text file that has the values of
+the Data Source column values that were used on each trial.  So, you
+can recover the name of the original text used on each trial from the
+subject's .dat file.

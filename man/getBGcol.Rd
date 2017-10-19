@@ -29,4 +29,3 @@ getBGcol(fcnvs)
 \author{
 Dave Braze <davebraze@gmail.com>
 }
-
