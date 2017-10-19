@@ -345,13 +345,13 @@ readELascii <- function(file,
     }
 
     ## get session information from file header
-    ## FIXME: Also need to capture version of edfapi/edf2asc used for file conversion.
     header <- grep("^[*][*] ", lines, value=TRUE)
     script <- unlist(stringr::str_split(grep("RECORDED BY", header, value=TRUE), "[ \t]+"))[4]
     sessdate <- unlist(stringr::str_split(grep("DATE:", header, value=TRUE), ": "))[2]
     srcfile <- unlist(stringr::str_split(grep("CONVERTED FROM", header, value=TRUE), " (FROM|using) "))[2]
     srcfile <- basename(srcfile)
-    session <- data.frame(subj, script, sessdate, srcfile)
+    conversion <- unlist(stringr::str_split(grep("CONVERTED FROM", header, value=TRUE), " (FROM|using|on) "))[3]
+    session <- data.frame(subj, script, sessdate, srcfile, conversion)
 
     ## get start and end lines for each trial block
     tStart <- grep(tStartRE, lines)
