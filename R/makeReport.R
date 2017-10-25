@@ -30,8 +30,8 @@
 ##' @examples
 ##' fname <- system.file("/extdata/1950006-RAN.asc.gz", package="FDBeye")
 ##' e <- readELascii(fname)
-##' efix <- fixReport(e)
-fixReport <- function(dat, trialvars=TRUE) {
+##' efix <- reportFixations(e)
+reportFixations <- function(dat, trialvars=TRUE) {
     if (!("ELascii" %in% class(dat))) {
         stop("Argument 'dat' must have class 'ELascii'.")
     }
@@ -105,8 +105,8 @@ fixReport <- function(dat, trialvars=TRUE) {
 ##' @examples
 ##' fname <- system.file("/extdata/1950006-RAN.asc.gz", package="FDBeye")
 ##' e <- readELascii(fname)
-##' esacc <- saccReport(e)
-saccReport <- function(dat, trialvars=TRUE) {
+##' esacc <- reportSaccades(e)
+reportSaccades <- function(dat, trialvars=TRUE) {
     if (!("ELascii" %in% class(dat))) {
         stop("Argument 'dat' must have class 'ELascii'.")
     }
@@ -144,6 +144,10 @@ saccReport <- function(dat, trialvars=TRUE) {
 
     retval
 }
+
+
+
+
 
 ##' @title Generate an ET report, as data.frame.
 ##'
