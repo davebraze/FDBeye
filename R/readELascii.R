@@ -166,7 +166,7 @@ getEyelinkTrialData <- function(bounds,
     
         if (length(samp_tmp) > 0) {
         samp_tmp <- data.frame(matrix(unlist(samp_tmp), ncol=length(samp_tmp[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
-        print(samp_tmp[1,])
+        # print(samp_tmp[1,])
         ## NEED SOME ADDITIONAL HANDLING here to take care of '...' (when either left or right eye is
         ## not tracked) and similar composite fields
         ## Problem: fields in sample lines are different depending on
