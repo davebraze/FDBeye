@@ -244,11 +244,11 @@ getEyelinkTrialData <- function(bounds,
         } else if((Sbinoc && Svel) && !Sres) { ## binocular; velocity; no resolution
             print("(Sbinoc && Svel) && !Sres")
             ## 10 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xv> <yv> ...
-        } else if(Sres && !(Sbinoc||Svel)) {   ## binocular; no velocity;  resolution
-            print("Sres && !(Sbinoc||Svel)")
+        } else if((Sbinoc && Sres) && !(Svel)) {   ## binocular; no velocity;  resolution
+            print("(Sbinoc && Sres) && !(Svel)")
             ## 10 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xr> <yr> ...
-        } else if((Svel&&Sres) && !Sbinoc) {   ## binocular; velocity;  resolution
-            print("(Svel&&Sres) && !Sbinoc")
+        } else if(Sbinoc && Svel && Sres) {   ## binocular; velocity;  resolution
+            print("Sbinoc && Svel && Sres")
             ## 12 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xv> <yv> <xr> <yr> ...
         }
 
