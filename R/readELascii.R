@@ -151,22 +151,22 @@ getEyelinkTrialData <- function(bounds,
 
     ## TODO: Get sample level data put in separate list item (data.frame).
     ## Get samples
-    samp <- grep("^[0-9]+", lines[bounds[1]:bounds[2]], value=TRUE)
-    samp <- stringr::str_split(samp, pattern="[ \t]+")
+    samp_tmp <- grep("^[0-9]+", lines[bounds[1]:bounds[2]], value=TRUE)
+    samp_tmp <- stringr::str_split(samp_tmp, pattern="[ \t]+")
 
-    samp_template <- setNames(data.frame(matrix(ncol = 18, nrow = length(samp))),
-                              c("time",
-                                "xpl","ypl","psl", # position and pupil size for left eye
-                                "xpr","ypr","psr", # position and pupil size for right eye
-                                "xvl","yvl","xvr","yvr", # velocity for left and right eyes
-                                "xr","yr", # resolution
-                                "CR_warn", # corneal reflection mode warning
-                                "target_x","target_y","target_dis","remote_warn" # remote mode info
-                              ))
+    samp <- setNames(data.frame(matrix(ncol = 18, nrow = length(samp_tmp))),
+                     c("time",
+                       "xpl","ypl","psl", # position and pupil size for left eye
+                       "xpr","ypr","psr", # position and pupil size for right eye
+                       "xvl","yvl","xvr","yvr", # velocity for left and right eyes
+                       "xr","yr", # resolution
+                       "CR_warn", # corneal reflection mode warning
+                       "target_x","target_y","target_dis","remote_warn" # remote mode info
+                       ))
     
-        if (length(samp) > 0) {
-        samp <- data.frame(matrix(unlist(samp), ncol=length(samp[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
-        print(samp[1,])
+        if (length(samp_tmp) > 0) {
+        samp_tmp <- data.frame(matrix(unlist(samp_tmp), ncol=length(samp_tmp[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
+        print(samp_tmp[1,])
         ## NEED SOME ADDITIONAL HANDLING here to take care of '...' (when either left or right eye is
         ## not tracked) and similar composite fields
         ## Problem: fields in sample lines are different depending on
