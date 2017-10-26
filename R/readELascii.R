@@ -195,92 +195,38 @@ getEyelinkTrialData <- function(bounds,
           }
         }
         
-        if (!(Sbinoc||Svel||Sres)) {           ## monocular data; no velocity; no resolution
-            print("!(Sbinoc||Svel||Sres)")
-            ## For monocular data determine which eye was measured, label columns
-            ## accordingly. Within a study using monocular recording, some subjects may contribute R
-            ## eye data while others L eye data. If this is the case then coordinate and pupil size
-            ## columns will be labelled differently for the two groups. Will need a helper function
-            ## to deal with that. Perhaps just by renaming columns. But in a more complicated
-            ## situation where, e.g., most subjects contributed binoculard data, but some have L eye
-            ## only and some R eye only, we'll need a more sophisticated means of choosing which eye
-            ## to use in analysis. One approach might be something like "prefer left" meaning take
-            ## left eye measurements if available, otherwise use right. Other options, for binoc
-            ## data would include "prefer best" where we choose the better of R or L eye data
-            ## according to some rubric, or "collapse" were we take the average of L & R for each
-            ## time point.
-            ##
-            ## MAYBE: Also insert columns for unmeasured eye and fill them with NAs.
-
-            if (Sleft) {
-              samp$time <- samp_tmp[1]
-              samp$xpl <- samp_tmp[2]
-              samp$ypl <- samp_tmp[3]
-              samp$psl <- samp_tmp[4]
-            } else {
-              samp$time <- samp_tmp[1]
-              samp$xpr <- samp_tmp[2]
-              samp$ypr <- samp_tmp[3]
-              samp$psr <- samp_tmp[4]
+        ## monocular data
+        if (!Sbinoc) {
+          ## time, posistion, pupil size, velocity
+          if (Sleft) { # left eye
+            samp$time <- samp_tmp[[1]]
+            samp$xpl <- samp_tmp[[2]]
+            samp$ypl <- samp_tmp[[3]]
+            samp$psl <- samp_tmp[[4]]
+            if (Svel){
+              samp$xvl <- samp_tmp[[5]]
+              samp$yvl <- samp_tmp[[6]]
+            } 
+          } else { # right eye
+            samp$time <- samp_tmp[[1]]
+            samp$xpr <- samp_tmp[[2]]
+            samp$ypr <- samp_tmp[[3]]
+            samp$psr <- samp_tmp[[4]]
+            if (Svel){
+              samp$xvr <- samp_tmp[[5]]
+              samp$yvr <- samp_tmp[[6]]
             }
-
-        } else if(Svel && !(Sbinoc||Sres)) {   ## monocular; velocity; no resolution
-            print("Svel && !(Sbinoc||Sres)")
-            if (Sleft) {
-              samp$time <- samp_tmp[1]
-              samp$xpl <- samp_tmp[2]
-              samp$ypl <- samp_tmp[3]
-              samp$psl <- samp_tmp[4]
-              samp$xvl <- samp_tmp[5]
-              samp$yvl <- samp_tmp[6]
+          }
+          ## resolution
+          if (Sres) {
+            if (Svel){
+              samp$xr <- samp_tmp[[7]]
+              samp$yr <- samp_tmp[[8]]
             } else {
-              samp$time <- samp_tmp[1]
-              samp$xpr <- samp_tmp[2]
-              samp$ypr <- samp_tmp[3]
-              samp$psr <- samp_tmp[4]
-              samp$xvr <- samp_tmp[5]
-              samp$yvr <- samp_tmp[6]
+              samp$xr <- samp_tmp[[5]]
+              samp$yr <- samp_tmp[[6]]
             }
-
-        } else if(Sres && !(Sbinoc||Svel)) {   ## monocular; no velocity;  resolution
-            print("Sres && !(Sbinoc||Svel)")
-            if (Sleft) {
-              samp$time <- samp_tmp[1]
-              samp$xpl <- samp_tmp[2]
-              samp$ypl <- samp_tmp[3]
-              samp$psl <- samp_tmp[4]
-              samp$xr <- samp_tmp[5]
-              samp$yr <- samp_tmp[6]
-            } else {
-              samp$time <- samp_tmp[1]
-              samp$xpr <- samp_tmp[2]
-              samp$ypr <- samp_tmp[3]
-              samp$psr <- samp_tmp[4]
-              samp$xr <- samp_tmp[5]
-              samp$yr <- samp_tmp[6]
-            }
-
-        } else if((Svel&&Sres) && !Sbinoc) {   ## monocular; velocity;  resolution
-            print("(Svel&&Sres) && !Sbinoc")
-            if (Sleft) {
-              samp$time <- samp_tmp[1]
-              samp$xpl <- samp_tmp[2]
-              samp$ypl <- samp_tmp[3]
-              samp$psl <- samp_tmp[4]
-              samp$xvl <- samp_tmp[5]
-              samp$yvl <- samp_tmp[6]
-              samp$xr <- samp_tmp[7]
-              samp$yr <- samp_tmp[8]
-            } else {
-              samp$time <- samp_tmp[1]
-              samp$xpr <- samp_tmp[2]
-              samp$ypr <- samp_tmp[3]
-              samp$psr <- samp_tmp[4]
-              samp$xvr <- samp_tmp[5]
-              samp$yvr <- samp_tmp[6]
-              samp$xr <- samp_tmp[7]
-              samp$yr <- samp_tmp[8]
-            }
+          }
         ## binocular data
         } else if (Sbinoc) {
           samp$time <- samp_tmp[[1]]
