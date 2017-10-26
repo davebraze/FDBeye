@@ -50,7 +50,8 @@ getEyelinkTrialData <- function(bounds,
     ## samplesLine <- "SAMPLES	GAZE	RIGHT	VEL	RES	RATE	 250.00	TRACKING	CR	FILTER	2"
     Sgaze <- grepl("GAZE", samplesLine)
     Sres <- grepl("RES", samplesLine)
-    Starget <- grepl("HTARGET", samplesLine)
+    Starget <- grepl("HTARGET", samplesLine) # remote recording mode
+    Scr <- grepl("CR", samplesLine) # CR recording mode
     Svel <- grepl("VEL", samplesLine) ## this flag not valid for EVENTS, SAMPLES only
     Sleft <- grepl("LEFT", samplesLine)
     Sright <- grepl("RIGHT", samplesLine)
