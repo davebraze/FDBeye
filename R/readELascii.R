@@ -179,7 +179,22 @@ getEyelinkTrialData <- function(bounds,
         ##   . monoc/HM recording, 5 fields (time, xpos, ypos, pupil, CR)
         ##   . binoc/remote recording, Not known at present
         ##   . monoc/remote recording, 9 fields (time, xpos, ypos, pupil, CR, xtarg, ytarg, ztarg (distance), IP field)
-
+        
+        ## recording mode (corneal reflection mode and/or remote mode)
+        if (Starget) {
+          samp$target_x <- samp_tmp[[ncol(samp_tmp)-3]]
+          samp$target_y <- samp_tmp[[ncol(samp_tmp)-2]]
+          samp$target_dis <- samp_tmp[[ncol(samp_tmp)-1]]
+          samp$remote_warn <- samp_tmp[[ncol(samp_tmp)]]
+          if (Scr) {
+            samp$CR_warn <- samp_tmp[[ncol(samp_tmp)-4]]
+          }
+        } else {
+          if (Scr) {
+            samp$CR_warn <- samp_tmp[[ncol(samp_tmp)]]
+          }
+        }
+          
         if (!(Sbinoc||Svel||Sres)) {           ## monocular data; no velocity; no resolution
             print("!(Sbinoc||Svel||Sres)")
             ## For monocular data determine which eye was measured, label columns
