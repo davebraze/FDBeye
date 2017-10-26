@@ -213,58 +213,36 @@ getEyelinkTrialData <- function(bounds,
             ## MAYBE: Also insert columns for unmeasured eye and fill them with NAs.
 
             if (Sleft) {
-                ## 5 columns <time> <xpl> <ypl> <psl> ...  5th column (...) is only present in
-                ## corneal reflection mode. This warning field is "..." if no warnings. First
-                ## character is "I" if sample was interpolated. Second characters is "C" if CR is
-                ## missing. Third character is "R" if CR recovery in progress. See page 122 of
-                ## EyeLink 1000 plus Manual v1.0.6.
             } else {
-                ## 5 columns        <time> <xpr> <ypr> <psr> ...
             }
 
 
         } else if(Svel && !(Sbinoc||Sres)) {   ## monocular; velocity; no resolution
             print("Svel && !(Sbinoc||Sres)")
             if (Sleft) {
-                ## 7 columns        <time> <xpl> <ypl> <psl> <xv> <yv> ...
             } else {
-                ## 7 columns        <time> <xpr> <ypr> <psr> <xv> <yv> ...
             }
 
         } else if(Sres && !(Sbinoc||Svel)) {   ## monocular; no velocity;  resolution
             print("Sres && !(Sbinoc||Svel)")
             if (Sleft) {
-                ## 7 columns        <time> <xpl> <ypl> <psl> <xr> <yr> ...
             } else {
-                ## 7 columns        <time> <xpr> <ypr> <psr> <xr> <yr> ...
             }
 
         } else if((Svel&&Sres) && !Sbinoc) {   ## monocular; velocity;  resolution
             print("(Svel&&Sres) && !Sbinoc")
             if (Sleft) {
-                ## 7 columns        <time> <xpl> <ypl> <psl> <xv> <yv> <xr> <yr> ...
             } else {
-                ## 7 columns        <time> <xpr> <ypr> <psr> <xv> <yv> <xr> <yr> ...
             }
 
         } else if (Sbinoc && !(Svel||Sres)) {  ## binocular data; no velocity; no resolution
             print("Sbinoc && !(Svel||Sres)")
-            ## 8 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> ...
-            ##
-            ## 8th column (.....) is only present in corneal reflection mode. This warning field is
-            ## "....." if no warnings. First character is "I" if sample was interpolated. Second
-            ## characters is "C" if LEFT CR is missing. Third character is "R" if LEFT CR recovery
-            ## in progress. Fourth characters is "C" if RIGHT CR is missing. Fifth character is "R"
-            ## if RIGHT CR recovery in progress. See page 122 of EyeLink 1000 plus Manual v1.0.6.
         } else if((Sbinoc && Svel) && !Sres) { ## binocular; velocity; no resolution
             print("(Sbinoc && Svel) && !Sres")
-            ## 10 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xv> <yv> ...
         } else if((Sbinoc && Sres) && !(Svel)) {   ## binocular; no velocity;  resolution
             print("(Sbinoc && Sres) && !(Svel)")
-            ## 10 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xr> <yr> ...
         } else if(Sbinoc && Svel && Sres) {   ## binocular; velocity;  resolution
             print("Sbinoc && Svel && Sres")
-            ## 12 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xv> <yv> <xr> <yr> ...
         }
 
     } else {
