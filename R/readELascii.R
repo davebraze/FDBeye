@@ -343,8 +343,6 @@ getEyelinkTrialData <- function(bounds,
 ##'     TODO: Test for the case where tStarteRE and TEndRE are
 ##'     mismatched and handle it more gracefully, while throwing a
 ##'     warning.
-##' @param msgSet A character vector. Each element identifies a MSG
-##'     event to recover from the data file.
 ##' @param subjID If NULL (default), use filename as subject
 ##'     ID. Otherwise use specified string.
 ##' @return List with two elements, one for session information, and
@@ -357,7 +355,6 @@ getEyelinkTrialData <- function(bounds,
 readELascii <- function(file,
                         tStartRE="TRIALID",
                         tEndRE="TRIAL_RESULT",
-                        msgSet=NA,
                         subjID=NULL) {
     ## TODO: maybe change default tStartRE to "Prepare_sequence"
     f <- file(file, "r", blocking=FALSE)
@@ -392,7 +389,7 @@ readELascii <- function(file,
     trialids <- trialids[seq(2, length(trialids), 2)]
 
     ## get events for each trial
-    trials <- apply(trialidx, 1, getEyelinkTrialData, lines=lines, msgSet=msgSet)
+    trials <- apply(trialidx, 1, getEyelinkTrialData, lines=lines)
     names(trials) <- trialids
 
     retval <- list(session=session, trials=trials)
