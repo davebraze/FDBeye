@@ -59,20 +59,6 @@ getEyelinkTrialData <- function(bounds,
     Sbinoc <- (Sleft && Sright)
     Srate <- unlist(stringr::str_split(stringr::str_extract(samplesLine, "RATE\\W+[0-9.]+"), "[ \t]+"))[2]
 
-    ## There is also an HTARGET flag that adds columns (three, to SAMPLE lines. Definitely need to
-    ## deal with that. HTARGET only occurs with remote systems in head-free mode. One of it's
-    ## columns seems to be camera-to-target distance in mm. Not sure about the others. An INPUT flag
-    ## also adds a single column.
-
-    ## Maybe a better way to handle sample data is to use the flags in the samplesLine to build a
-    ## header for sample df directly. So
-    ## hdr <- "time"
-    ## if (grepl("LEFT", samplesLine)
-    ##     hdr <- c(hdr, c("xL", "yL", "pL"))
-    ## if (grepl("RIGHT", samplesLine)
-    ##     hdr <- c(hdr, c("xR", "yR", "pR"))
-    ## And so on.
-
     ## Get fixation events
     fix <- grep("^EFIX", lines[bounds[1]:bounds[2]], value=TRUE)
     fix <- stringr::str_split(fix, pattern="[ \t]+")
@@ -150,7 +136,6 @@ getEyelinkTrialData <- function(bounds,
         trialvar <- NULL
     }
 
-    ## TODO: Get sample level data put in separate list item (data.frame).
     ## Get samples
     samp_tmp <- grep("^[0-9]+", lines[bounds[1]:bounds[2]], value=TRUE)
     samp_tmp <- stringr::str_split(samp_tmp, pattern="[ \t]+")
@@ -164,22 +149,50 @@ getEyelinkTrialData <- function(bounds,
                        "CR_warn", # corneal reflection mode warning
                        "target_x","target_y","target_dis","remote_warn" # remote mode info
                        ))
+    # # SAMPLE LINE FORMAT
+    #   * Monocular: <time> <xp> <yp> <ps>
+    #   * Monocular, with velocity: <time> <xp> <yp> <ps> <xv> <yv>
+    #   * Monocular, with resolution: <time> <xp> <yp> <ps> <xr> <yr>
+    #   * Monocular, with velocity and resolution: <time> <xp> <yp> <ps> <xv> <yv> <xr> <yr>
+    #   * Binocular: <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr>
+    #   * Binocular, with velocity: <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xvl> <yvl> <xvr> <yvr>
+    #   * Binocular, with and resolution: <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xr> <yr>
+    #   * Binocular, with velocity and resolution: <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xvl> <yvl> <xvr> <yvr> <xr> <yr>
+    # 
+    # ## CORNEAL REFLECTION
+    #   * one extra column after all standard fields and before remote fields
+    #   * 3 characters for monocular and 5 characters for binocular
+    #     * if binocular, the second and third characters are for the left eye, and the forth and the fifth are for the right eye
+    #   * "..." (monocular) or "....." (binocular) if no warning for sample
+    #	  * first character is "I" if sample was interpolated
+    #   * second character is "C" if CR missing
+    #   * third character is "R" if CR recovery in progress
+    # 
+    # ## REMOTE
+    #   * extra columns when using remote mode
+    #   * <target x> <target y> <target distance> <warning messages>
+    #   * warning messages contain:
+    #   * 13 characters for monocular and 17 characters for binocular
+    #     * first 9 characters for the target (M,A,N,C,F,T,B,L,R)
+    #     * then 4 characters for each eye (T,B,L,R), left eye first if binocular
+    #   * "............." (monocular) or "................." (binocular) if no warning for target and eye image
+    #   * first character is "M" if target is missing
+    #   * second character is "A" if extreme target angle occurs
+    #   * third character is "N" if target is near eye so that the target window and eye window overlap
+    #   * fourth character is "C" if target is too close
+    #   * fifth character is "F" if target is too far
+    #   * sixth character is "T" if target is near top edge of the camera image
+    #   * seventh character is "B" if target is near bottom edge of the camera image
+    #   * eighth character is "L" if target is near left edge of the camera image
+    #   * ninth character is "R" if target is near right edge of the camera image
+    #   * tenth character is "T" if eye is near top edge of the camera image
+    #   * eleventh character is "B" if eye is near bottom edge of the camera image
+    #   * twelfth character is "L" if eye is near left edge of the camera image
+    #   * thirteenth character is "R" if eye is near right edge of the camera image
     
         if (length(samp_tmp) > 0) {
         samp_tmp <- data.frame(matrix(unlist(samp_tmp), ncol=length(samp_tmp[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
         # print(samp_tmp[1,])
-        ## NEED SOME ADDITIONAL HANDLING here to take care of '...' (when either left or right eye is
-        ## not tracked) and similar composite fields
-        ## Problem: fields in sample lines are different depending on
-        ## o recording mode is 'remote' or 'head mounted'
-        ## o eye being recorded is 'left', 'right' or 'binocular'
-        ## o crossing those paramenters leads to 6 different configurations
-        ## o For SAMPLE lines, there are 4 cases that need to be handled (not counting
-        ##   optional velocity and resolution fields). See section 4.92 of EL1000+ user manual.
-        ##   . binoc/HM recording, 8 fields (time, xposL, yposL, pupilL, xposR, yposR, pupilL, CR)
-        ##   . monoc/HM recording, 5 fields (time, xpos, ypos, pupil, CR)
-        ##   . binoc/remote recording, Not known at present
-        ##   . monoc/remote recording, 9 fields (time, xpos, ypos, pupil, CR, xtarg, ytarg, ztarg (distance), IP field)
         
         ## recording mode (corneal reflection mode and/or remote mode)
         if (Starget) {
