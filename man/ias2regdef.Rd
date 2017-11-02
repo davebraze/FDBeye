@@ -2,7 +2,7 @@
 % Please edit documentation in R/textRegions.R
 \name{ias2regdef}
 \alias{ias2regdef}
-\title{Convert SR Research IAS (Interest Area Set) file to region 
+\title{Convert SR Research IAS (Interest Area Set) file to region
   definition file.}
 \usage{
 ias2regdef(fname, write.regdef = TRUE, reg.sep = NA, baseline.offset = 0,
@@ -12,26 +12,26 @@ ias2regdef(fname, write.regdef = TRUE, reg.sep = NA, baseline.offset = 0,
   rgn.minH = NA, rgn.padL = NA, rgn.padR = NA)
 }
 \arguments{
-\item{fname}{A string containing the name of a SR Research IAS 
-file ("*.ias"). Columns in file from left to right must be: 
-Interest Area Type (Rectangular), Region Number, x1 (left 
-boundary), y1 (top boundary), x2 (right boundary), y2 (bottom 
+\item{fname}{A string containing the name of a SR Research IAS
+file ("*.ias"). Columns in file from left to right must be:
+Interest Area Type (Rectangular), Region Number, x1 (left
+boundary), y1 (top boundary), x2 (right boundary), y2 (bottom
 boundary), Region Label.}
 
-\item{write.regdef}{A boolean value of whether or not a converted 
-region definition file will be written. Default value is 
+\item{write.regdef}{A boolean value of whether or not a converted
+region definition file will be written. Default value is
 \code{TRUE}.}
 
-\item{reg.sep}{A string of characters that denotes the region 
-separator in the region labels. Default value is \code{NA}, 
+\item{reg.sep}{A string of characters that denotes the region
+separator in the region labels. Default value is \code{NA},
 which indicates that region boundary is not specified within the
-region labels, and region labels will be catenated with 
-\code{"\t"} in between to determine the locations of the region 
-boundaries. If \code{reg.sep} is specified by the user, the 
-\code{reg.sep} string will be replaced by \code{"\t"} to 
+region labels, and region labels will be catenated with
+\code{"\t"} in between to determine the locations of the region
+boundaries. If \code{reg.sep} is specified by the user, the
+\code{reg.sep} string will be replaced by \code{"\t"} to
 determine the locations of the region boundaries.}
 
-\item{baseline.offset}{Number of pixels of which the baseline of 
+\item{baseline.offset}{Number of pixels of which the baseline of
 each line is above from y2. Default value is \code{0}.}
 
 \item{scrnW}{Screen width in pixels (integer).}
@@ -42,7 +42,7 @@ each line is above from y2. Default value is \code{0}.}
 
 \item{fnt.size}{Nominal font size in points for text display.}
 
-\item{chrW}{Letter width in pixels, assuming a monospace font is 
+\item{chrW}{Letter width in pixels, assuming a monospace font is
 used.}
 
 \item{chrH}{Nominal letter height in pixels.}
@@ -60,62 +60,62 @@ in pixels from the top of the screen.}
 
 \item{mrgn.right}{Right margin of the screen in pixels.}
 
-\item{rgn.maxH}{Extent of regions of interest above baseline in 
+\item{rgn.maxH}{Extent of regions of interest above baseline in
 pixels.}
 
-\item{rgn.minH}{Extent of regions of interest below baseline in 
+\item{rgn.minH}{Extent of regions of interest below baseline in
 pixels.}
 
-\item{rgn.padL}{Expand leftmost region on each line leftward by 
+\item{rgn.padL}{Expand leftmost region on each line leftward by
 this amount in pixels.}
 
-\item{rgn.padR}{Expand rightmost region on each line rightward by 
+\item{rgn.padR}{Expand rightmost region on each line rightward by
 this amount in pixels.}
 }
 \value{
-A vector of strings containing the region definition. The 
-  vector includes a yaml block with values for each of the 
-  function parameters except for \code{fname}, 
+A vector of strings containing the region definition. The
+  vector includes a yaml block with values for each of the
+  function parameters except for \code{fname},
   \code{write.regdef}, \code{reg.sep}, and \code{baseline.offset}.
   In addition to the yaml block, the vector will include a pair of
-  lines for each line of text in the stimulus. The first element 
-  of each pair is the text displayed on that line. The second 
-  element is a regioning string made up of square brackets ("[", 
-  "]"), and pipe ("|") characters. An opening bracket ("[") 
-  indicates the start of a line and a closing bracket ("]") 
-  indicates the end of a line. Pipes ("|") indicate region 
+  lines for each line of text in the stimulus. The first element
+  of each pair is the text displayed on that line. The second
+  element is a regioning string made up of square brackets ("[",
+  "]"), and pipe ("|") characters. An opening bracket ("[")
+  indicates the start of a line and a closing bracket ("]")
+  indicates the end of a line. Pipes ("|") indicate region
   boundaries within a line.
-  
-  By default, the output vector is also written to a region 
-  definition file (*_regdef.txt) using the file name of the input 
-  .ias file. The region definition file can be hand edited to add 
-  or correct information in the yaml block, or to re-specify 
+
+  By default, the output vector is also written to a region
+  definition file (*_regdef.txt) using the file name of the input
+  .ias file. The region definition file can be hand edited to add
+  or correct information in the yaml block, or to re-specify
   region placements.
 }
 \description{
-Convert SR Rsearch IAS (Interest Area Set) file 
-  (*.ias) to a region definition file (*_regdef.txt). The latter 
-  is suitable for hand editing and can be used to generate 
+Convert SR Rsearch IAS (Interest Area Set) file
+  (*.ias) to a region definition file (*_regdef.txt). The latter
+  is suitable for hand editing and can be used to generate
   alternative region specifications (e.g., multi word regions) for
   text stimuli.
 }
 \details{
-If not specified, \code{baseline}, \code{chrH} and 
+If not specified, \code{baseline}, \code{chrH} and
   \code{chrW} will be calculated based on \code{x1}, \code{x2},
   \code{y1}, and \code{y2} in the .ias file such that:
   \itemize{
   \item{\code{baseline = y2 - baseline.offset} for each line of text}
   \item{\code{chrH = (y1 - y2)/2} for each line of text}
-  \item{\code{chrW} is the smallest differece between region 
-  widths (i.e., \code{x2 - x1} of each region) among all regions. 
-  (Note that it is assumed the font of the stimulus text is 
-  monospace, and the estimation for \code{chrW} with proportional 
+  \item{\code{chrW} is the smallest differece between region
+  widths (i.e., \code{x2 - x1} of each region) among all regions.
+  (Note that it is assumed the font of the stimulus text is
+  monospace, and the estimation for \code{chrW} with proportional
   fonts could be very off.)}
   }
-  
-  Region labels (the last column in the .ias file) should be the 
-  content of the actual stimulus for each region, especially in 
-  terms of the number of characters or items within each region, 
+
+  Region labels (the last column in the .ias file) should be the
+  content of the actual stimulus for each region, especially in
+  terms of the number of characters or items within each region,
   in order to generate optimal regdef files. This way, when
   converting regdef to other formats, the region widths in the
   regioning string can be directly converted into the actual

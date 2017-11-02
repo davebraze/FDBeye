@@ -427,6 +427,46 @@ regdef2ias <- function(fname) {
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
+##' @examples
+##' ## go full circle, regdef to ias and back
+##' regdef_file <- system.file("extdata/story01-regdef.txt", package="FDBeye")
+##'
+##' ## Peek at regdef file.
+##' regdef_story1 <- readLines(regdef_file)
+##'
+##' ## Generate an SRR DV compatible IAS file from the regdef file and write it to file.
+##' ias_story1 <- regdef2ias(regdef_file)
+##' tmpfile <- tempfile("ias_story1_", fileext=".tab")
+##' write.table(ias_story1, tmpfile, sep="\t", row.names=FALSE, col.names=FALSE, quote=FALSE)
+##'
+##' regdef_story1_anew <- ias2regdef(tmpfile)
+##'
+##' The roundtrip is not quite successful. One problem is that regdef2ias() replaces spaces with
+##' underscores. This process needs to be reversed in ias2regdef(). I think a first pass at this
+##' would be to provide an argument consisting of a 2 element string vector: the first element is a
+##' string to be replaced and the second element is the replacement. Then, with a value of c("_",
+##' " "), underscores will be replaced by spaces. Maybe make that the default value.
+##'
+##' Also, ias2regdef() issues a warning
+##' " interest area vertical boundaries (x1, x2) are out of order". I'm not sure whether that's
+##' important to chase down or not.
+##'
+##' Finally, if the y2 values within a line are not all the same, then ias2regdef() shows some odd
+##' behavior. So, we'll doctor up an example to show this.
+##'
+##' ias_story1$y2[9] <- 120 ## word is "recently"
+##'
+##' tmpfile2 <- tempfile("ias_story1_", fileext=".tab")
+##' write.table(ias_story1, tmpfile2, sep="\t", row.names=FALSE, col.names=FALSE, quote=FALSE)
+##'
+##' regdef_story1_anew2 <- ias2regdef(tmpfile2)
+##'
+##' You'll notice that now the word "recently" is now assigned to a separate line, and not properly
+##' included in the line that contains it. This definitely needs to be corrected. I can think of one
+##' possible approache: to introduce a "fuzz factor" around the value of y2 such that values within
+##' a certain distance of each other are considered to be the same. For example, if argument y2.fuzz
+##' were set to 5, then y2 values no more than 5 pixels apart would be considered the same. That
+##' said, it's certainly worth thinking this for a bit before committing to a specific approach.
 
 ias2regdef <- function(fname, write.regdef=TRUE, reg.sep=NA, baseline.offset=0,
                        scrnW=NA, scrnH=NA,
