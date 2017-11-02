@@ -19,6 +19,7 @@
 ##'     saccades, blinks, TRIAL_VARs, samples and messages for the
 ##'     trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
+##' @author Monica Li \email{monica.yc.li@@gmail.com}
 getEyelinkTrialData <- function(bounds,
                                 lines,
                                 msgSet=NA) {
@@ -338,6 +339,7 @@ getEyelinkTrialData <- function(bounds,
 ##'     a list of 6 elements: data.frames enumerating fixations,
 ##'     saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
+##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
 readELascii <- function(file,
                         tStartRE="TRIALID",
