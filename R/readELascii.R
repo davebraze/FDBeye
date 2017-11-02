@@ -13,16 +13,13 @@
 ##'     trial. e2 is index indicating end of trial.
 ##' @param lines A vector of strings, each corresponding to 1 line of
 ##'     the EL ASCII file.
-##' @param msgSet A character vector of regular expressions to
-##'     identify eyelink MSG lines to catch.
 ##' @return A list of 6 elements, data.frames enumerating fixations,
 ##'     saccades, blinks, TRIAL_VARs, samples and messages for the
 ##'     trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @author Monica Li \email{monica.yc.li@@gmail.com}
 getEyelinkTrialData <- function(bounds,
-                                lines,
-                                msgSet=NA) {
+                                lines) {
 
     requireNamespace("FDButils", quietly = TRUE)
 
@@ -272,22 +269,14 @@ getEyelinkTrialData <- function(bounds,
     }
 
     ## Get message events
-    if(length(msgSet)>1 || !is.na(msgSet)) {
-        ## All messages caught by this routine should have the same number of fields, or else.
-        ## TODO: add error check for field count.
-        ## TODO: add code to pick up groups of msgs, where across groups the field count is different.
-        ##  1. Set of REs, each uniquely matches line in trial (e.g., "ARECSTART")
-        ##  2. For each matched line, get timestamp, and offset if present. If no offset, set offset to 0.
-        ##  3. Get label/event-type (e.g., ARECSTART).
-        ##  4. Get value if present, otherwise set value to NA.
-        msgRE <- paste0("^MSG.*(", paste0(msgSet, "", collapse="|"), ")") ## FIXME: Don't paste the REs together. Handle them 1 at a time.
-        msg <- grep(msgRE, lines[bounds[1]:bounds[2]], value=TRUE)
-        msg <- stringr::str_split(msg, pattern="[ \t]+")
-        if (length(msg) > 0) {
-            msg <- data.frame(matrix(unlist(msg), ncol=length(msg[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
-        } else {
-            msg <- NULL
-        }
+    msgRE <- "^MSG.*"
+    msg_tmp <- grep(msgRE, lines[bounds[1]:bounds[2]], value=TRUE)
+    if (length(msg_tmp) > 0) {
+        msg_tmp <- subset(msg_tmp, !grepl(".*TRIAL_VAR.*", msg_tmp)) # drop trial variables
+        msg_tmp <- stringr::str_match(msg_tmp, "^MSG\t([:digit:]+?)[:space:]([-]*[:digit:]*)[:space:]*(.*)")[,2:4]
+        msg_tmp[msg_tmp==""] <- NA
+        msg <- setNames(data.frame(msg_tmp, stringsAsFactors=FALSE),
+                        c("time","offset","message"))
     } else {
         msg <- NULL
     }
