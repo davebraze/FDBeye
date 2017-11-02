@@ -501,7 +501,7 @@ ias2regdef <- function(fname, write.regdef=TRUE, reg.sep=NA, baseline.offset=0,
     retval <- c(hdr, ln)
     
     if (write.regdef==TRUE){ 
-      write(retval, gsub(".ias", "_regdef.txt", fname))
+      write(retval, gsub("[.]ias$", "_regdef.txt", fname))
       invisible(retval)
     } else {
       return(retval)
