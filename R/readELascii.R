@@ -273,7 +273,7 @@ getEyelinkTrialData <- function(bounds,
     msg_tmp <- grep(msgRE, lines[bounds[1]:bounds[2]], value=TRUE)
     if (length(msg_tmp) > 0) {
         msg_tmp <- subset(msg_tmp, !grepl(".*TRIAL_VAR.*", msg_tmp)) # drop trial variables
-        msg_tmp <- stringr::str_match(msg_tmp, "^MSG\t([:digit:]+?)[:space:]([-]*[:digit:]*)[:space:]*(.*)")[,2:4]
+        msg_tmp <- stringr::str_match(msg_tmp, "^MSG\t([:digit:]+)[:space:]?([-]?[:digit:]+)?[:space:](.*)")[,2:4]
         msg_tmp[msg_tmp==""] <- NA
         msg <- setNames(data.frame(msg_tmp, stringsAsFactors=FALSE),
                         c("time","offset","message"))
