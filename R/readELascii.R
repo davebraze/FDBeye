@@ -190,7 +190,7 @@ getEyelinkTrialData <- function(bounds,
     #   * twelfth character is "L" if eye is near left edge of the camera image
     #   * thirteenth character is "R" if eye is near right edge of the camera image
     
-        if (length(samp_tmp) > 0) {
+    if (length(samp_tmp) > 0) {
         samp_tmp <- data.frame(matrix(unlist(samp_tmp), ncol=length(samp_tmp[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
         # print(samp_tmp[1,])
         
