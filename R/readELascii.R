@@ -58,7 +58,7 @@ getEyelinkTrialData <- function(bounds,
     Srate <- unlist(stringr::str_split(stringr::str_extract(samplesLine, "RATE\\W+[0-9.]+"), "[ \t]+"))[2]
 
     ## There is also an HTARGET flag that adds columns (three, to SAMPLE lines. Definitely need to
-    ## deal with that. HTARGET only occurs with remote systems in head-free mode. One of it's
+    ## deal with that. HTARGET only occurs with remote systems in head-free mode. One of its
     ## columns seems to be camera-to-target distance in mm. Not sure about the others. An INPUT flag
     ## also adds a single column.
 
