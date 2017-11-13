@@ -5,7 +5,7 @@
 \title{Get events from SR Research ASCII data files.}
 \usage{
 readELascii(file, tStartRE = "TRIALID", tEndRE = "TRIAL_RESULT",
-  msgSet = NA, subjID = NULL)
+  subjID = NULL)
 }
 \arguments{
 \item{file}{A string giving path/fname to input file (ELascii
@@ -47,9 +47,6 @@ file).}
     mismatched and handle it more gracefully, while throwing a
     warning.}
 
-\item{msgSet}{A character vector. Each element identifies a MSG
-event to recover from the data file.}
-
 \item{subjID}{If NULL (default), use filename as subject
 ID. Otherwise use specified string.}
 }
@@ -72,4 +69,6 @@ SR Research provides a utility (EDF2ASC.exe) that dumps
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}
+
+Monica Li \email{monica.yc.li@gmail.com}
 }
