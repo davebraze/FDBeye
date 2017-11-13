@@ -1,7 +1,7 @@
 Package: FDBeye
 Type: Package
 Title: Functions to Ease Work with Eyetracker Data
-Version: 0.0.21
+Version: 0.0.21.9999
 Date: 2017-09-06
 Authors@R: c(
     person("David", "Braze", email="davebraze@gmail.com", role=c("aut", "cre")),
