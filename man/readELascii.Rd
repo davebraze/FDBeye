@@ -67,6 +67,11 @@ SR Research provides a utility (EDF2ASC.exe) that dumps
     eye-movement events (fixations, saccades, blinks), specified
     MSG events, and TRIAL_VARs from them.
 }
+\examples{
+inf <- system.file("extdata/1950006-RAN.asc.gz", package="FDBeye")
+D0 <- readELascii(inf)
+str(D0)
+}
 \author{
 Dave Braze \email{davebraze@gmail.com}
 
