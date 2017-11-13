@@ -13,15 +13,13 @@
 ##'     trial. e2 is index indicating end of trial.
 ##' @param lines A vector of strings, each corresponding to 1 line of
 ##'     the EL ASCII file.
-##' @param msgSet A character vector of regular expressions to
-##'     identify eyelink MSG lines to catch.
 ##' @return A list of 6 elements, data.frames enumerating fixations,
 ##'     saccades, blinks, TRIAL_VARs, samples and messages for the
 ##'     trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
+##' @author Monica Li \email{monica.yc.li@@gmail.com}
 getEyelinkTrialData <- function(bounds,
-                                lines,
-                                msgSet=NA) {
+                                lines) {
 
     requireNamespace("FDButils", quietly = TRUE)
 
@@ -50,26 +48,13 @@ getEyelinkTrialData <- function(bounds,
     ## samplesLine <- "SAMPLES	GAZE	RIGHT	VEL	RES	RATE	 250.00	TRACKING	CR	FILTER	2"
     Sgaze <- grepl("GAZE", samplesLine)
     Sres <- grepl("RES", samplesLine)
-    Starget <- grepl("HTARGET", samplesLine)
+    Starget <- grepl("HTARGET", samplesLine) # remote recording mode
+    Scr <- grepl("CR", samplesLine) # CR recording mode
     Svel <- grepl("VEL", samplesLine) ## this flag not valid for EVENTS, SAMPLES only
     Sleft <- grepl("LEFT", samplesLine)
     Sright <- grepl("RIGHT", samplesLine)
     Sbinoc <- (Sleft && Sright)
     Srate <- unlist(stringr::str_split(stringr::str_extract(samplesLine, "RATE\\W+[0-9.]+"), "[ \t]+"))[2]
-
-    ## There is also an HTARGET flag that adds columns (three, to SAMPLE lines. Definitely need to
-    ## deal with that. HTARGET only occurs with remote systems in head-free mode. One of it's
-    ## columns seems to be camera-to-target distance in mm. Not sure about the others. An INPUT flag
-    ## also adds a single column.
-
-    ## Maybe a better way to handle sample data is to use the flags in the samplesLine to build a
-    ## header for sample df directly. So
-    ## hdr <- "time"
-    ## if (grepl("LEFT", samplesLine)
-    ##     hdr <- c(hdr, c("xL", "yL", "pL"))
-    ## if (grepl("RIGHT", samplesLine)
-    ##     hdr <- c(hdr, c("xR", "yR", "pR"))
-    ## And so on.
 
     ## Get fixation events
     fix <- grep("^EFIX", lines[bounds[1]:bounds[2]], value=TRUE)
@@ -92,7 +77,7 @@ getEyelinkTrialData <- function(bounds,
         sacc <- data.frame(matrix(unlist(sacc), ncol=length(sacc[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
         toN <- sapply(sacc, function(v) all(FDButils::isNumeral(v)))
         sacc <- data.frame(sapply(sacc[!toN], as.factor, simplify=FALSE), sapply(sacc[toN], as.numeric, simplify=FALSE))
-        names(sacc) <- c('event', 'eye', 'stime', 'etime', 'dur', 'xpos1', 'ypos1', 'xpos2', 'ypos2', 'ampl', 'peakvel')
+        names(sacc) <- c('event', 'eye', 'xpos1', 'ypos1', 'stime', 'etime', 'dur', 'xpos2', 'ypos2', 'ampl', 'peakvel')
         sacc$event <- gsub("^E", "", sacc$event)
     } else {
         sacc <- NULL
@@ -148,96 +133,135 @@ getEyelinkTrialData <- function(bounds,
         trialvar <- NULL
     }
 
-    ## TODO: Get sample level data put in separate list item (data.frame).
     ## Get samples
-    samp <- grep("^[0-9]+", lines[bounds[1]:bounds[2]], value=TRUE)
-    samp <- stringr::str_split(samp, pattern="[ \t]+")
-    if (length(samp) > 0) {
-        samp <- data.frame(matrix(unlist(samp), ncol=length(samp[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
-        print(samp[1,])
-        ## NEED SOME ADDITIONAL HANDLING here to take care of '...' (when either left or right eye is
-        ## not tracked) and similar composite fields
-        ## Problem: fields in sample lines are different depending on
-        ## o recording mode is 'remote' or 'head mounted'
-        ## o eye being recorded is 'left', 'right' or 'binocular'
-        ## o crossing those paramenters leads to 6 different configurations
-        ## o For SAMPLE lines, there are 4 cases that need to be handled (not counting
-        ##   optional velocity and resolution fields). See section 4.92 of EL1000+ user manual.
-        ##   . binoc/HM recording, 8 fields (time, xposL, yposL, pupilL, xposR, yposR, pupilL, CR)
-        ##   . monoc/HM recording, 5 fields (time, xpos, ypos, pupil, CR)
-        ##   . binoc/remote recording, Not known at present
-        ##   . monoc/remote recording, 9 fields (time, xpos, ypos, pupil, CR, xtarg, ytarg, ztarg (distance), IP field)
+    samp_tmp <- grep("^[0-9]+", lines[bounds[1]:bounds[2]], value=TRUE)
+    samp_tmp <- stringr::str_split(samp_tmp, pattern="[ \t]+")
 
-        if (!(Sbinoc||Svel||Sres)) {           ## monocular data; no velocity; no resolution
-            print("!(Sbinoc||Svel||Sres)")
-            ## For monocular data determine which eye was measured, label columns
-            ## accordingly. Within a study using monocular recording, some subjects may contribute R
-            ## eye data while others L eye data. If this is the case then coordinate and pupil size
-            ## columns will be labelled differently for the two groups. Will need a helper function
-            ## to deal with that. Perhaps just by renaming columns. But in a more complicated
-            ## situation where, e.g., most subjects contributed binoculard data, but some have L eye
-            ## only and some R eye only, we'll need a more sophisticated means of choosing which eye
-            ## to use in analysis. One approach might be something like "prefer left" meaning take
-            ## left eye measurements if available, otherwise use right. Other options, for binoc
-            ## data would include "prefer best" where we choose the better of R or L eye data
-            ## according to some rubric, or "collapse" were we take the average of L & R for each
-            ## time point.
-            ##
-            ## MAYBE: Also insert columns for unmeasured eye and fill them with NAs.
-
-            if (Sleft) {
-                ## 5 columns <time> <xpl> <ypl> <psl> ...  5th column (...) is only present in
-                ## corneal reflection mode. This warning field is "..." if no warnings. First
-                ## character is "I" if sample was interpolated. Second characters is "C" if CR is
-                ## missing. Third character is "R" if CR recovery in progress. See page 122 of
-                ## EyeLink 1000 plus Manual v1.0.6.
-            } else {
-                ## 5 columns        <time> <xpr> <ypr> <psr> ...
+    samp <- setNames(data.frame(matrix(ncol = 18, nrow = length(samp_tmp))),
+                     c("time",
+                       "xpl","ypl","psl", # position and pupil size for left eye
+                       "xpr","ypr","psr", # position and pupil size for right eye
+                       "xvl","yvl","xvr","yvr", # velocity for left and right eyes
+                       "xr","yr", # resolution
+                       "CR_warn", # corneal reflection mode warning
+                       "target_x","target_y","target_dis","remote_warn" # remote mode info
+                       ))
+    # # SAMPLE LINE FORMAT
+    #   * Monocular: <time> <xp> <yp> <ps>
+    #   * Monocular, with velocity: <time> <xp> <yp> <ps> <xv> <yv>
+    #   * Monocular, with resolution: <time> <xp> <yp> <ps> <xr> <yr>
+    #   * Monocular, with velocity and resolution: <time> <xp> <yp> <ps> <xv> <yv> <xr> <yr>
+    #   * Binocular: <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr>
+    #   * Binocular, with velocity: <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xvl> <yvl> <xvr> <yvr>
+    #   * Binocular, with and resolution: <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xr> <yr>
+    #   * Binocular, with velocity and resolution: <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xvl> <yvl> <xvr> <yvr> <xr> <yr>
+    # 
+    # ## CORNEAL REFLECTION
+    #   * one extra column after all standard fields and before remote fields
+    #   * 3 characters for monocular and 5 characters for binocular
+    #     * if binocular, the second and third characters are for the left eye, and the forth and the fifth are for the right eye
+    #   * "..." (monocular) or "....." (binocular) if no warning for sample
+    #	  * first character is "I" if sample was interpolated
+    #   * second character is "C" if CR missing
+    #   * third character is "R" if CR recovery in progress
+    # 
+    # ## REMOTE
+    #   * extra columns when using remote mode
+    #   * <target x> <target y> <target distance> <warning messages>
+    #   * warning messages contain:
+    #   * 13 characters for monocular and 17 characters for binocular
+    #     * first 9 characters for the target (M,A,N,C,F,T,B,L,R)
+    #     * then 4 characters for each eye (T,B,L,R), left eye first if binocular
+    #   * "............." (monocular) or "................." (binocular) if no warning for target and eye image
+    #   * first character is "M" if target is missing
+    #   * second character is "A" if extreme target angle occurs
+    #   * third character is "N" if target is near eye so that the target window and eye window overlap
+    #   * fourth character is "C" if target is too close
+    #   * fifth character is "F" if target is too far
+    #   * sixth character is "T" if target is near top edge of the camera image
+    #   * seventh character is "B" if target is near bottom edge of the camera image
+    #   * eighth character is "L" if target is near left edge of the camera image
+    #   * ninth character is "R" if target is near right edge of the camera image
+    #   * tenth character is "T" if eye is near top edge of the camera image
+    #   * eleventh character is "B" if eye is near bottom edge of the camera image
+    #   * twelfth character is "L" if eye is near left edge of the camera image
+    #   * thirteenth character is "R" if eye is near right edge of the camera image
+    
+    if (length(samp_tmp) > 0) {
+        samp_tmp <- data.frame(matrix(unlist(samp_tmp), ncol=length(samp_tmp[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
+        # print(samp_tmp[1,])
+        
+        ## recording mode (corneal reflection mode and/or remote mode)
+        if (Starget) {
+          samp$target_x <- samp_tmp[[ncol(samp_tmp)-3]]
+          samp$target_y <- samp_tmp[[ncol(samp_tmp)-2]]
+          samp$target_dis <- samp_tmp[[ncol(samp_tmp)-1]]
+          samp$remote_warn <- samp_tmp[[ncol(samp_tmp)]]
+          if (Scr) {
+            samp$CR_warn <- samp_tmp[[ncol(samp_tmp)-4]]
+          }
+        } else {
+          if (Scr) {
+            samp$CR_warn <- samp_tmp[[ncol(samp_tmp)]]
+          }
+        }
+        
+        ## monocular data
+        if (!Sbinoc) {
+          ## time, posistion, pupil size, velocity
+          if (Sleft) { # left eye
+            samp$time <- samp_tmp[[1]]
+            samp$xpl <- samp_tmp[[2]]
+            samp$ypl <- samp_tmp[[3]]
+            samp$psl <- samp_tmp[[4]]
+            if (Svel){
+              samp$xvl <- samp_tmp[[5]]
+              samp$yvl <- samp_tmp[[6]]
+            } 
+          } else { # right eye
+            samp$time <- samp_tmp[[1]]
+            samp$xpr <- samp_tmp[[2]]
+            samp$ypr <- samp_tmp[[3]]
+            samp$psr <- samp_tmp[[4]]
+            if (Svel){
+              samp$xvr <- samp_tmp[[5]]
+              samp$yvr <- samp_tmp[[6]]
             }
-
-
-        } else if(Svel && !(Sbinoc||Sres)) {   ## monocular; velocity; no resolution
-            print("Svel && !(Sbinoc||Sres)")
-            if (Sleft) {
-                ## 7 columns        <time> <xpl> <ypl> <psl> <xv> <yv> ...
+          }
+          ## resolution
+          if (Sres) {
+            if (Svel){
+              samp$xr <- samp_tmp[[7]]
+              samp$yr <- samp_tmp[[8]]
             } else {
-                ## 7 columns        <time> <xpr> <ypr> <psr> <xv> <yv> ...
+              samp$xr <- samp_tmp[[5]]
+              samp$yr <- samp_tmp[[6]]
             }
-
-        } else if(Sres && !(Sbinoc||Svel)) {   ## monocular; no velocity;  resolution
-            print("Sres && !(Sbinoc||Svel)")
-            if (Sleft) {
-                ## 7 columns        <time> <xpl> <ypl> <psl> <xr> <yr> ...
-            } else {
-                ## 7 columns        <time> <xpr> <ypr> <psr> <xr> <yr> ...
+          }
+        ## binocular data
+        } else if (Sbinoc) {
+          samp$time <- samp_tmp[[1]]
+          samp$xpl <- samp_tmp[[2]]
+          samp$ypl <- samp_tmp[[3]]
+          samp$psl <- samp_tmp[[4]]
+          samp$xpr <- samp_tmp[[5]]
+          samp$ypr <- samp_tmp[[6]]
+          samp$psr <- samp_tmp[[7]]
+          if (Svel) {
+            samp$xvl <- samp_tmp[[8]]
+            samp$yvl <- samp_tmp[[9]]
+            samp$xvr <- samp_tmp[[10]]
+            samp$yvr <- samp_tmp[[11]]
+            if (Sres) {
+              samp$xr <- samp_tmp[[12]]
+              samp$yr <- samp_tmp[[13]]
             }
-
-        } else if((Svel&&Sres) && !Sbinoc) {   ## monocular; velocity;  resolution
-            print("(Svel&&Sres) && !Sbinoc")
-            if (Sleft) {
-                ## 7 columns        <time> <xpl> <ypl> <psl> <xv> <yv> <xr> <yr> ...
-            } else {
-                ## 7 columns        <time> <xpr> <ypr> <psr> <xv> <yv> <xr> <yr> ...
+          } else {
+            if (Sres) {
+              samp$xr <- samp_tmp[[8]]
+              samp$yr <- samp_tmp[[9]]
             }
-
-        } else if (Sbinoc && !(Svel||Sres)) {  ## binocular data; no velocity; no resolution
-            print("Sbinoc && !(Svel||Sres)")
-            ## 8 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> ...
-            ##
-            ## 8th column (.....) is only present in corneal reflection mode. This warning field is
-            ## "....." if no warnings. First character is "I" if sample was interpolated. Second
-            ## characters is "C" if LEFT CR is missing. Third character is "R" if LEFT CR recovery
-            ## in progress. Fourth characters is "C" if RIGHT CR is missing. Fifth character is "R"
-            ## if RIGHT CR recovery in progress. See page 122 of EyeLink 1000 plus Manual v1.0.6.
-        } else if((Sbinoc && Svel) && !Sres) { ## binocular; velocity; no resolution
-            print("(Sbinoc && Svel) && !Sres")
-            ## 10 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xv> <yv> ...
-        } else if(Sres && !(Sbinoc||Svel)) {   ## binocular; no velocity;  resolution
-            print("Sres && !(Sbinoc||Svel)")
-            ## 10 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xr> <yr> ...
-        } else if((Svel&&Sres) && !Sbinoc) {   ## binocular; velocity;  resolution
-            print("(Svel&&Sres) && !Sbinoc")
-            ## 12 columns        <time> <xpl> <ypl> <psl> <xpr> <ypr> <psr> <xv> <yv> <xr> <yr> ...
+          }
         }
 
     } else {
@@ -245,22 +269,14 @@ getEyelinkTrialData <- function(bounds,
     }
 
     ## Get message events
-    if(length(msgSet)>1 || !is.na(msgSet)) {
-        ## All messages caught by this routine should have the same number of fields, or else.
-        ## TODO: add error check for field count.
-        ## TODO: add code to pick up groups of msgs, where across groups the field count is different.
-        ##  1. Set of REs, each uniquely matches line in trial (e.g., "ARECSTART")
-        ##  2. For each matched line, get timestamp, and offset if present. If no offset, set offset to 0.
-        ##  3. Get label/event-type (e.g., ARECSTART).
-        ##  4. Get value if present, otherwise set value to NA.
-        msgRE <- paste0("^MSG.*(", paste0(msgSet, "", collapse="|"), ")") ## FIXME: Don't paste the REs together. Handle them 1 at a time.
-        msg <- grep(msgRE, lines[bounds[1]:bounds[2]], value=TRUE)
-        msg <- stringr::str_split(msg, pattern="[ \t]+")
-        if (length(msg) > 0) {
-            msg <- data.frame(matrix(unlist(msg), ncol=length(msg[[1]]), byrow=TRUE), stringsAsFactors=FALSE)
-        } else {
-            msg <- NULL
-        }
+    msgRE <- "^MSG.*"
+    msg_tmp <- grep(msgRE, lines[bounds[1]:bounds[2]], value=TRUE)
+    if (length(msg_tmp) > 0) {
+        msg_tmp <- subset(msg_tmp, !grepl(".*TRIAL_VAR.*", msg_tmp)) # drop trial variables
+        msg_tmp <- stringr::str_match(msg_tmp, "^MSG\t([:digit:]+)[:space:]?([-]?[:digit:]+)?[:space:](.*)")[,2:4]
+        msg_tmp[msg_tmp==""] <- NA
+        msg <- setNames(data.frame(msg_tmp, stringsAsFactors=FALSE),
+                        c("time","offset","message"))
     } else {
         msg <- NULL
     }
@@ -316,8 +332,6 @@ getEyelinkTrialData <- function(bounds,
 ##'     TODO: Test for the case where tStarteRE and TEndRE are
 ##'     mismatched and handle it more gracefully, while throwing a
 ##'     warning.
-##' @param msgSet A character vector. Each element identifies a MSG
-##'     event to recover from the data file.
 ##' @param subjID If NULL (default), use filename as subject
 ##'     ID. Otherwise use specified string.
 ##' @return List with two elements, one for session information, and
@@ -325,11 +339,11 @@ getEyelinkTrialData <- function(bounds,
 ##'     a list of 6 elements: data.frames enumerating fixations,
 ##'     saccades, blinks, samples, TRIAL_VARs and MSGs for the trial.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
+##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
 readELascii <- function(file,
                         tStartRE="TRIALID",
                         tEndRE="TRIAL_RESULT",
-                        msgSet=NA,
                         subjID=NULL) {
     ## TODO: maybe change default tStartRE to "Prepare_sequence"
     f <- file(file, "r", blocking=FALSE)
@@ -345,13 +359,13 @@ readELascii <- function(file,
     }
 
     ## get session information from file header
-    ## FIXME: Also need to capture version of edfapi/edf2asc used for file conversion.
     header <- grep("^[*][*] ", lines, value=TRUE)
     script <- unlist(stringr::str_split(grep("RECORDED BY", header, value=TRUE), "[ \t]+"))[4]
     sessdate <- unlist(stringr::str_split(grep("DATE:", header, value=TRUE), ": "))[2]
     srcfile <- unlist(stringr::str_split(grep("CONVERTED FROM", header, value=TRUE), " (FROM|using) "))[2]
     srcfile <- basename(srcfile)
-    session <- data.frame(subj, script, sessdate, srcfile)
+    conversion <- unlist(stringr::str_split(grep("CONVERTED FROM", header, value=TRUE), " (FROM|using|on) "))[3]
+    session <- data.frame(subj, script, sessdate, srcfile, conversion)
 
     ## get start and end lines for each trial block
     tStart <- grep(tStartRE, lines)
@@ -364,7 +378,7 @@ readELascii <- function(file,
     trialids <- trialids[seq(2, length(trialids), 2)]
 
     ## get events for each trial
-    trials <- apply(trialidx, 1, getEyelinkTrialData, lines=lines, msgSet=msgSet)
+    trials <- apply(trialidx, 1, getEyelinkTrialData, lines=lines)
     names(trials) <- trialids
 
     retval <- list(session=session, trials=trials)
