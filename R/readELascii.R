@@ -341,6 +341,11 @@ getEyelinkTrialData <- function(bounds,
 ##' @author Dave Braze \email{davebraze@@gmail.com}
 ##' @author Monica Li \email{monica.yc.li@@gmail.com}
 ##' @export
+##' @examples
+##' inf <- system.file("extdata/1950006-RAN.asc.gz", package="FDBeye")
+##' D0 <- readELascii(inf)
+##' str(D0)
+
 readELascii <- function(file,
                         tStartRE="TRIALID",
                         tEndRE="TRIAL_RESULT",
