@@ -68,9 +68,11 @@ SR Research provides a utility (EDF2ASC.exe) that dumps
     MSG events, and TRIAL_VARs from them.
 }
 \examples{
-inf <- system.file("extdata/1950006-RAN.asc.gz", package="FDBeye")
-D0 <- readELascii(inf)
-str(D0)
+library(FDBeye)
+
+infile <- system.file("extdata/1950006-RAN.asc.gz", package="FDBeye")
+D <- readELascii(infile)
+str(D)
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}
