@@ -3,7 +3,7 @@ FDBeye
 [![github release](https://img.shields.io/github/release/davebraze/FDBeye.svg?label=current+release)](https://github.com/davebraze/FDBeye/releases)
 [![DOI](https://zenodo.org/badge/38009047.svg)](https://zenodo.org/badge/latestdoi/38009047)
 [![Travis-CI Build Status](https://travis-ci.org/davebraze/FDBeye.svg?branch=master)](https://travis-ci.org/davebraze/FDBeye)
-[![license](https://img.shields.io/badge/license-MIT.svg)](LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
 This is a collection of tools to ease working with eyetracker
 data. I'm slowly migrating stuff from my collection of project
