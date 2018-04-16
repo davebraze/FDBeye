@@ -30,8 +30,8 @@
 ##' @examples
 ##' fname <- system.file("/extdata/1950006-RAN.asc.gz", package="FDBeye")
 ##' e <- readELascii(fname)
-##' efix <- fixReport(e)
-fixReport <- function(dat, trialvars=TRUE) {
+##' efix <- reportFixations(e)
+reportFixations <- function(dat, trialvars=TRUE) {
     if (!("ELascii" %in% class(dat))) {
         stop("Argument 'dat' must have class 'ELascii'.")
     }
@@ -105,8 +105,8 @@ fixReport <- function(dat, trialvars=TRUE) {
 ##' @examples
 ##' fname <- system.file("/extdata/1950006-RAN.asc.gz", package="FDBeye")
 ##' e <- readELascii(fname)
-##' esacc <- saccReport(e)
-saccReport <- function(dat, trialvars=TRUE) {
+##' esacc <- reportSaccades(e)
+reportSaccades <- function(dat, trialvars=TRUE) {
     if (!("ELascii" %in% class(dat))) {
         stop("Argument 'dat' must have class 'ELascii'.")
     }
@@ -144,6 +144,54 @@ saccReport <- function(dat, trialvars=TRUE) {
 
     retval
 }
+
+##' @title Extract a trial report from an ELascii object
+##'
+##' @description Extract a trial report from an ELascii object
+##'
+##' @details trial reports contain summary data from each trial, as well as subject ID,
+##'     trial number.
+##'
+##' @param dat An object of class "ELascii", as created by readELascii().
+##' @return Which specific trial variables are available will vary, depending on the idiosyncratic
+##'     characteristics of the protocol. Regardless, the returned data.frame will contain a report with the
+##'     following columns, together with any trial variables found in the dataset:
+##'
+##' \enumerate{
+##'     \item subject: factor for subject ID, taken from the name of the source EDF file.
+##'     \item trialn: factor for trial ID.
+##'     \item time0: integer indicating timestamp (ms) of first sample in recording block.
+##' }
+##'
+##' Returned data.frame will also include trial_vars from edf file if requested (TRUE by default).
+##' @author Dave Braze \email{davebraze@@gmail.com}
+##' @export
+##' @examples
+##' fname <- system.file("/extdata/1950006-RAN.asc.gz", package="FDBeye")
+##' e <- readELascii(fname)
+##' efix <- reportTrials(e)
+reportTrials <- function(dat) {
+    if (!("ELascii" %in% class(dat))) {
+        stop("Argument 'dat' must have class 'ELascii'.")
+    }
+
+    retval <- plyr::ldply(.data = dat$trials, .fun = function(x) {x$trialvar},
+                          .id = "trialn_")
+
+
+    ## get subject ID from EDF source filename
+    ## FIXME: strsplit() is ugly. Look for better option in stringr:: or stringi::
+    subject <- strsplit(as.character(dat$session$srcfile), "[.]")[[1]][1]
+    retval <- data.frame(subject, retval)
+
+    ## cleanup
+    if (sum(names(retval)=="trialn")==0) { ## check for a name collision before renaming 'trialn_'
+        names(retval)[names(retval)=="trialn_"] <- "trialn"
+    }
+    retval
+}
+
+
 
 ##' @title Generate an ET report, as data.frame.
 ##'

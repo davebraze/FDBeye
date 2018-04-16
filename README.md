@@ -3,15 +3,16 @@ FDBeye
 [![github release](https://img.shields.io/github/release/davebraze/FDBeye.svg?label=current+release)](https://github.com/davebraze/FDBeye/releases)
 [![DOI](https://zenodo.org/badge/38009047.svg)](https://zenodo.org/badge/latestdoi/38009047)
 [![Travis-CI Build Status](https://travis-ci.org/davebraze/FDBeye.svg?branch=master)](https://travis-ci.org/davebraze/FDBeye)
-[![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
 This is a collection of tools to ease working with eyetracker
-data. I'm slowly migrating stuff from my junkpile of project specific
-code into this package. FDBeye is about post-acquisition data
+data. I'm slowly migrating stuff from my collection of project
+specific code into this package. FDBeye is about post-acquisition data
 processing. What's here now is focused on my own workflows involving
 data from SRR Eyelink systems, although some stuff may be more
-generally useful. Functionality is a bit thin at present. Pitch in and
-help if you like (see [Contributing](#contributing)).
+generally useful. This package is most definitely a work in
+progress. Keep that in mind if you make use of it. Pitch in and help
+with development if you like (see [Contributing](#contributing)).
 
 Before you try FDBeye, you might want to look at what else is
 available. See the list of
@@ -47,11 +48,11 @@ downloaded.
 Keeping up with Changes
 -----------------------
 
-FDBeye development proceeds sporadically. If you
-want to be notified of any updates, then you can "watch" the github
-repository. If you already have a github account, this is as easy as
-clicking a button. If you don't have a github account, well, it's easy
-enough to sign up for one.
+FDBeye development proceeds sporadically. If you want to be notified
+of any updates, then you can "watch" the github repository. If you
+already have a github account, this is as easy as clicking a
+button. If you don't have a github account, maybe it's time to sign up
+for one.
 
 Contributing
 ------------
@@ -69,8 +70,9 @@ request, and (b) agree to apply the
 contained in the pull request. Contributors retain copyright to their
 own code.
 
-Other Eye Tracking Tools
+Other Researcher-Contributed Eye Tracking Tools
 ------------------------
 
-The list of (mostly FOSS) tools that used to be here has been moved to
-the [FDBeye Wiki](https://github.com/davebraze/FDBeye/wiki).
+The list of (mostly FOSS) tools that used to be a part of this README
+file has been moved to the
+[FDBeye Wiki](https://github.com/davebraze/FDBeye/wiki).

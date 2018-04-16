@@ -4,7 +4,7 @@
 \alias{getEyelinkTrialData}
 \title{Called by readELascii()}
 \usage{
-getEyelinkTrialData(bounds, lines, msgSet = NA)
+getEyelinkTrialData(bounds, lines)
 }
 \arguments{
 \item{bounds}{A numeric tuple. e1 is index marking beginning of
@@ -12,9 +12,6 @@ trial. e2 is index indicating end of trial.}
 
 \item{lines}{A vector of strings, each corresponding to 1 line of
 the EL ASCII file.}
-
-\item{msgSet}{A character vector of regular expressions to
-identify eyelink MSG lines to catch.}
 }
 \value{
 A list of 6 elements, data.frames enumerating fixations,
@@ -30,4 +27,6 @@ Used by readELascii(). Not intended for end-users. Extract fixations, saccades, 
 }
 \author{
 Dave Braze \email{davebraze@gmail.com}
+
+Monica Li \email{monica.yc.li@gmail.com}
 }
