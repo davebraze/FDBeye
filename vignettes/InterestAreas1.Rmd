@@ -4,9 +4,9 @@ author: "Jenna Duclos"
 date: "October 25, 2016"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Interest Areas}
+  %\VignetteIndexEntry{FDBeye: Interest Areas}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  %\VignetteEncoding{ASCII}
 ---
 
 ## Building DataViewer Compatible Interest Area Files
@@ -14,7 +14,7 @@ vignette: >
 Eye movement data can be analyzed by using interest area definitions
 to pick out specific screen areas for summarizing local gaze
 behavior. For reading experiments, interest areas may focus on a
-single word or a multi-word unit depending on needs of the
+single word or multi-word units depending on needs of the
 analysis. Given an interest area specification, SRR DataViewer can
 generate an interest area report to provide information on various
 gaze measures for each area: fixation count, summed fixation duration,
@@ -23,10 +23,11 @@ regressions into an interest area, etc.
 ### Using R Package FDBeye to Create SRR Interest Area Files
 
 At this point we assume that the user has created paired bitmap (used
-as experimental stimuli in, e.g., SRR Experiment Builder) and comma separated
-**region** files. File names for the latter will typically end with
-"region.csv".  R and the package FDBeye can be used to create Interest Area
-Templates compatible with SRR DataViewer.
+as experimental stimuli in, e.g., SRR Experiment Builder) and comma
+separated **region** files. File names for the latter will typically
+end with "region.csv". The R package FDBeye can be used to translate
+region files into Interest Area files (.ias files) compatible with SRR
+DataViewer.
 
 The following R packages are required:
 
@@ -95,7 +96,7 @@ The quick brown fox jumps over the lazy dog.
 ```
 
 Once you have hand edited the text document to reflect the interest
-area locations you want save the file.
+area locations you want, save the file.
 
 #### Preview the new interest areas:
 1. Use the `*.region.def` file to build a set of regions.
