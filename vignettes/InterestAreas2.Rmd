@@ -17,7 +17,7 @@ generate interest area reports. For each trial in an .edf there should
 also be one `*.ias`.  If you will be working with multiple trials in
 an .edf, it is recommended that when you are creating your interest
 area files in R you save them with a name that can be easily
-identified and matched with the corresponding trials in the .edf in
+identified and related to corresponding trials in `*.edf` files in
 DataViewer. As seen in our examples above, the interest area template
 for trial 1 was saved as trial1.ias. A cohesive naming scheme across
 the .edf trial names and interest area templates will simplify the
