@@ -23,10 +23,10 @@
 ##'     columns for:
 ##'
 ##' \describe{
-##'     \item {iaHeight}{Interest area height in integer pixels.}
-##'     \item {firstWordInLine}{Logical flag picking out the first word (IA) on each line.}
-##'     \item {lastWordInLine}{Logical flag picking out the last word (IA) on each line.}
-##'     \item {lineNum}{Integer indicating line number for word (IA), ranging from 1 to n where n is the number of lines.}
+##'     \item{iaHeight}{Interest area height in integer pixels.}
+##'     \item{firstWordInLine}{Logical flag picking out the first word (IA) on each line.}
+##'     \item{lastWordInLine}{Logical flag picking out the last word (IA) on each line.}
+##'     \item{lineNum}{Integer indicating line number for word (IA), ranging from 1 to n where n is the number of lines.}
 ##' }
 ##'
 ##' @author Dave Braze <davebraze@@gmail.com>
