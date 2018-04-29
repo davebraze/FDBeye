@@ -24,7 +24,8 @@
 ##'     each Interest Area.
 ##' @return A data.frame of interest areas with modified upper and
 ##'     lower limits.
-##' @author Dave Braze <davebraze@@gmail.com>
+##' @author Dave Braze \email{davebraze@@gmail.com}
+##' @import dplyr
 ##' @export
 ##' @examples
 ##' \dontrun{

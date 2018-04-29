@@ -29,7 +29,8 @@
 ##'     \item{lineNum}{Integer indicating line number for word (IA), ranging from 1 to n where n is the number of lines.}
 ##' }
 ##'
-##' @author Dave Braze <davebraze@@gmail.com>
+##' @author Dave Braze \email{davebraze@@gmail.com}
+##' @import dplyr
 ##' @export
 ##' @examples
 ##' \dontrun{
