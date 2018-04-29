@@ -13,7 +13,7 @@
     ## ver <- as.character(ver)
     ## packageStartupMessage(paste("Welcome to",  pkg, ", version ", ver, "."))
 
-    packageStartupMessage("    (c) 2014-2017, Dave Braze, and others.")
+    packageStartupMessage("    (c) 2014-2018, Dave Braze, and others.")
     packageStartupMessage("    Released under the MIT license.\n")
 
     ## check here that path to edf2asc is set. If not, caution user

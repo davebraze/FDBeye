@@ -7,25 +7,25 @@
 fortifySRias(df, y1 = y1, y2 = y2)
 }
 \arguments{
+\item{df}{A data.frame containing a set of rectangular interest
+areas. Typically these will contain at least 7 columns
+for: type, index x_left, y_top, x_right, y_bottom, label.}
+
 \item{y1}{Label of column in .data containing y values for upper
 bound of interest areas.}
 
 \item{y2}{Label of column in .data containing y values for lower
 bound of interest areas.}
-
-\item{.data}{A data.frame containing a set of rectangular interest
-areas. Typically these will contain at least 7 columns
-for: type, index x_left, y_top, x_right, y_bottom, label.}
 }
 \value{
 A data.frame containing interest areas, now enriched with
     columns for:
 
 \describe{
-    \item{iaHeight}{Interest area height in integer pixels.}
-    \item{firstWordInLine}{Logical flag picking out the first word (IA) on each line.}
-    \item{lastWordInLine}{Logical flag picking out the last word (IA) on each line.}
-    \item{lineNum}{Integer indicating line number for word (IA), ranging from 1 to n where n is the number of lines.}
+    \item{iaHeight}{Integer. Interest area height in pixels.}
+    \item{firstWordInLine}{Logical. Flag the first word (IA) on each line.}
+    \item{lastWordInLine}{Logical. flag the last word (IA) on each line.}
+    \item{lineNum}{Integer. Line number, ranging from 1 to n where n is the number of lines.}
 }
 }
 \description{
@@ -58,5 +58,5 @@ glimpse(ias1)
 patchIAy
 }
 \author{
-Dave Braze <davebraze@gmail.com>
+Dave Braze \email{davebraze@gmail.com}
 }

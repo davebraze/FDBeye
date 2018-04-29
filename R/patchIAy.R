@@ -22,6 +22,12 @@
 ##'     bound of interest areas.
 ##' @param lineNum Label of column in df indicating line number for
 ##'     each Interest Area.
+##' @param stdize Logical. Indicates whether or not to do line-wise standardization
+##'     of IA upper and lower limits. Defaults to TRUE.
+##' @param ytop Integer. Offset to apply to upper limit of IAs. Positive values increase
+##'     the height of IAs (moves upper limit up). Defaults to 0.
+##' @param ybottom Integer. Offset to apply to lower limit of IAs. Positive values increase
+##'     the height of IAs (moves lower limit down). Defaults to 0.
 ##' @return A data.frame of interest areas with modified upper and
 ##'     lower limits.
 ##' @author Dave Braze \email{davebraze@@gmail.com}
