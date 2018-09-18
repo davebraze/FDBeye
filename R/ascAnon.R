@@ -14,9 +14,6 @@
 ##'     If newName is provided, that will be used as the basename for the EDF file in the CONVERTED
 ##'     FROM line, as well as the output file name.
 ##'
-##'     Standards for data de-identification can be found here:
-##'     https://www.hhs.gov/hipaa/for-professionals/privacy/special-topics/de-identification/index.html
-##'
 ##' @param file Path to SRR *ASC file.
 ##' @param newName Name to use for newly anonymized *ASC file. If an extension is included it will
 ##'     be ignored and replaced with "asc". If NULL (the default) will use the same name as the
