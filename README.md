@@ -45,6 +45,11 @@ install.packages(pathToFile, repos = NULL)
 Where pathToFile is the full path and file name for the file you
 downloaded.
 
+Copyright & License
+-------------------
+
+FDBeye is released under the [MIT License](LICENSE).
+
 Keeping up with Changes
 -----------------------
 
