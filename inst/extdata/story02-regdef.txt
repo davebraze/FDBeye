@@ -32,29 +32,29 @@ regions:
   padR: 0		# extent to pad last region on line to right of last character, in pixels.
 ---
 
-The trial pack of Beauty-Forever pills made the couple feel
-[  |     |    |  |              |     |    |   |      |   ]
+The trial pack of Beauty-Forever pills made the couple feel more attractive
+[  |     |    |  |              |     |    |   |      |    |    |         ]
 
-more attractive than either had ever imagined possibly. Suddenly
-[   |          |    |      |   |    |        |         |       ]
+than either had ever imagined possibly. Suddenly their marriage was filled
+[   |      |   |    |        |         |        |     |        |   |     ]
 
-their marriage was filled with more laughter, more cuddling, more
-[    |        |   |      |    |    |         |    |         |   ]
+with more laughter, more cuddling, more passionate sex more often.
+[   |    |         |    |         |    |          |   |    |     ]
 
-passionate sex more often. Convinced, they became loyal customers.
-[         |   |    |      |          |    |      |     |         ]
+Convinced, they became loyal customers. One day, lying in bed, their
+[         |    |      |     |          |   |    |     |  |    |    ]
 
-One day, lying in bed, their seemingly perfect bodies naked and
-[  |    |     |  |    |     |         |       |      |     |  ]
+seemingly perfect bodies naked and spent together, the wife said, "Did you
+[        |       |      |     |   |     |         |   |    |     |    |  ]
 
-spent together, the wife said, "Did you think I was beautiful before?"
-[    |         |   |    |     |    |   |     | |   |         |       ]
+think I was beautiful before? "The husband said, "Of course I did." She
+[    | |   |         |       |    |       |     |   |      | |     |  ]
 
-The husband said, "Of course I did." She replied, "Then let's stop taking
-[  |       |     |   |      | |     |   |        |     |     |    |     ]
+replied, "Then let's stop taking the pills. Let's see each other as we
+[       |     |     |    |      |   |      |     |   |    |     |  | ]
 
-the pills. Let's see each other as we really are." The husband looked
-[  |      |     |   |    |     |  |  |      |     |   |       |     ]
+really are." The husband looked at her, radiant beside him and said,
+[     |     |   |       |      |  |    |       |      |   |   |    ]
 
-at her, radiant beside him and said, "Maybe tomorrow, dear. Maybe tomorrow."
-[ |    |       |      |   |   |     |      |         |     |     |         ]
+"Maybe tomorrow, dear. Maybe tomorrow."
+[     |         |     |     |         ]

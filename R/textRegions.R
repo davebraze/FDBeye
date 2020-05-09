@@ -206,7 +206,7 @@ reg2regdef <- function(reg, scrnW=NA, scrnH=NA,
 ##'     text displayed on that line. The second element is a regioning
 ##'     string made up of square brackets ("[", "]"), and pipe ("|")
 ##'     characters. An opening bracket ("[") indicates the start of a
-##'     line and a closing bracket ("]) indicates the end of a line.
+##'     line and a closing bracket ("]") indicates the end of a line.
 ##'     Pipes ("|") indicate region boundaries within a line. By
 ##'     default, the region definition file will specify that each
 ##'     text line be exhaustively divided into space delimited regions
@@ -327,4 +327,184 @@ regdef2ias <- function(fname) {
         ias <- rbind(ias, data.frame(type, regnum, x1, y1, x2, y2, labs))
     }
     ias
+}
+
+
+##' @title Convert SR Research IAS (Interest Area Set) file to region 
+##'   definition file.
+##' @description Convert SR Rsearch IAS (Interest Area Set) file 
+##'   (*.ias) to a region definition file (*_regdef.txt). The latter 
+##'   is suitable for hand editing and can be used to generate 
+##'   alternative region specifications (e.g., multi word regions) for
+##'   text stimuli.
+##'   
+##' @param fname A string containing the name of a SR Research IAS 
+##'   file ("*.ias"). Columns in file from left to right must be: 
+##'   Interest Area Type (Rectangular), Region Number, x1 (left 
+##'   boundary), y1 (top boundary), x2 (right boundary), y2 (bottom 
+##'   boundary), Region Label.
+##' @param write.regdef A boolean value of whether or not a converted 
+##'   region definition file will be written. Default value is 
+##'   \code{TRUE}.
+##' @param reg.sep A string of characters that denotes the region 
+##'   separator in the region labels. Default value is \code{NA}, 
+##'   which indicates that region boundary is not specified within the
+##'   region labels, and region labels will be catenated with 
+##'   \code{"\t"} in between to determine the locations of the region 
+##'   boundaries. If \code{reg.sep} is specified by the user, the 
+##'   \code{reg.sep} string will be replaced by \code{"\t"} to 
+##'   determine the locations of the region boundaries.
+##' @param baseline.offset Number of pixels of which the baseline of 
+##'   each line is above from y2. Default value is \code{0}.
+##'   
+##' @param scrnW Screen width in pixels (integer).
+##' @param scrnH Screen height in pixels (integer).
+##' @param fnt.name Font name used for stimulus text.
+##' @param fnt.size Nominal font size in points for text display.
+##' @param chrW Letter width in pixels, assuming a monospace font is 
+##'   used.
+##' @param chrH Nominal letter height in pixels.
+##' @param ln.space Line spacing in pixels for multi line texts.
+##' @param baseline Baseline positions for each line of text. Measured
+##'   in pixels from the top of the screen.
+##' @param mrgn.top Top margin of the screen in pixels.
+##' @param mrgn.left Left margin of the screen in pixels.
+##' @param mrgn.bottom Bottom margin of the screen in pixels.
+##' @param mrgn.right Right margin of the screen in pixels.
+##' @param rgn.maxH Extent of regions of interest above baseline in 
+##'   pixels.
+##' @param rgn.minH Extent of regions of interest below baseline in 
+##'   pixels.
+##' @param rgn.padL Expand leftmost region on each line leftward by 
+##'   this amount in pixels.
+##' @param rgn.padR Expand rightmost region on each line rightward by 
+##'   this amount in pixels.
+##'   
+##' @details If not specified, \code{baseline}, \code{chrH} and 
+##'   \code{chrW} will be calculated based on \code{x1}, \code{x2},
+##'   \code{y1}, and \code{y2} in the .ias file such that:
+##'   \itemize{
+##'   \item{\code{baseline = y2 - baseline.offset} for each line of text}
+##'   \item{\code{chrH = (y1 - y2)/2} for each line of text}
+##'   \item{\code{chrW} is the smallest differece between region 
+##'   widths (i.e., \code{x2 - x1} of each region) among all regions. 
+##'   (Note that it is assumed the font of the stimulus text is 
+##'   monospace, and the estimation for \code{chrW} with proportional 
+##'   fonts could be very off.)}
+##'   }
+##'   
+##'   Region labels (the last column in the .ias file) should be the 
+##'   content of the actual stimulus for each region, especially in 
+##'   terms of the number of characters or items within each region, 
+##'   in order to generate optimal regdef files. This way, when
+##'   converting regdef to other formats, the region widths in the
+##'   regioning string can be directly converted into the actual
+##'   region widths in the stimulus. For example, if the stimuli are
+##'   color patches instead of text (like in Rapid Automatized
+##'   Naming), it may be ideal to use a single letter to stand for
+##'   each color as the region label, instead of using the whole name
+##'   of a color.
+##'   
+##' @return A vector of strings containing the region definition. The 
+##'   vector includes a yaml block with values for each of the 
+##'   function parameters except for \code{fname}, 
+##'   \code{write.regdef}, \code{reg.sep}, and \code{baseline.offset}.
+##'   In addition to the yaml block, the vector will include a pair of
+##'   lines for each line of text in the stimulus. The first element 
+##'   of each pair is the text displayed on that line. The second 
+##'   element is a regioning string made up of square brackets ("[", 
+##'   "]"), and pipe ("|") characters. An opening bracket ("[") 
+##'   indicates the start of a line and a closing bracket ("]") 
+##'   indicates the end of a line. Pipes ("|") indicate region 
+##'   boundaries within a line.
+##'   
+##'   By default, the output vector is also written to a region 
+##'   definition file (*_regdef.txt) using the file name of the input 
+##'   .ias file. The region definition file can be hand edited to add 
+##'   or correct information in the yaml block, or to re-specify 
+##'   region placements.
+##'   
+##' @author Dave Braze \email{davebraze@@gmail.com}
+##' @author Monica Li \email{monica.yc.li@@gmail.com}
+##' @export
+
+ias2regdef <- function(fname, write.regdef=TRUE, reg.sep=NA, baseline.offset=0,
+                       scrnW=NA, scrnH=NA,
+                       fnt.name=NA, fnt.size=NA,
+                       chrW=NA, chrH=NA,
+                       ln.space=NA, baseline=NA,
+                       mrgn.top=NA, mrgn.left=NA, mrgn.bottom=NA, mrgn.right=NA,
+                       rgn.maxH=NA, rgn.minH=NA, rgn.padL=NA, rgn.padR=NA) {
+    ##### read in ias file #####
+    ias <- read.table(fname, header = FALSE, sep = "\t", comment.char = "#", quote = "",
+                    col.names = c("type","regnum","x1","y1","x2","y2","labs"))
+    
+    # check input file and show error or warning messages
+    if (!all(ias$type=="RECTANGLE")) {stop("interest area type has to be RECTANGLE")}
+    if (!is.logical(write.regdef)) {stop("argument write.regdef must be a boolean")}
+    if (is.unsorted(ias$regnum)) {warning("interest area number is out of order")}
+    if (is.unsorted(ias$x1)|is.unsorted(ias$x2)) {
+      warning("interest area vertical boundaries (x1, x2) are out of order")
+    }
+    if (is.unsorted(ias$y1)|is.unsorted(ias$y2)) {
+      warning("interest area horizontal boundaries (y1, y2) are out of order")
+    }
+    
+    ##### build yaml block #####
+    if (is.na(baseline)) baseline <- unique(ias$y2)-baseline.offset
+    if (is.na(chrH)) chrH <- mean(ias$y2-ias$y1)/2
+    if (is.na(chrW)) chrW <- min(diff(sort(unique(ias$x2-ias$x1))))
+    scrn <- list(screen=list(width=as.integer(scrnW), height=as.integer(scrnH))) # likely defaults
+    fnt <- list(font=list(name=fnt.name, size=fnt.size)) # no default; not important to region definitions
+    chr <- list(character=list(width=as.integer(chrW), height=as.integer(chrH)))
+    lns <- list(lines=list(spacing=ln.space, baseline=as.integer(baseline)))
+    mrg <- list(margins=list(top=as.integer(mrgn.top), left=as.integer(mrgn.left),
+                             bottom=as.integer(mrgn.bottom), right=as.integer(mrgn.right)))
+    rgns <- list(regions=list(maxH=as.integer(rgn.maxH), minH=as.integer(rgn.minH),
+                              padL=as.integer(rgn.padL), padR=as.integer(rgn.padR)))
+    hdr <- c("---\n",
+             sapply(list(scrn, fnt, chr, lns, mrg, rgns), yaml::as.yaml),
+             "---\n")
+
+    ##### build regdef block #####
+    # create an empty vector to store text and region definition lines
+    ln <- c()
+    # loop over each line of text
+    for (y in unique(ias$y2)){
+        # use y2 to identify text on the same line
+        ias_line <- subset(ias, y2==y)
+        
+        # read in text and determine where the separators are
+        # replace separators with spaces
+        if (is.na(reg.sep)){
+          txt <- stringr::str_c(ias_line$labs, collapse="\t")
+          idx <- stringr::str_locate_all(txt, "\t")[[1]][,1]
+          txt <- gsub("\t", " ", txt)
+        } else {
+          txt <- stringr::str_c(ias_line$labs, collapse="")
+          txt <- gsub(reg.sep, "\t", txt)
+          idx <- stringr::str_locate_all(txt, "\t")[[1]][,1]
+          txt <- gsub("\t", " ", txt)
+        }
+        
+        # create corresponding region marks for each line of text
+        regmarks <- rep(" ", stringr::str_length(txt))
+        regmarks[idx] <- "|"
+        regmarks[1] <- "["
+        regmarks[length(regmarks)] <- "]"
+        regmarks <- paste(regmarks, collapse="")
+        
+        # stack text and region definition lines
+        ln <- c(paste0(ln, "\n", txt, "\n", regmarks, "\n"))
+    }
+    
+    retval <- c(hdr, ln)
+    
+    if (write.regdef==TRUE){ 
+      write(retval, gsub("[.]ias$", "_regdef.txt", fname))
+      invisible(retval)
+    } else {
+      return(retval)
+    } 
+
 }
